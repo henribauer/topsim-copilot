@@ -1,0 +1,771 @@
+￼
+￼
+Participant Manual
+Version 1.0
+￼
+Management Essentials
+
+Table of Contents
+2
+© TOPSIM
+Table of Contents
+1. What is Management Essentials? ......................................................................................................... 3
+1.1 Training Objectives of Management Essentials ......................................................................................... 3
+1.2 Course of the Seminar .................................................................................................................................. 4
+Introduction ............................................................................................................................................. 5
+2.1 What Tasks Do You Take On as a Participant? .......................................................................................... 5
+2.2 The Company................................................................................................................................................. 6
+Decision Areas ........................................................................................................................................ 7
+3.1 Sales ............................................................................................................................................................... 7
+3.1.1 Marketing-Mix ...................................................................................................................................... 7
+3.1.2 Description of the Product and Product Policy ..................................................................................... 8
+3.1.3 Pricing Policy ....................................................................................................................................... 8
+3.1.4 Communication Policy .......................................................................................................................... 9
+3.1.5 Distribution Policy............................................................................................................................... 11
+3.1.6 Additional Sales Opportunity: Bulk Buyer ........................................................................................... 12
+3.1.7 Insufficient Capacity of Supply ........................................................................................................... 12
+3.1.8 Price Changes ................................................................................................................................... 12
+3.2 Research & Development (R&D) ................................................................................................................ 12
+3.3 Purchasing ................................................................................................................................................... 13
+3.4 Production & Human Resources ............................................................................................................... 14
+3.4.1 Production Lines ................................................................................................................................ 14
+3.4.2 Need of and Adjustment of Production Capacity ................................................................................ 15
+3.4.3 Operating Materials ............................................................................................................................ 16
+3.4.4 Headcount in the Initial Period ........................................................................................................... 16
+3.4.5 Adjusting the Work Force ................................................................................................................... 16
+3.4.6 Non-Salary Staff Costs ....................................................................................................................... 17
+3.4.7 Productivity of Manufacturing Employees .......................................................................................... 17
+3.5 Finance and Accounting ............................................................................................................................. 18
+3.5.1 Payment Behavior of Customers........................................................................................................ 18
+3.5.2 Loans ................................................................................................................................................. 18
+3.5.3 Taxes ................................................................................................................................................. 18
+3.5.4 Dividends ........................................................................................................................................... 18
+3.5.5 Success Value ................................................................................................................................... 19
+3.5.6 Business Report of the Industry ......................................................................................................... 19
+3.5.7 Accounting ......................................................................................................................................... 19
+Planning Model .....................................................................................................................................21
+Note: For ease of reading, the masculine form of speech for personal nouns and pronouns is used in the following. This
+does not imply any discrimination against females or other gender identities but is intended to be understood as gender-
+neutral for the sake of linguistic simplification.
+
+3
+© TOPSIM
+What is Management Essentials
+1. What is Management Essentials?
+Management Essentials offers a challenging, computer-based management simulation. Together with your
+teammates, you will form a business team that will take over the leadership of the “mosaic GmbH” in the
+headphone industry. The simulation presents a realistic model of a company and provides participants the
+opportunity to:
+• Learn quickly
+• Learn in a risk-free way
+• Gain practical experience with lasting long-term effects.
+The management simulation is an interactive teaching and learning system based on the principle
+of
+1.1 Training Objectives of Management Essentials
+• Recognize and formulate framework conditions for economic success
+• Holistic experience of business contexts
+• Practice cross-departmental thinking and working
+• Setting and implementing goals and strategies in a dynamic competitive environment
+• Master the basics of marketing
+• Analyze financial figures and put knowledge into practice
+• Learn to use business tools like cost accounting and income analysis
+• Maintain control over the business under uncertain conditions
+• Learn to think and act in an interdisciplinary way
+• Develop the ability to structure and solve problems
+• Develop a view for the essential problems
+• Practice effective communication through visualization
+• Define and solve problems in teams with the help of data-processed planning models
+￼
+
+4
+© TOPSIM
+What is Management Essentials
+1.2 Course of the Seminar
+The business simulation Management Essentials is structured into distinct phases:
+Decision Phases Evaluation Phases
+Make operational and strategic decisions for a fiscal
+year of your business.
+Analysis of the results of the previous period and
+review of the general game strategy.
+Usually, the instructors will use the time between these phases to either provide relevant background
+information to the participants or to offer a detailed evaluation of recent results and events from the simulation.
+￼
+￼
+Introduction to the
+simulation
+￼
+1. Decision making in
+teams
+2. Hand in
+decisions
+￼
+3. Simulation by the
+instructor
+￼
+4. Evaluation of the
+decisions
+
+5
+© TOPSIM
+Introduction
+Introduction
+2.1 What Tasks Do You Take On as a Participant?
+￼
+A success story since the foundation
+A new era for the young company begins
+Moritz Vallenberg studied at the University of Tübingen and used his free time for his great
+passion - music production. Through his hobby he met the sound engineer Sarah. In addition
+to their studies, the two produced their own songs and beats in every free minute, which
+caught the attention of the music industry. By selling their works to well-known musicians,
+Moritz was not only able to finance his studies, but also to turn his passion into a profession.
+Together with Sarah, he developed the first prototype of an on-ear headphone with a built-in
+microphone, which they named “SuperBass”. Their high-quality headphones were not only
+great for music production, but also as a communication tool. They were so convinced of their
+product that they pooled all their savings and founded their own company with the name
+"mosaic" as a play on words from the founders' first names and their enthusiasm for music.
+The young entrepreneurs rented a production hall and warehouse in Constancy, leased their
+first machine, and went into series production of the SuperBass on-ear headphones. With the
+help of their extensive contacts within the music industry, they were able to successfully
+market their product through their own online store during the first few years after starting
+their business.
+Seven years have now passed, and mosaic GmbH continues to flourish. With annual sales
+of 6 million euros and 40,000 units sold per year, the company has established itself on the
+market. But now Moritz Vallenberg released a surprising statement:
+„My goals and wishes as managing director of mosaic GmbH were not only fulfilled, but far
+exceeded. We were able to successfully place our product on the market and now employ 36
+people. Even though this step is difficult for me, it is now time to dedicate myself to new tasks.
+I have great confidence in the new management of my company and will support them in
+word and deed. “
+As of January 1 of the new year, the new management team will take over the company.
+Moritz emphasizes that the new team will be responsible for strategic decisions from now
+on. The first step will be a rebranding. Neither Sarah nor he are still part of the company,
+which is why the company name mosaic should also be renewed. The new team will be
+entrusted with the task of developing a new brand. We remain curious to see how the
+company will develop in the future.
+Welcome to mosaic GmbH!
+￼
+
+6
+© TOPSIM
+Introduction
+2.2 The Company
+After an evaluation of the documents of the former management, you receive the following information about
+the individual business areas of mosaic GmbH:
+Sales
+• Our customer advisors are the interface between our customers and the company.
+• This is where the course is set for a targeted customer approach through our sales
+policy instruments such as advertising and pricing.
+• The customer advisors serve as competent contact persons for questions.
+regarding our products for customers and retailers and thus also act as support.
+Research &
+Development
+• The company does not have its own R&D department.
+• Further developments are carried out by a long-term cooperation partner.
+• The external cooperation partner develops new product standards and improves
+the quality of existing products.
+• The finished products are intensively tested to ensure that they meet the high-
+quality standards that we set ourselves.
+Purchasing
+• The purchasing department procures the materials, parts and supply items needed
+to produce our product.
+Production
+• The production department uses state-of-the-art production lines to manufacture
+our headphones.
+• Our highly qualified employees guarantee both the craftsmanship and durability of
+our product.
+Human
+Resources
+• The HR-team focuses on everything related to our workforce from staffing to
+general personnel support, IT, and accounting.
+• Our human resources department takes care of both the filling of vacant positions
+and, if necessary, the issue of dismissals.
+Finance &
+Accounting
+• The accounting department monitors all numbers, data and facts related to our
+company.
+• Our accounting team is well-versed in modern accounting and business practices.
+They ensure the financial success of our company.
+
+Decision Areas
+7
+© TOPSIM
+Decision Areas
+In the simulation Management Essentials, your team takes on the position as the new management of
+mosaic GmbH. As the newly elected executive board, you make decisions in all major fields of corporate
+activity:
+The following description of the different decision areas should help you to gain an overview of all decision
+parameters within the simulation, along with their corresponding impacts. The number and complexity of
+decisions will increase during the simulation. Additionally, the decisions that you ultimately make will be highly
+dependent on the specific scenario conditions present in each period of the simulation.
+3.1 Sales
+3.1.1 Marketing-Mix
+In the sales department, your main task is to design an effective marketing mix. The marketing mix is a
+combination of decisions in four areas: product policy, pricing policy, distribution policy and communication
+policy. Those are also known as the "4 P" (Product – Price – Place – Promotion) and represent the main factors
+for the determination of the sales potential. Your task is to find the mix of decisions that leads to the intended
+effects.
+Marketing Tools Influencing Factor
+Product Product policy Level product quality
+Price Pricing policy Pricing decision
+Place Distribution policy Number of sales employees at the end of the
+period
+Promotion Communication
+policy
+Includes
+• Investments in advertising
+• Investments in corporate identity
+￼
+Sales
+￼
+￼
+Purchasing
+￼
+￼
+Finance &
+Accounting
+￼
+￼
+Human
+Resources
+￼
+￼
+Production
+￼
+￼
+The Executive Board decides on…
+￼
+R & D
+￼
+
+Decision Areas
+8
+© TOPSIM
+The table above gives you a brief overview over the four marketing tools and respective decisions. In the
+following, they are described in more detail.
+Your marketing decisions should be determined based on both your overall strategy as well as the overall
+conditions of the market. Keep in mind that you will never be able to fully predict the actions of your competitors.
+Furthermore, pricing, and competitive aggressiveness of your competitors will have an influence on your
+potential sales volume. This means that in certain circumstances, sales growth could actually be higher or
+lower than what is predicted in the economic news.
+3.1.2 Description of the Product and Product Policy
+mosaic GmbH produces and distributes the high-quality “SuperBass” headphones. These on-ear headphones
+with built-in microphones are not only excellent for music production, but also as a tool for communication.
+Although studio-quality headphones and headsets with built-in microphones are already on the market, the
+SuperBass is the first headphone to combine these elements. With its licensed transducers, its high tones
+sound melodic instead of flat, and its deep bass booms into the ear. At the same time, every online meeting
+with the SuperBass runs smoothly, as the built-in and noise-isolating microphone transmits the voice clearly
+to the other end of the line. This allows music to be experienced exactly as the artist intended, and for your
+colleagues, your voice sounds as if you were right next to them in the office.
+The award of the influential music magazine "Beat Mag" in the category "Product Innovation of the Year"
+helped the start-up company achieve further success. The SuperBass headphones are on par with other
+devices in terms of general features. In period 0, the headphones achieved the following rating:
+Product Quality: Level 1
+The publications of the specialist magazine "Beat Mag" provide guidance for customers. The level of your
+headphones is an important quality criterion: the higher the level, the greater the reputation of the product on
+the market. In addition to the absolute value of the two indicators, the distance to the level of the competition
+also plays a role. For the improvement of the product quality, the external consulting of NiceNoise GmbH is
+necessary.
+For each level of product quality, NiceNoise improves one aspect of the sound, material, or design of the
+headphones. In doing so, NiceNoise pays attention to the balance between these dimensions, resulting in a
+high-quality product according to modern standards.
+3.1.3 Pricing Policy
+In competition with other suppliers, price is an important marketing instrument with an immediate effect on
+sales. It thus makes a significant contribution to differentiation from the competition. Your set price in the initial
+situation is EUR 150.
+In general, fewer products are sold when prices are increased. Conversely, demand increases when prices
+are reduced. This relationship is shown in the following table:
+
+Decision Areas
+9
+© TOPSIM
+However, keep in mind that the values above are shown without the sales-effective effects of the further
+development of your product quality. You must expect significant business consequences if you change your
+price drastically. For example, if your price is high, you should also offer high quality, or if your price is low, you
+should be able to deliver and produce cost-effectively.
+The revenue for the period is calculated from the number of headphones sold and the respective price. The
+revenue for period 0 is the amount of money that mosaic GmbH earns from the sale of 40,000 headphones at
+a price of EUR 150 each. The revenue after the end of the previous financial year thus amounts to (end of
+period 0):
+40,000 Units * EUR 150 = EUR 6,000,000
+The quantity demanded is sensitive to pricing decisions. For example, if the price is too low, sales may increase
+due to increased volume, but this volume may no longer be sufficient to cover costs. Therefore, check whether
+you can produce a high quantity profitably before lowering the price. Similarly, if you overprice, you may also
+lose sales if you lose customers to competitors because of a high-price strategy. Customers are only willing to
+pay significantly higher prices if you also deliver corresponding performance (product quality). It is assumed
+here that the additional costs per headphone due to improved product quality (see section 3.2 Research &
+Development (R&D)) can be roughly passed on to customers. As this price increase maintains the price-
+performance ratio (increased price, simultaneously increased product quality), the clientele is prepared to
+accept it without any loss of sales.
+From this context, it becomes clear that not only the expected sales volume, but also the resulting revenue
+must be planned when deciding on the price. Sales depend on other factors besides price. Therefore, you
+depend on forecasts about the buying behavior of your customers to make assumptions about the actions of
+your competitors as well as the future market development.
+3.1.4 Communication Policy
+Your company's communication expenses can be divided into two sub-areas for which you allocate budget:
+• Advertising
+• Corporate Identity
+Price-Sales-Table
+Price Sales in Units
+€ 160 (+ 6.7%) Approx. 28,500
+€ 150 40,000
+€ 140 (- 6.7%) Approx. 53,000
+
+Decision Areas
+10
+© TOPSIM
+At the beginning of the simulation, you only make decisions about advertising, while corporate identity is added
+as the simulation progresses. These tools combined result in your awareness index.
+3.1.4.1 Advertising
+The most common marketing tool is classic advertising. This includes social media posts, banner ads, online
+spots, and advertorials, which together appeal to a large potential customer base. An increase in advertising
+spend usually increases demand for your product as well. Because advertising increases the awareness of
+your company, the effect of advertising spend is felt over several periods. However, the strongest effect is
+achieved during the period in which the advertising is placed. The effect of advertising on demand is
+exemplified in the following diagram:
+(Note: This is an illustration and does not represent the actual function)
+The figure shows: Very high advertising expenditures do not produce a clear additional effect; thus, advertising
+expenditures are subject to a decreasing marginal utility. At the same time, too little advertising effort has little
+effect. This is hardly noticed by the customer. The advertising budget in the initial period is EUR 300,000.
+Marketing experts assume that with a budget of EUR 330,000, approximately 1,200 more headphones could
+have been sold in period 0.
+The impact of advertising on total demand is also influenced by the difference between your company budget
+and the budget of your competitors.
+3.1.4.2 Corporate Identity
+Corporate identity (CI) is another communication tool that can be used to increase awareness and sales.
+Advertising expenditures tend to have a short-term effect and are only product- and market-related, whereas
+corporate identity increases the company's awareness across products and markets in the long term.
+Consequently, the corporate identity of the company is an important factor for the long-term development of
+the company. For companies like mosaic GmbH, corporate identity expenditures of approximately EUR
+125,000 are appropriate. When planning your marketing budget, also consider the decreasing marginal benefit
+of your corporate identity investments.
+￼
+￼
+Demand in Units
+Advertising Expenditure in TEUR
+￼
+￼
+300
+￼
+￼
+40.000
+
+Decision Areas
+11
+© TOPSIM
+3.1.4.3 Awareness
+In each period, the awareness index shows the general awareness of the company from the customer's point
+of view. The awareness of the company directly influences your market share on the market.
+The awareness of the company on the market is determined each period in the form of an index. Expenditure
+on CI is a major influencing factor here. In addition, advertising expenditure plays a significant role. While these
+have an impact on the company's awareness in a specific market, spending on CI has a positive influence on
+the company's awareness across markets (scatter effect). Note that awareness can decrease over time if
+spending on CI and advertising is significantly reduced. Likewise, you should check whether the sum of all
+expenditures is in relation to the expected revenues. Please note that awareness can decrease over time if
+you reduce expenses significantly.
+3.1.5 Distribution Policy
+The mosaic GmbH employs customer advisors who are responsible for the sales processing of the
+headphones as well as for the support in the online store. The sales chances increase with the number of your
+customer advisors, since an increased presence leads to faster processing times as well as to a more
+extensive support. So, it's not just the sheer number of customer advisors that matters, but also the rate of
+support. At the beginning, there are eight customer advisors for in total 40,000 headphones sold. Experts
+estimate that one additional customer advisor in period 0 could have increased sales by around 4.5%. The
+following relationship is an example of the relationship between the number of customer advisors and the sales
+to be achieved:
+(Note: This is an illustration and does not represent the actual function)
+Unlike communication activities, which build and establish awareness of your brand over the long term,
+customer advisor activities only lead to sales success in the current period. However, keep in mind that
+additional hires increase costs and that the number of customer advisors should be related to the expected
+sales volume. Conversely, a significantly higher sales volume means that more customer advisors are needed
+to maintain the quality of service.
+It should also be noted that ordering from an online store incurs transport costs for delivery. However, these
+￼
+￼
+Demand in Units
+Number of customer advisors
+￼
+￼
+40,000
+8
+￼
+
+Decision Areas
+12
+© TOPSIM
+are low due to long-term contracts, amounting to EUR 3 per headphone shipped.
+3.1.6 Additional Sales Opportunity: Bulk Buyer
+In addition to sales through your online store, there are also extra sales opportunities. From time to time,
+interested parties from your network approach you with purchase offers with a large demand quantity. In this
+form of sales, in which all companies can participate, the price and the maximum delivery quantity per company
+are set by the bulk buyer. As a result, no quantity or a smaller quantity to your regular customers can be
+offered. The delivery takes place in the decision period and has priority over the delivery to customers in the
+online store, because the sales are secured, and the sold quantity can be scheduled. All distribution costs are
+borne by the bulk buyer. As a rule, however, the contribution margins to be achieved are lower than when
+selling through your online store. Selling to a bulk buyer has no effect on the demand of interested parties in
+the online market.
+3.1.7 Insufficient Capacity of Supply
+Your products are supplied in the following order:
+1. Commitments to bulk buyers
+2. Supply to online store customers
+3. Supply to retail stores
+If you create demand (due to your marketing mix) that your company is unable to satisfy, you will lose these
+sales due to your insufficient supply capacity. Approximately 80% of the demand that you are unable to meet
+will then be distributed among the other companies in the simulation in proportion to their existing market
+shares.
+In the course of this redistribution, it may happen that one of the companies that is still able to supply during
+the first distribution also becomes unable to supply. In this case, the demand not satisfied by this company is
+not redistributed to the remaining companies. This may result in less than 80% of the unsatisfied demand being
+redistributed.
+3.1.8 Price Changes
+Price changes also have an impact on demand. Customers prefer constant or even falling prices. These
+indicate better long-term planning capability. The higher the index value, the more satisfied your customers
+are, which subsequently has a positive influence on your sales. If prices are raised very drastically, especially
+without a corresponding increase in your product quality, this will have a negative impact on your demand.
+3.2 Research & Development (R&D)
+General technological progress, increasing sensitivity for sustainability on the part of your customers as well
+as increasing competitive pressure force companies to continuously develop their products. For the further
+development of the headphones, mosaic GmbH can take the following measures:
+
+Decision Areas
+13
+© TOPSIM
+3.3 Purchasing
+To produce a headphone, one unit of "input material" must be used at the beginning. You can purchase the
+input materials for production from your supplier.
+Currently, you are taking advantage of the current procurement contract of your supplier, which provides for
+just-in-time delivery. Thus, as many input materials are supplied as your production needs.
+Pay attention to information of your specialist department during the simulation. Possibly, quantity scales could
+be requested in the long term. This means, the more units you purchase the more favorable the purchase
+price. Here, the firm borders of the graduations are to be considered, whereby only starting from reaching a
+certain purchase quantity, the more favorable price results. In return for his just-in-time service, your supplier
+insists on immediate payment of the invoice.
+The costs for storing input materials and finished products are EUR 3 and EUR 5 per unit, respectively.
+Currently you have no input materials due to just-in-time delivery, but 1,000 finished headphones in stock.
+The inventory values are accounted at manufacturing cost. Here is an extract from the inventory report at the
+end of period 0:
+Product Quality
+Decision
+Investing in the development of new levels of quality (e.g., improved sound
+experience, better feel, new design, longer battery life, greater range, and
+finer sound settings).
+Results Increase in product quality → maximum two levels per period
+Effect
+Positive impact on market share. The development of a new level improves
+the quality of the product.
+There are one-time research & development costs of EUR 100,000 per level
+to increase product quality. In addition, variable costs are incurred on the sale
+of each headphone depending on the level of product quality. These
+additional costs can be passed on directly to the customer.
+Level 1 2 3 4 5 6 7 8 9 10 11 12 13
+Var. Costs [€] 16 18 20 22 24 26 28 30 32 34 36 38 40
+
+Decision Areas
+14
+© TOPSIM
+3.4 Production & Human Resources
+3.4.1 Production Lines
+mosaic GmbH has four type A production lines in period 0. The following data apply to these plants:
+Production Line
+The machines have been in your plant for different periods of time. The machine purchased first has already
+been fully depreciated.
+Production equipment is depreciated on a straight-line basis. The following applies:
+Yearly Depreciation = Acquisition Value / Running Time
+Once production lines are depreciated, they may still be utilized for production purposes. Reasonably high
+utilization of your equipment is very important for profitability, as the costs for the equipment can then be
+allocated to more products.
+Finished Products
+Amount Storage Value
+Units EUR / Unit TEUR
+Initial Inventory 0 0,00 0,00
++ Delivery by supplier 41,000 94.91 3,891.50
+- Amount processed 40,000 94.91 3,796.59
+= Closing Inventory 1,000 94.91 94.91
+Acquisition
+Period
+Normal
+Capacity
+Acquisition
+Value
+Remaining
+Running
+Time
+Depreciation
+Net
+Book
+Value
+Other
+Fixed
+costs
+Residual
+Proceeds
+Units TEUR Periods TEUR / Period TEUR TEUR /
+Period
+% Net
+Value
+Type A Nr. 1 -9 12,000 1,250 0 125 0 200 25
+Type A Nr. 2 -4 12,000 1,250 5 125 625 40 25
+Type A Nr. 3 -2 12,000 1,250 7 125 875 40 25
+Type A Nr. 4 0 12,000 1,250 9 125 1,125 40 25
+Total 48,000 5,000 500 2,625 320
+
+Decision Areas
+15
+© TOPSIM
+3.4.2 Need of and Adjustment of Production Capacity
+To produce a headphone, you need a capacity unit of a production line. The available production capacity can
+be influenced by the following means:
+• Investments in new production lines
+• Disinvestments of old production lines
+You can only increase the capacity of manufacturing facilities by expanding (investing in new equipment), not
+by working overtime.
+3.4.2.1 Investment in New Production Lines
+New production equipment can be procured for the manufacture of headphones. The current performance
+data can be taken from the following list:
+Newly procured production equipment is immediately available in the period of the order.
+3.4.2.2 Disinvestment of Old Production Lines
+Production facilities can be sold (scrapped). A scrapped production plant is no longer available at the beginning
+of the period. Assets that are already fully depreciated are not automatically sold. To sell a specific asset, place
+a check mark in the Disinvestment checkbox. The corresponding production equipment will then be sold at an
+asset-specific percentage of the net book value.
+If you scrap machines, you will receive residual proceeds, which will flow to your company as a deposit in the
+financial report. However, the loss in value equal to the difference of the net book value minus the residual
+proceeds results in an "extraordinary impairment" in production equipment in cost element accounting.
+You cannot sell all the machines, i.e., at least one asset must remain in your inventory.
+Purchase Price Duration Normal
+Capacity Other Fixed Costs Residual Proceeds
+TEUR Periods Units TEUR / Period %
+Type A 1,250 10 12,000 40 25.0
+
+Decision Areas
+16
+© TOPSIM
+The two items are combined in cost accounting and included directly under "Depreciation".
+3.4.3 Operating Materials
+For each headphone you want to produce EUR 3 are incurred for operating materials (e.g., energy). The
+operating materials are procured automatically and are always available in the required amount.
+3.4.4 Headcount in the Initial Period
+The personnel situation of mosaic GmbH in period 0 is as follows:
+Cost Center Headcount Salary Without Non-
+salary Staff Cost
+Total Cost (Incl. Non-salary Staff
+Cost)*
+Purchasing 3 TEUR 35 TEUR 151.5
+Administration 2 TEUR 32 TEUR 83.2
+Production 23 TEUR 40 TEUR 1,241.0
+Sales 8 TEUR 38 TEUR 425.2
+TOTAL 36 TEUR 1,900.9
+*With permanently fixed ancillary personnel costs of 30%.
+The Administration cost center includes the personnel costs of human resources, finance and accounting, and
+general administrative services.
+3.4.5 Adjusting the Work Force
+In principle, the adjustment of the headcount takes place via the final headcount.
+As management, you can determine the final headcount for production employees and customer service
+representatives in the production and sales divisions. Hiring and firing is done automatically according to the
+desired headcount.
+Effects of a Divestment
+Cost-type Accounting
+Depreciation (residual book value) = Other expenses
+Residual proceeds (scrap proceeds) = Other income
+Financial Report
+Residual proceeds (scrap proceeds) = Proceeds from divestments
+
+Decision Areas
+17
+© TOPSIM
+The number of employees in the Purchasing and Administration cost centers depends on the company's sales.
+In case of sales fluctuations, the headcount is automatically adjusted by hiring and firing. Again, the ratio is not
+linear, so if your turnover doubles, you will not need twice as many employees.
+Cost Center Purchasing: Required Staff Based on Sales Revenue:
+Cost Center Administration: Required Staff Based on Sales Revenue:
+Each new hire and dismissal in a cost center incurs one-time costs of EUR 15,000 (hiring) and EUR 10,000
+(dismissal) at the beginning.
+3.4.6 Non-Salary Staff Costs
+Non-salary staff costs are a constant 30% of the respective salary totals of the cost centers, as this is in line
+with legal requirements such as employer's contribution to social security, paid holidays, etc.
+3.4.7 Productivity of Manufacturing Employees
+The regular productivity of a production employee is 2,000 headphones per period. This parameter results
+from the work processes in production as well as the setup times of the machines. The value of 2,000 units
+manufactured can therefore not be increased by training, process optimization or motivational measures. The
+production capacity of the staff can - in contrast to the production equipment - be increased by overtime.
+Overtime is automatically applied if the planned production quantity cannot be manufactured with the available
+2 2,5 3 3,5 4 4,5 5
+6
+7
+0
+2
+4
+6
+8
+10
+12
+14
+2 4 6 8 10 12 14 18 22
+Required Purchasing Staff
+Total Revenues [MEUR]
+1 1,5 2
+3
+4
+5,5
+7
+9,5
+12
+0
+2
+4
+6
+8
+10
+12
+14
+2 4 6 8 10 12 14 18 22
+Required Administration Staff
+Total Revenues [MEUR]
+
+Decision Areas
+18
+© TOPSIM
+number of people. The number of possible overtime hours is limited to a maximum of 20%. In the event of
+overtime, production employees are subject to an overtime surcharge of 25% on wages and salaries that
+accrue during the overtime period. The overtime surcharges are not shown separately in the staff report.
+3.5 Finance and Accounting
+3.5.1 Payment Behavior of Customers
+The following applies to all periods: 80% of the revenues in a period result in immediate payments, 20% of the
+revenues result in payments in the following period. This does not apply to large customers who settle the
+entire invoice in the current period.
+The payments still outstanding at the end of a period appear in the balance sheet under the asset item "Trade
+receivables".
+3.5.2 Loans
+To be able to ensure the liquidity of the company, you must decide about taking out loans. At the beginning of
+the simulation, the required liquidity is automatically ensured by taking out an overdraft. This is the credit line
+that your house bank automatically grants you. Until the decisions to take out a loan are activated, financing
+through the overdraft is not a disadvantage for you. The interest rates for the overdraft will increase only after
+you are able to control the liquidity independently (information on this can be found in the economic news).
+3.5.2.1 Short-term Loans
+In each period, a short-term loan (duration: 1 period) can be taken out as required. It bears interest in the
+current period and is automatically repaid in the following period.
+3.4.9.2 Overdraft Loans
+If the available liquidity in a period is not sufficient to cover all payment obligations, the company is
+automatically granted an overdraft loan (current account credit) to avoid insolvency. The cash balance must
+be at least EUR 10,000. Just enough is drawn down to reach this cash balance. Interest is due in the current
+period. The overdraft itself is automatically repaid in the following period.
+3.5.3 Taxes
+The company's tax burden is 35% on the result from ordinary activities. Any losses are carried forward and
+offset against the pre-tax profit generated until a positive balance remains, which must then be taxed. Tax is
+paid in the current period.
+3.5.4 Dividends
+mosaic GmbH does not distribute profits. The net profit generated for the period remains in the company
+(retained earnings) and is shown cumulatively as profit carried forward in the balance sheet.
+
+Decision Areas
+19
+© TOPSIM
+3.5.5 Success Value
+The performance value of mosaic GmbH is determined in each period. In addition to key financial figures for
+the current periods, long-term parameters are also used.
+The success value is made up of the following key figures (which, however, are included with different
+weighting):
+3.5.6 Business Report of the Industry
+As part of the reporting system, you will receive a free overview of the most important data from the income
+statement and the balance sheet of the competitor companies in each period.
+3.5.7 Accounting
+mosaic GmbH has a modern accounting system. In its design, care was taken to ensure that cross-
+comparisons within the industry are possible. The evaluations of the operational accounting system, consisting
+of cost type, cost center and cost unit accounting, form an important basis for the planning and monitoring of
+costs. The evaluations of financial accounting comply with legal requirements and show the financial situation
+of the company. With the help of contribution margin accounting, you can determine your operating result.
+Influencing Factor Change of Influencing Factor Impact on Success Value
+Total Revenue
+Return on Sales
+Net Profit
+Equity
+Debt Ratio
+Quality of Planning
+Awareness
+Product Quality
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+￼
+
+Decision Areas
+20
+© TOPSIM
+3.5.7.1 Depreciation for Buildings
+The depreciation amount per period for buildings is TEUR 30. This depreciation amount is allocated to the cost
+centers as follows:
+Purchasing Production Sales Administration
+10% 60% 20% 10%
+3.5.7.2 Costs in Administration
+Administrative wages and salaries are charged to the Administration cost center as overhead costs. These are
+allocated to the products in accordance with the proportion of sales
+
+21
+© TOPSIM
+Planning Model
+Planning Model
+The Planning model is a tool that is available only in certain simulations. This tool can be optionally selected
+by your instructor. The planning model lets participants simulate the results of the following period on the basis
+of certain assumptions (for example, assumed sales) for a certain price. Thereby, it helps participants to
+understand the complexity and connection of different decisions. Every calculation costs EUR 10,000 unless
+stated otherwise.
+This section explains the usage of this planning model within the TOPSIM - Cloud.
+1. First, save all your decisions prior to opening the planning model. Each decision category on the left -
+hand side includes information as to if and when the decisions have been saved.
+2. Then, open the planning model by clicking on the button on the right in the bottom.
+￼
+￼
+
+22
+© TOPSIM
+Planning Model
+3. Import: To import the decisions you made in the game to the planning model, click on "Import" and
+then on "Import Decisions". After confirming the import, the decisions are imported to scenario 1. By
+clicking on scenario 1, you can switch to a different scenario. Clicking on "Import", you can either
+import the decisions you made in the game or copy the decisions from a different scenario.
+4. Save Scenario: You can also make decisions in the planning model. After making your decision, you
+should save them.
+5. Simulate: Click "Simulate" afterwards. You will see a decision overview of your saved scenario. Click
+"Simulate" again and your assumptions will be simulated. Afterwards, the most important KPIs are
+shown.
+6. Reports: After closing the KPI-overview, you can open "Reports" on the left -hand side. Here, you can
+see the reports that have been calculated on the basis of your calculated scenario.
+7. This shows the period for which the scenario has been simulated.
+8. You can share calculated scenarios with your teammates. To do this, first click on "Share" and then on
+"Release". Your team mates now can import the decision of this scenario or view the calculated KPIs.
+By clicking on "Share" again, you can end the release.
+9. After clicking "Apply" you will see an overview of all simulated scenarios and their KPIs. To copy the
+decisions, you made in one of these scenarios, press "Team-Decision".
+￼
+
+23
+© TOPSIM
+Planning Model
+We wish you a lot of fun and good luck with our Business Simulation Management Essentials!
+￼
+

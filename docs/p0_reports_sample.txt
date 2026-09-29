@@ -1,0 +1,640 @@
+=== Report10_Cost Unit Accounting.pdf
+TNB09: Cost
+Period: 0
+Unit Accounting
+Management Essentials Management Essentials - Company 2
+Total (TEUR)
+Cost Center Allocation Total Superbass
++ Purchasing Direct Costs 1,558.00 1,558.00
++ Purchasing Overhead 204.50 204.50
++ Production Direct Costs 1,066.00 1,066.00
++ Production Overhead 1,063.00 1,063.00
+= Cost of Goods Manufactured 3,891.50 3,891.50
++/- Increase/Decrease in Finished
+Goods Inventory
+-94.91 -94.91
+= Cost of Goods Sold 3,796.59 3,796.59
++ R&D Direct Costs 640.00 640.00
++ R&D Overhead 0.00 0.00
++ Sales Direct Costs 420.00 420.00
++ Sales Overhead 536.20 536.20
++ Administration Direct Costs 0.00 0.00
++ Administration Overhead 186.20 186.20
+= Total Costs of Goods Sold 5,578.99 5,578.99
+Per Unit (EUR)
+Cost Center Allocation Superbass
++ Purchasing Direct Costs 38.00
++ Purchasing Overhead 4.99
++ Production Direct Costs 26.00
++ Production Overhead 25.93
+= Cost of Goods Manufactured (*) 94.91
+= Cost of Goods Sold (**) 94.91
++ R&D Direct Costs 16.00
++ R&D Overhead 0.00
++ Sales Direct Costs 10.50
++ Sales Overhead 13.41
++ Administration Direct Costs 0.00
++ Administration Overhead 4.66
+= Total Costs of Goods Sold (**) 139.47
+(*) The Cost of Goods Manufactured is set in
+proportion to the quantity produced.
+(**) The Cost of Sales is set in proportion to the
+quantity sold.
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report11_Contribution Margin.pdf
+TNB10: Contribution Margin Period: 0
+Management Essentials Management Essentials - Company 2
+Superbass - Contribution Margin Total (TEUR)
+Online-Market Bulk Buyer Requests for Bids Retail Market Special Market Total
+Sales Revenue 6,000.00 0.00 0.00 0.00 0.00 6,000.00
+- Direct Material
+Costs
+1,520.00 0.00 0.00 0.00 0.00 1,520.00
+- Direct Production
+Costs
+1,040.00 0.00 0.00 0.00 0.00 1,040.00
+- Transport Costs 120.00 0.00 0.00 0.00 0.00 120.00
+= Contribution
+Margin I
+3,320.00 0.00 0.00 0.00 0.00 3,320.00
+- Fixed Material
+Costs
+199.51 0.00 0.00 0.00 0.00 199.51
+- Fixed Production
+Costs
+1,037.07 0.00 0.00 0.00 0.00 1,037.07
+= Contribution
+Margin II
+2,083.41 0.00 0.00 0.00 0.00 2,083.41
+- Advertising
+Costs
+300.00 0.00 0.00 0.00 0.00 300.00
+= Contribution
+Margin III
+1,783.41 0.00 0.00 0.00 0.00 1,783.41
+- Development
+Costs
+640.00 0.00 0.00 0.00 0.00 640.00
+= Contribution
+Margin IV
+1,143.41 0.00 0.00 0.00 0.00 1,143.41
+- Research Costs 0.00
+- Sales Costs 536.20
+- Administration
+Costs
+186.20
+= Contribution
+Margin V
+421.01
+Superbass - Contribution Margin Accounting per Unit (EUR)
+- Page 1 Copyright (c) by Topsim GmbH
+
+TNB10: Contribution Margin Period: 0
+Management Essentials Management Essentials - Company 2
+Online-Market Bulk Buyer Requests for Bids Retail Market Special Market ø-Value
+Price 150.00 0.00 0.00 0.00 0.00 150.00
+- Direct Material
+Costs
+38.00 0.00 0.00 0.00 0.00 38.00
+- Direct Production
+Costs
+26.00 0.00 0.00 0.00 0.00 26.00
+- Transport Costs 3.00 0.00 0.00 0.00 0.00 3.00
+= Contribution
+Margin I
+83.00 0.00 0.00 0.00 0.00 83.00
+- Fixed Material
+Costs
+4.99 0.00 0.00 0.00 0.00 4.99
+- Fixed Production
+Costs
+25.93 0.00 0.00 0.00 0.00 25.93
+= Contribution
+Margin II
+52.09 0.00 0.00 0.00 0.00 52.09
+- Advertising
+Costs
+7.50 0.00 0.00 0.00 0.00 7.50
+= Contribution
+Margin III
+44.59 0.00 0.00 0.00 0.00 44.59
+- Development
+Costs
+16.00 0.00 0.00 0.00 0.00 16.00
+= Contribution
+Margin IV
+28.59 0.00 0.00 0.00 0.00 28.59
+- Research Costs 0.00
+- Sales Costs 13.41
+- Administration
+Costs
+4.66
+= Contribution
+Margin V
+10.53
+- Page 2 Copyright (c) by Topsim GmbH
+
+=== Report12_Profit and Loss Statement.pdf
+TNB11: Profit and
+Loss Statement
+Period: 0
+Management Essentials Management Essentials - Company 2
+Total Cost Accounting
+Sales Revenue 6,000.00 100.00
+TEUR % of Revenue
++ Increase/Decrease of the Stock of Finished
+Products
++ Other Income 0.00 0.00
+94.91 1.58
+- Material Expenses 1,558.00 25.97
+- Personnel Costs 1,900.90 31.68
+- Wages/Salaries 1,393.00
+- Hires/Dismissals 90.00
+- Other Staffing Costs 417.90
+- Depreciation 530.00 8.83
+- Other Expenses 1,685.00 28.08
+= Operating Income 421.01 7.02
+Cost of Sales Accounting
+TEUR
+Sales Revenue 6,000.00
++ Other Income 0.00
+- Cost of Goods Sold 3,796.59
+- R&D 640.00
+- Sales 956.20
+- Administration 186.20
+= Operating Income 421.01
+Net Income/Net Loss
+TEUR % of Revenue
+Operating Income 421.01 7.02
+- Financial Result -101.54 -1.69
++ Investment Income 0.00 0.00
+- Interests for Short- and Long-term Loans 30.00 0.50
+- Interests for Overdraft Loan 71.54 1.19
+= Earnings before Tax 319.48 5.32
+- Income Tax 111.82 1.86
+= Net Income/Net Loss 207.66 3.46
+Appropriation of Net Income
+- Page 1 Copyright (c) by Topsim GmbH
+
+TNB11: Profit and
+Loss Statement
+Period: 0
+Management Essentials Management Essentials - Company 2
+TEUR
+Income/Loss Carried Forward 0.00
++ Net Income/Net Loss 207.66
+= Income/Loss Carried Forward 207.66
+- Page 2 Copyright (c) by Topsim GmbH
+
+=== Report13_Cash Accounting.pdf
+TNB12: Cash Accounting Period: 0
+Management Essentials Management Essentials - Company 2
+TEUR
+Initial Cash Balance 10.00
+Cash Inflows
+TEUR
+Cash Inflows from Sales Current Period 4,800.00
+Cash Inflows from Sales Previous Period 1,265.00
+Interest Income 0.00
+Other Payments/Capital Increase 0.00
+Disinvestment of Production Lines 0.00
+Short-Term and Long-Term Loans 0.00
+Overdraft Loans 1,192.25
+Total Cash Inflows 7,257.25
+Cash Outflows
+TEUR
+Input/Operating Materials, Finished Products 1,558.00
+Purchase Previous Period 0.00
+Personnel Costs 1,900.90
+Other Expenses 1,685.00
+Short-Term & Overdraft Loan Repayment 650.00
+Interest Costs Short-Term & Long-Term Loans 30.00
+Purchase of Production Lines 1,250.00
+Charge-Off 0.00
+Income Tax 111.82
+Interest Payment for Overdraft Loans 71.54
+Total Cash Outflows 7,257.25
+TEUR
+Final Cash Balance 10.00
+Payment Conditions
+% in the Actual Period
+Customers Products (Cash Inflows) 80.0
+Supplier Input Materials Superbass (Cash Outflows) 100.0
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report15_Cash-Flow Statement.pdf
+TNB14: Cash-
+Flow Statement
+Period: 0
+Management Essentials Management Essentials - Company 2
+TEUR
+Net Income/Net Loss 207.66
++ Depreciation on Fixed Assets 530.00
+Traditional Cash-Flow 737.66
++ Increase(-) / Reduction(+) Inventories of Materials 0.00
++ Increase(-) / Reduction(+) Inventories of Finished Products -94.91
++ Increase(-) / Reduction(+) Inventories of Accounts Receivable 65.00
+A. Operating Cash-Flow 707.75
++ Investments in Production Lines -1,250.00
+B. Cash-Flow from Investment Activities -1,250.00
++ Capital Increases 0.00
++ Payment Dividends from Prev. Period 0.00
++ Increase(-) /Reduction(+) of Securities 0.00
++ Increase(+) / Reduction(-) of Bank Liabilities 542.25
+C. Cash-Flow from Financing Activities 542.25
+D. Change in Cash Position (A+B+C) 0.00
+Free Cash-Flow (A+B) -542.25
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report16_Balance Sheet.pdf
+TNB15: Balance Sheet Period: 0
+Management Essentials Management Essentials - Company 2
+Assets (TEUR) Liabilities (TEUR)
+Current Period Previous Period Current Period Previous Period
+Fixed Assets 3,045.00 2,325.00 Equity 2,407.66 2,200.00
+Property and
+Buildings
+420.00 450.00 Share Capital 700.00 700.00
+Machines and
+Production Facilities
+2,625.00 1,875.00 Capital Reserves 1,400.00 1,400.00
+Current Assets 1,304.91 1,275.00 Retained Earnings 100.00 100.00
+Input Materials 0.00 0.00 Profit/Loss carried
+0.00 0.00
+forward
+Finished Products 94.91 0.00 Net Income/Loss 207.66 0.00
+Trade Receivables 1,200.00 1,265.00 Liabilities 1,942.25 1,400.00
+Securities 0.00 0.00 Long-term Loans gt
+10 Periods
+750.00 750.00
+Cash Balance 10.00 10.00 Short-Term Loans lt 1
+Period
+0.00 0.00
+Overdraft Loans 1,192.25 650.00
+Balance Sheet Total 4,349.91 3,600.00 4,349.91 3,600.00
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report17_Business Report.pdf
+TNB16: Business
+Period: 0
+Report of the Industry
+Management Essentials Management Essentials - Company 2
+Cost of Sales Accounting (TEUR)
+C1 C2 C3 C4
+Sales Revenue 6,000.00 6,000.00 6,000.00 6,000.00
++ Other Income 0.00 0.00 0.00 0.00
+- Cost of Goods Sold 3,796.59 3,796.59 3,796.59 3,796.59
+- R&D 640.00 640.00 640.00 640.00
+- Sales 956.20 956.20 956.20 956.20
+- Administration 186.20 186.20 186.20 186.20
+= Operating Income 421.01 421.01 421.01 421.01
++ Financial Result -101.54 -101.54 -101.54 -101.54
+= Earnings before Tax 319.48 319.48 319.48 319.48
+- Income Tax 111.82 111.82 111.82 111.82
+= Net Income/Net Loss 207.66 207.66 207.66 207.66
+Balance Sheet (TEUR)
+C1 C2 C3 C4
+Assets
+Fixed Assets 3,045.00 3,045.00 3,045.00 3,045.00
+Property and Buildings 420.00 420.00 420.00 420.00
+Machines and Production
+Facilities
+2,625.00 2,625.00 2,625.00 2,625.00
+Current Assets 1,304.91 1,304.91 1,304.91 1,304.91
+Input Materials 0.00 0.00 0.00 0.00
+Finished Products 94.91 94.91 94.91 94.91
+Trade Receivables 1,200.00 1,200.00 1,200.00 1,200.00
+Securities 0.00 0.00 0.00 0.00
+Cash Balance 10.00 10.00 10.00 10.00
+Balance Sheet Total 4,349.91 4,349.91 4,349.91 4,349.91
+- Page 1 Copyright (c) by Topsim GmbH
+
+TNB16: Business
+Period: 0
+Report of the Industry
+Management Essentials Management Essentials - Company 2
+C1 C2 C3 C4
+Liabilities
+Equity 2,407.66 2,407.66 2,407.66 2,407.66
+Share Capital 700.00 700.00 700.00 700.00
+Capital Reserves 1,400.00 1,400.00 1,400.00 1,400.00
+Retained Earnings 100.00 100.00 100.00 100.00
+Profit/Loss carried forward 0.00 0.00 0.00 0.00
+Net Income/Loss 207.66 207.66 207.66 207.66
+Liabilities 1,942.25 1,942.25 1,942.25 1,942.25
+Long-term Loans gt 10
+Periods
+750.00 750.00 750.00 750.00
+Short-Term Loans lt 1
+Period
+0.00 0.00 0.00 0.00
+Overdraft Loans 1,192.25 1,192.25 1,192.25 1,192.25
+Balance Sheet Total 4,349.91 4,349.91 4,349.91 4,349.91
+- Page 2 Copyright (c) by Topsim GmbH
+
+=== Report1_Executive Summary.pdf
+TNB01: Executive Summary Period: 0
+Management Essentials Management Essentials - Company 2
+General
+Period 0
+Success Value Index 228.78
+Total Revenue TEUR 6,000.00
+Net Income/Net Loss TEUR 207.66
+Market
+Period 0
+Total Sales Superbass Units 40,000
+Total Revenue Superbass TEUR 6,000.00
+Superbass | Online-Market
+Period 0
+Actual Sales Units 40,000
+Planned Sales Units 40,000
+Revenue TEUR 6,000.00
+Market Share % 25.00
+Production
+Period 0
+Planned Production Quantity Superbass Units 41,000
+Actual Production Quantity Superbass Units 41,000
+Final Inventory Superbass Units 1,000
+Utilization of Staff % 89.13
+Utilization of Production Lines % 85.42
+Cost Structure
+Period 0
+Cost of Goods Manufactured Superbass EUR/per unit 94.91
+Total Costs of Goods Sold Superbass EUR/per unit 139.47
+Contribution Margin V Superbass EUR/per unit 10.53
+Performance Indicators
+- Page 1 Copyright (c) by Topsim GmbH
+
+TNB01: Executive Summary Period: 0
+Management Essentials Management Essentials - Company 2
+Period 0
+Operating Income TEUR 421.01
+Net Income/Net Loss TEUR 207.66
+Equity TEUR 2,407.66
+Return on Equity % 9.44
+Return on Sales % 3.46
+Success Value Index 228.78
+Finance
+Period 0
+Final Cash Balance TEUR 10.00
+Overdraft Loans TEUR 1,192.25
+Financial Result TEUR -101.54
+Debt Ratio % 44.65
+- Page 2 Copyright (c) by Topsim GmbH
+
+=== Report20_Decision Protocol.pdf
+TNB19: Decision Protocol Period: 0
+Management Essentials Management Essentials - Company 2
+Marketing Mix
+P 0
+Price Online-Market Superbass EUR 150
+Advertising Online-Market Superbass TEUR 300
+Account Manager Final Workforce Online-Market Number 8.0
+Access Online-Market Superbass Yes
+Product Development
+P 0
+Product Quality Level Superbass Increase +0
+Bulk Buyer
+P 0
+Bulk Buyer Superbass Units 0
+Purchase and Production
+P 0
+Production Volume Superbass Units 41,000
+Production Lines
+P 0
+Investment (No. of New Lines) Type A 1
+Disinvestment Line No.
+Human Resources
+P 0
+Production Staff Number 23.0
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report2_Market Research Report.pdf
+TNB02: Market
+Period: 0
+Research Report
+Management Essentials Management Essentials - Company 2
+Superbass - Online-Market
+C1 C2 C3 C4 ø-Value / Total
+Price EUR 150 150 150 150 150
+Deviation Price % 0.00 0.00 0.00 0.00
+Product Quality Level 1 1 1 1
+Advertising TEUR 300 300 300 300 300
+Account Manager Number 8.0 8.0 8.0 8.0 8.0
+Price Change % 0.00 0.00 0.00 0.00 0.00
+Awareness Index 35.00 35.00 35.00 35.00 35.00
+Potential Sales Units 40,000 40,000 40,000 40,000
+Actual Sales Units 40,000 40,000 40,000 40,000 160,000
+Not Covered
+Demand
+Units 0 0 0 0
+Revenue Market TEUR 6,000.00 6,000.00 6,000.00 6,000.00 24,000.00
+Market Share % 25.00 25.00 25.00 25.00
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report3_Production Report.pdf
+TNB03: Production Report Period: 0
+Management Essentials Management Essentials - Company 2
+Overview
+Superbass
+Planned Production Quantity Units 41,000
+Actual Production Quantity Units 41,000
+Utilization of Production Lines % 85.42
+Utilization of Staff % 89.13
+Production Lines
+Acquisition
+Period
+Acquisition
+Value
+Remaining
+Residual Time
+Depreciation Net Book Value Other Fixed
+Costs
+Residual
+Earnings
+TEUR Periods TEUR/Period TEUR TEUR/Period % from Book
+Value
+Type A Line Nr.
+-9 1,250.00 0 125.00 0.00 200.00 25.0
+1
+Type A Line Nr.
+-4 1,250.00 5 125.00 625.00 40.00 25.0
+2
+Type A Line Nr.
+-2 1,250.00 7 125.00 875.00 40.00 25.0
+3
+Type A Line Nr.
+0 1,250.00 9 125.00 1,125.00 40.00 25.0
+4
+Total 5,000.00 500.00 2,625.00 320.00
+Normal Capacity Maintenance
+Units TEUR Factor
+Type A Line Nr. 1 12,000 0.00 1.00
+Type A Line Nr. 2 12,000 0.00 1.00
+Type A Line Nr. 3 12,000 0.00 1.00
+Type A Line Nr. 4 12,000 0.00 1.00
+Total 48,000 0.00
+Utilization Production Lines
+Superbass
+Planned Production Quantity Units 41,000
+Capacity of the Production Lines Units 48,000
+Actual Production Quantity Units 41,000
+Production Line Capacity Needed per Finished
+Product
+Number per product 1.00
+Total Production Line Capacity Needed Units 41,000
+Utilization of Production Lines % 85.42
+Utilization of Staff
+- Page 1 Copyright (c) by Topsim GmbH
+
+TNB03: Production Report Period: 0
+Management Essentials Management Essentials - Company 2
+Superbass
+Available Staff (without Overtime) Number 23.0
+Available Staff (including Overtime) Number 27.6
+Production Capacity per Employee Units/Period 2,000
+Planned Production Quantity Units 41,000
+Actual Production Quantity Units 41,000
+Deployed Staff (including Overtime) Number 20.5
+Utilization of Staff % 89.13
+- Page 2 Copyright (c) by Topsim GmbH
+
+=== Report5_Research & Development.pdf
+TNB04: Research
+Period: 0
+& Development
+Management Essentials Management Essentials - Company 2
+Superbass
+Level Previous Period Level Current Period Fixed Costs TEUR Variable Cost EUR/
+unit
+Variable Costs TEUR
+Product Quality 1 1 0.00 16.00 640.00
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report6_Inventory.pdf
+TNB05: Inventory Period: 0
+Management Essentials Management Essentials - Company 2
+Overview Inventory
+Superbass
+Final Inventory Input Materials Units 0
+Final Inventory Finished Products Units 1,000
+Input Materials/Parts Superbass
+Quantity Inventory
+Units EUR/per unit TEUR
+Initial Inventory 0 0.00 0.00
++ Quantity from Supplier 0 38.00 0.00
++ Express Delivery 41,000 35.00 1,435.00
+- Quantity Used in Production 41,000 35.00 1,435.00
+= Final Inventory 0 35.00 0.00
+Finished Products Superbass
+Quantity Inventory
+Units EUR/per unit TEUR
+Initial Inventory 0 0.00 0.00
++ Quantity Produced 41,000 94.91 3,891.50
+- Quantity Distributed 40,000 94.91 3,796.59
+= Final Inventory 1,000 94.91 94.91
+Storage Cost
+All Products
+Input Materials/Parts Superbass TEUR 0.00
+Finished Products Superbass TEUR 5.00
+Total TEUR 5.00
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report7_Human Resources.pdf
+TNB06: Human Resources Period: 0
+Management Essentials Management Essentials - Company 2
+Workforce
+Purchasing Administration Production Account Manager Total
+Initial Workforce Number 2.0 2.0 20.0 6.0 30.0
++ Hires Number 1.0 0.0 3.0 2.0 6.0
+- Dismissals Number 0.0 0.0 0.0 0.0 0.0
+- Attrition Number 0.0 0.0 0.0 0.0 0.0
+= Final
+Workforce
+Number 3.0 2.0 23.0 8.0 36.0
+Staffing Costs
+Purchasing Administration Production Account Manager Total
+Wages/Salaries
+(*)
+TEUR 105.00 64.00 920.00 304.00 1,393.00
+Recruitment/
+Dismissals/
+Training
+TEUR 15.00 0.00 45.00 30.00 90.00
+Non-Salary Staff
+Costs (*)
+TEUR 31.50 19.20 276.00 91.20 417.90
+Total Staffing
+Costs
+TEUR 151.50 83.20 1,241.00 425.20 1,900.90
+(*) Without
+Overtime Costs
+Non-Salary Staff Costs in % of Salaries 30.00
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report8_Cost Type Accounting.pdf
+TNB07: Cost Type
+Period: 0
+Accounting (TEUR)
+Management Essentials Management Essentials - Company 2
+Total Overhead Direct Costs
+Superbass
+Material Costs
+Input Materials/Parts 1,435.00 0.00 1,435.00
+Factory Materials 123.00 0.00 123.00
+Staffing Costs
+Wages/Salaries (*) 1,393.00 573.00 820.00
+Recruitment/Dismissals/Training 90.00 90.00 0.00
+Non-Salary Staff Costs 417.90 171.90 246.00
+Depreciation
+Buildings 30.00 30.00 0.00
+Production Lines 500.00 500.00 0.00
+Finished Products 0.00 0.00 0.00
+Other Costs
+Other Fixed Costs 620.00 620.00 0.00
+Storage Costs 5.00 5.00 0.00
+Advertising/CI 300.00 0.00 300.00
+Other Costs R&D 640.00 0.00 640.00
+Transport Costs 120.00 0.00 120.00
+Total 5,673.90 1,989.90 3,684.00
+(*) with Overtime Costs
+- Page 1 Copyright (c) by Topsim GmbH
+
+=== Report9_Cost Center Accounting.pdf
+TNB08: Cost Center
+Period: 0
+Accounting (TEUR)
+Management Essentials Management Essentials - Company 2
+Total Purchasing Production R&D Sales Administration
+Material Costs
+Input Materials/
+Parts
+0.00 0.00 0.00 0.00 0.00 0.00
+Factory Materials 0.00 0.00 0.00 0.00 0.00 0.00
+Staffing Costs
+Wages/Salaries
+(*)
+573.00 105.00 100.00 0.00 304.00 64.00
+Recruitment/
+Dismissals/
+Training
+90.00 15.00 45.00 0.00 30.00 0.00
+Non-Salary Staff
+Costs
+171.90 31.50 30.00 0.00 91.20 19.20
+Depreciation
+Buildings 30.00 3.00 18.00 0.00 6.00 3.00
+Production Lines 500.00 0.00 500.00 0.00 0.00 0.00
+Finished Products 0.00 0.00 0.00 0.00 0.00 0.00
+Other Costs
+Other Fixed Costs 620.00 50.00 370.00 0.00 100.00 100.00
+Storage Costs 5.00 0.00 0.00 0.00 5.00 0.00
+Advertising/CI 0.00 0.00 0.00 0.00 0.00 0.00
+Other Costs R&D 0.00 0.00 0.00 0.00 0.00 0.00
+Transport Costs 0.00 0.00 0.00 0.00 0.00 0.00
+Total Costs 1,989.90 204.50 1,063.00 0.00 536.20 186.20
+(*) with Overtime
+Costs
+- Page 1 Copyright (c) by Topsim GmbH
+
