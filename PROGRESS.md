@@ -10,5 +10,6 @@
   (`Class Notes.md`, `Class Material/`) — read-only. Atlas ring.js label updated (atlas a96b30c).
 - 2026-09-29: Mobbin design pass done → docs/design-guide.md (55 cited refs, rules D1–D36, 5 open choices). 3 URLs spot-checked: resolve to claimed apps.
 - Design choices C1–C5 decided (sidebar, light, docked copilot, waterfall, retry-first quiz) → design-guide.md.
-- Next: CONTEXT.md; slice 1 = report import (PDF/paste/manual → JSON + vault note), TDD.
+- 2026-09-29: CONTEXT.md written (glossary: simulation world / accounting / market+ops / app terms; canonical words, Avoid-lists). Commit with design guide.
+- Next: slice 1 = report import (PDF/paste/manual → same parsed JSON shape + vault note), TDD.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.
