@@ -14,7 +14,7 @@ headphone "SuperBass", 1 period = 1 fiscal year). Course starts 2026-10-07; targ
   teaches the controlling concepts behind each number, not only the numbers. Coach mode is the default.
 - **Lecture link** (Henri 2026-09-29: "maybe it could be connected to the atlas app for lecture material and notes").
   Proposed mechanism: read the course's vault folder directly, READ-ONLY: `Class Notes.md` (where Atlas files
-  lectures) and the `Class Material/` companion notes. No code coupling to Atlas. Course folder: TBD by Henri.
+  lectures) and the `Class Material/` companion notes. No code coupling to Atlas. Course folder: `3rd Semester/Managerial Accounting and Controlling`.
 - **Design**: Mobbin as inspiration (Henri 2026-09-29). Before the first UI slice, a Mobbin research pass
   with app + screen citation per finding, distilled into a numbered design recipe.
 - **Report input**: Henri doesn't yet know if reports always come as PDFs. So import accepts PDF, pasted
@@ -56,5 +56,5 @@ headphone "SuperBass", 1 period = 1 fiscal year). Course starts 2026-10-07; targ
 - TOPSIM login or auto-submitting decisions. Multi-user/team sync. Hosted deployment.
 
 ## Open questions for Henri
-- Which vault course folder is TOPSIM's lecture: `3rd Semester/Accounting and Controlling` or `Planning and Controlling`?
+- ~~Which vault course folder is TOPSIM's lecture?~~ Resolved 2026-09-29: `3rd Semester/Managerial Accounting and Controlling` (folder renamed from "Accounting and Controlling" the same day).
 - Atlas side (later, optional): should Atlas also show TOPSIM concepts in its University Recall?
