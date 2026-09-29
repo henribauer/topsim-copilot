@@ -12,4 +12,9 @@
 - Design choices C1–C5 decided (sidebar, light, docked copilot, waterfall, retry-first quiz) → design-guide.md.
 - 2026-09-29: CONTEXT.md written (glossary: simulation world / accounting / market+ops / app terms; canonical words, Avoid-lists). Commit with design guide.
 - Next: slice 1 = report import (PDF/paste/manual → same parsed JSON shape + vault note), TDD.
+- 2026-09-29: Slice 1a done: scaffolded Vite+React+TS+Vitest; TNB10 Contribution Margin parser via TDD
+  (7 tests green, typecheck green): header, channel columns, single-line + wrapped-label rows, and the
+  real Period 0 Total table (all 16 steps incl. CM I–V; Margin V is Total-only). Commits bcce146, 7c5e9bd.
+  node_modules symlinked to ~/claude-local/topsim-copilot (entry added to link-local-deps.sh).
+  Next in slice 1: per-Unit table → paste UI with JSON preview → other reports → PDF extraction → vault note.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.
