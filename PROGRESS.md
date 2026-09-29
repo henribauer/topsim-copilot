@@ -8,5 +8,6 @@
 - 2026-09-29: Course is **Managerial Accounting and Controlling** (renamed from "Accounting and Controlling").
   Lecture folder: `Cowork OS/University/Universität/3rd Semester/Managerial Accounting and Controlling/`
   (`Class Notes.md`, `Class Material/`) — read-only. Atlas ring.js label updated (atlas a96b30c).
-- Next: Mobbin design pass → numbered design guide; CONTEXT.md; slice 1 = report import (PDF/paste/manual → JSON + vault note), TDD.
+- 2026-09-29: Mobbin design pass done → docs/design-guide.md (55 cited refs, rules D1–D36, 5 open choices). 3 URLs spot-checked: resolve to claimed apps.
+- Next: Henri answers open choices; CONTEXT.md; slice 1 = report import (PDF/paste/manual → JSON + vault note), TDD.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.
