@@ -138,7 +138,15 @@ Design research for a local, single-user desktop web app that supports Henri thr
 
 **8. App shell / navigation** — Left icon+label sidebar for the ~8 sections; top-right period switcher as a dropdown with named presets plus a full calendar for custom ranges (51, 52, 53). For finer period control (comparing two custom periods), a tabbed Fixed/Last/Since picker outperforms a single dropdown (55, 54).
 
-## Open choices for Henri
+## Decisions (Henri, 2026-09-29)
+
+- C1 Navigation: left sidebar (D1).
+- C2 Theme: light (D9).
+- C3 Copilot: collapsible right-hand panel, docked on every screen (D3).
+- C4 Contribution margin chart: waterfall (D14); no Sankey in v1.
+- C5 Quiz: Try again first, then See answer (D34).
+
+## Open choices for Henri (resolved above)
 
 1. **Sidebar vs. top nav** — every researched reference for an ~8-section dashboard app uses a left icon sidebar (51–54), none use a pure top nav at this density. Confirm sidebar is the right call before building it any other way.
 2. **Light vs. dark default** — nearly all finance/study references researched are light (Xero, Midday, Whop, Amplitude, Coursera); only the AI-assistant references (ChatGPT, Claude) commonly ship a dark mode. Should the whole app default light to match the finance-app tone, or should the copilot's own chat pane specifically support/default to dark?
