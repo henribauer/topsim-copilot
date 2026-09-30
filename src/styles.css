@@ -94,6 +94,8 @@ td { padding: 5px 8px; border-bottom: 1px solid #f0f1f3; white-space: nowrap; }
 th:last-child, td:last-child { font-weight: 700; border-left: 1px solid var(--border); }
 tr.margin td { font-weight: 700; background: #fafbfc; }
 tr.cost td:first-child { color: var(--muted); }
+tr.sub td { color: var(--muted); font-size: 12px; }
+tr.sub td:first-child { padding-left: 24px; }
 
 .error { background: var(--red-soft); border: 1px solid var(--red); color: var(--red); border-radius: 8px; padding: 10px 12px; margin-top: 12px; }
 .warning { background: var(--amber-soft); color: var(--amber); border-radius: 8px; padding: 8px 12px; margin-top: 14px; font-size: 13px; }

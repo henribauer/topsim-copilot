@@ -29,4 +29,12 @@
   (empty | ok | error), 3 TDD tests → 13 total green, typecheck clean. Verified in headless Chrome with
   the real P0 paste (32 rows, CM V = 421.01 / 10.53 in the aggregate column).
   Next: slice 1d = other report types (P&L, balance sheet, market research…).
+- 2026-09-30: Slice 1d.1 done: TNB11 Profit and Loss Statement parser (src/parser/profitAndLoss.ts):
+  wrapped 3-line header, 4 sections (Total Cost / Cost of Sales / Net Income / Appropriation, the last
+  continued on page 2), rows = sign + label + TEUR + % of revenue. Handles the PDF split of "+ Increase/
+  Decrease of the Stock of Finished Products" around "+ Other Income" (orphan label + later bare numbers)
+  and skips repeated page headers/footers. 4 tests; mutation check 4/4 caught. previewPaste now dispatches
+  on report code (kind "cm" | "pnl"; unknown → error naming supported reports). UI renders one table per
+  P&L section, breakdown rows indented. 18 tests green, typecheck clean; headless Chrome: 29 P&L rows,
+  CM still 32. Next: balance sheet (TNB12?), then the remaining report types.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

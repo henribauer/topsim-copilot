@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { previewPaste } from "./import/previewPaste";
-import type { CmStep, CmTable } from "./parser/contributionMargin";
+import type { CmStep, CmTable, ContributionMarginReport } from "./parser/contributionMargin";
+import type { PnlRow, ProfitAndLossReport } from "./parser/profitAndLoss";
 
 /** D1: the app's sections. Only Import exists so far; the rest are shown but disabled. */
 const SECTIONS = ["Import", "Dashboard", "Analysis", "Planner", "What-if", "Copilot", "Learn", "Glossary"];
@@ -33,7 +34,7 @@ export default function App() {
       <main className="page">
         <h1>Import reports</h1>
         <p className="muted">
-          Paste the text of a TOPSIM report. Supported so far: TNB10 Contribution Margin.
+          Paste the text of a TOPSIM report. Supported so far: TNB10 Contribution Margin, TNB11 Profit and Loss Statement.
         </p>
 
         <div className="card">
@@ -74,15 +75,7 @@ export default function App() {
                     <span>Period {preview.report.period}</span>
                     <span>{preview.report.company}</span>
                   </div>
-                  <CmTableView
-                    title={`Total (${preview.report.unit})`}
-                    table={{ unit: preview.report.unit, channels: preview.report.channels, steps: preview.report.steps }}
-                  />
-                  {preview.report.perUnit ? (
-                    <CmTableView title={`Per unit (${preview.report.perUnit.unit})`} table={preview.report.perUnit} />
-                  ) : (
-                    <div className="warning">Page 2 (per unit) was not in the paste.</div>
-                  )}
+                  {preview.kind === "cm" ? <CmReportView report={preview.report} /> : <PnlReportView report={preview.report} />}
                   <button className="link" onClick={() => setShowJson((v) => !v)}>
                     {showJson ? "Hide" : "Show"} JSON
                   </button>
@@ -95,6 +88,66 @@ export default function App() {
       </main>
     </div>
   );
+}
+
+function CmReportView({ report }: { report: ContributionMarginReport }) {
+  return (
+    <>
+      <CmTableView
+        title={`Total (${report.unit})`}
+        table={{ unit: report.unit, channels: report.channels, steps: report.steps }}
+      />
+      {report.perUnit ? (
+        <CmTableView title={`Per unit (${report.perUnit.unit})`} table={report.perUnit} />
+      ) : (
+        <div className="warning">Page 2 (per unit) was not in the paste.</div>
+      )}
+    </>
+  );
+}
+
+/** One table per P&L block. D6: amounts right-aligned, tabular figures. */
+function PnlReportView({ report }: { report: ProfitAndLossReport }) {
+  return (
+    <>
+      {report.sections.map((section) => {
+        const hasPercent = section.rows.some((r) => r.percentOfRevenue !== null);
+        return (
+          <div key={section.title}>
+            <h2>{section.title}</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th />
+                  <th className="num">TEUR</th>
+                  {hasPercent && <th className="num">% of Revenue</th>}
+                </tr>
+              </thead>
+              <tbody>
+                {section.rows.map((r, i) => (
+                  // In a block with a % column, rows without one are the breakdown of the line above
+                  // (Wages/Salaries, Hires/Dismissals, Other Staffing Costs under Personnel Costs).
+                  <tr key={i} className={pnlRowClass(r, hasPercent)}>
+                    <td>{r.sign === "=" ? "= " : r.sign === "-" ? "− " : r.sign === "+" ? "+ " : ""}{r.label}</td>
+                    <td className="num">{fmt.format(r.value)}</td>
+                    {hasPercent && (
+                      <td className="num">{r.percentOfRevenue === null ? "" : `${fmt.format(r.percentOfRevenue)} %`}</td>
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
+function pnlRowClass(r: PnlRow, hasPercent: boolean): string {
+  if (r.sign === "=") return "margin";
+  if (hasPercent && r.percentOfRevenue === null) return "sub";
+  return r.sign === "-" ? "cost" : "";
 }
 
 function CmTableView({ title, table }: { title: string; table: CmTable }) {
