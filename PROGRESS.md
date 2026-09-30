@@ -22,4 +22,11 @@
   mutation check (force both tables to page 1's rows) → 2 red, restored. Repo on GitHub (private):
   henribauer12-source/topsim-copilot, README added.
   Next: slice 1c = paste box in the browser → live JSON preview.
+- 2026-09-30: Slice 1c done: Import screen (src/App.tsx + src/styles.css). Sidebar (D1, other sections
+  disabled), Paste/PDF/Manual tabs (D24, only Paste live), textarea → live preview: meta chips, Total
+  and per-Unit tables (D6 right-aligned tabular figures, aggregate column bold), amber warning if page 2
+  missing (D12), red error with text (D11/D35), Show JSON toggle. Logic in src/import/previewPaste.ts
+  (empty | ok | error), 3 TDD tests → 13 total green, typecheck clean. Verified in headless Chrome with
+  the real P0 paste (32 rows, CM V = 421.01 / 10.53 in the aggregate column).
+  Next: slice 1d = other report types (P&L, balance sheet, market research…).
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.
