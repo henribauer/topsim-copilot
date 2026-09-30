@@ -8,6 +8,15 @@ export interface ContributionMarginReport {
   unit: CmUnit;
   channels: string[];
   steps: CmStep[];
+  /** Page 2: the same cascade per unit sold (EUR); null if the page is missing. */
+  perUnit: CmTable | null;
+}
+
+/** One table of the report: its unit, column headers and rows. */
+export interface CmTable {
+  unit: CmUnit;
+  channels: string[];
+  steps: CmStep[];
 }
 
 /** Column labels TOPSIM uses for the CM report, in their fixed order. */
@@ -51,18 +60,48 @@ export function parseContributionMargin(text: string): ContributionMarginReport 
   const companyLine = lines.find((l) => l.includes("- Company "));
   const company = companyLine?.split(" - ").pop() ?? "";
 
-  const unitLine = lines.find((l) => /Contribution Margin (Total|per Unit)/.test(l));
-  const unitMatch = unitLine ? /\((TEUR|EUR)\)/.exec(unitLine) : null;
+  // Table titles, e.g. "Superbass - Contribution Margin Total (TEUR)" and
+  // "... Accounting per Unit (EUR)" — in document order, one per table.
+  const units = lines
+    .filter(isTableTitle)
+    .map((l) => /\((TEUR|EUR)\)\s*$/.exec(l)![1] as CmUnit);
 
-  const channelLine = lines.find((l) => KNOWN_CHANNELS.some((c) => l.startsWith(c)));
-  if (!channelLine) throw new Error("Cannot find the channel header row");
+  const channelRows = lines
+    .map((l, i) => ({ l, i }))
+    .filter(({ l }) => KNOWN_CHANNELS.some((c) => l.startsWith(c)));
+  if (channelRows.length === 0) throw new Error("Cannot find the channel header row");
 
-  const channelIndex = lines.indexOf(channelLine);
+  const tables = channelRows.map(({ l, i }, n) => ({
+    unit: units[n] ?? (n === 0 ? "TEUR" : "EUR"),
+    channels: parseChannels(l),
+    steps: parseSteps(lines, i + 1),
+  }));
+  const [total, perUnit = null] = tables;
+
+  return {
+    reportCode: "TNB10",
+    title: headerMatch[1],
+    period: Number(headerMatch[2]),
+    company,
+    unit: total.unit,
+    channels: total.channels,
+    steps: total.steps,
+    perUnit,
+  };
+}
+
+function isTableTitle(line: string): boolean {
+  return line.includes("Contribution Margin") && /\((TEUR|EUR)\)\s*$/.test(line);
+}
+
+/** Reads rows from `start` until the next page header (TNB10: …) or end of text. */
+function parseSteps(lines: string[], start: number): CmStep[] {
   const steps: CmStep[] = [];
   let pendingLabel: string | null = null;
-  for (const line of lines.slice(channelIndex + 1)) {
+  for (const line of lines.slice(start)) {
     if (line.startsWith("===") || line.includes("Copyright (c)") || line === "") continue;
-    if (/^TNB\d+:/.test(line)) break; // next page's header → per-Unit table, later slice
+    if (isTableTitle(line)) continue;
+    if (/^TNB\d+:/.test(line)) break;
 
     const tokens = line.split(/\s+/);
     const values: string[] = [];
@@ -78,22 +117,13 @@ export function parseContributionMargin(text: string): ContributionMarginReport 
 
     const rawLabel = pendingLabel ? `${pendingLabel} ${tokens.join(" ")}` : tokens.join(" ");
     pendingLabel = null;
-    const label = rawLabel.trim().replace(/\s+/g, " ").replace(/^[-=]\s*/, "");
     const trimmed = rawLabel.trim();
+    const label = trimmed.replace(/\s+/g, " ").replace(/^[-=]\s*/, "");
     const kind: CmStep["kind"] =
       trimmed.startsWith("=") ? "margin" : trimmed.startsWith("-") ? "cost" : "revenue";
     steps.push({ kind, label, values: values.map(parseNumber) });
   }
-
-  return {
-    reportCode: "TNB10",
-    title: headerMatch[1],
-    period: Number(headerMatch[2]),
-    company,
-    unit: (unitMatch?.[1] as CmUnit) ?? "TEUR",
-    channels: parseChannels(channelLine),
-    steps,
-  };
+  return steps;
 }
 
 /** Greedily matches channel names in the header row; ends at Total / ø-Value. */

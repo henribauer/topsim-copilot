@@ -10,6 +10,14 @@ const REAL_SAMPLE = readFileSync(
   .split("=== Report11_Contribution Margin.pdf")[1]
   .split("Superbass - Contribution Margin Accounting per Unit")[0];
 
+/** The whole TNB10 report: Total table (page 1) + per-Unit table (page 2). */
+const FULL_REPORT = readFileSync(
+  resolve(import.meta.dirname, "../docs/p0_reports_sample.txt"),
+  "utf8",
+)
+  .split("=== Report11_Contribution Margin.pdf")[1]
+  .split("=== Report12_")[0];
+
 const SAMPLE = `=== Report11_Contribution Margin.pdf
 TNB10: Contribution Margin Period: 0
 Management Essentials Management Essentials - Company 2
@@ -91,5 +99,38 @@ describe("parseContributionMargin — real Period 0 report", () => {
     expect(marginI.values).toEqual([3320, 0, 0, 0, 0, 3320]);
     const marginV = report.steps.find((s) => s.label === "Contribution Margin V")!;
     expect(marginV.values).toEqual([421.01]);
+  });
+});
+
+describe("parseContributionMargin — per-Unit table (page 2)", () => {
+  it("reads unit, columns and the Price row of the per-Unit table", () => {
+    const report = parseContributionMargin(FULL_REPORT);
+    expect(report.perUnit).not.toBeNull();
+    const perUnit = report.perUnit!;
+    expect(perUnit.unit).toBe("EUR");
+    expect(perUnit.channels.at(-1)).toBe("ø-Value");
+    expect(perUnit.steps[0]).toEqual({
+      kind: "revenue",
+      label: "Price",
+      values: [150, 0, 0, 0, 0, 150],
+    });
+  });
+
+  it("parses the full per-Unit cascade, matching the Total table step for step", () => {
+    const report = parseContributionMargin(FULL_REPORT);
+    const perUnit = report.perUnit!;
+    // Same 16 steps, same order — only the first label differs (Price vs Sales Revenue).
+    expect(perUnit.steps.slice(1).map((s) => `${s.kind}:${s.label}`)).toEqual(
+      report.steps.slice(1).map((s) => `${s.kind}:${s.label}`),
+    );
+    const byLabel = (l: string) => perUnit.steps.find((s) => s.label === l)!.values;
+    expect(byLabel("Contribution Margin I")).toEqual([83, 0, 0, 0, 0, 83]);
+    expect(byLabel("Contribution Margin IV")).toEqual([28.59, 0, 0, 0, 0, 28.59]);
+    expect(byLabel("Sales Costs")).toEqual([13.41]);
+    expect(byLabel("Contribution Margin V")).toEqual([10.53]);
+  });
+
+  it("returns perUnit = null when only page 1 was pasted", () => {
+    expect(parseContributionMargin(SAMPLE).perUnit).toBeNull();
   });
 });

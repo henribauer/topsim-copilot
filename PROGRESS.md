@@ -17,4 +17,9 @@
   real Period 0 Total table (all 16 steps incl. CM I–V; Margin V is Total-only). Commits bcce146, 7c5e9bd.
   node_modules symlinked to ~/claude-local/topsim-copilot (entry added to link-local-deps.sh).
   Next in slice 1: per-Unit table → paste UI with JSON preview → other reports → PDF extraction → vault note.
+- 2026-09-30: Slice 1b done: per-Unit (EUR) table parsed into `report.perUnit` (null if page 2 missing).
+  Row loop extracted to `parseSteps`; one table per channel-header row. 10 tests green, typecheck clean;
+  mutation check (force both tables to page 1's rows) → 2 red, restored. Repo on GitHub (private):
+  henribauer12-source/topsim-copilot, README added.
+  Next: slice 1c = paste box in the browser → live JSON preview.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.
