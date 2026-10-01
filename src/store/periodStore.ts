@@ -1,6 +1,7 @@
 import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync, renameSync } from "node:fs";
 import { join } from "node:path";
 import { previewPaste } from "../import/previewPaste";
+import type { Correction } from "./corrections";
 
 /**
  * One period on disk: every imported report, keyed by report code. The raw pasted text is kept next to
@@ -18,6 +19,8 @@ export interface StoredReport {
   savedAt: string;
   raw: string;
   parsed: { reportCode: string; title: string; period: number; company: string };
+  /** Henri's fixes of misread values, applied on read (see corrections.ts); `raw` and `parsed` stay as imported. */
+  corrections?: Correction[];
 }
 
 export interface SaveResult {
@@ -39,11 +42,33 @@ export function saveReport(vaultDir: string, raw: string, now: Date = new Date()
     ? JSON.parse(readFileSync(jsonPath, "utf8"))
     : { period: parsed.period, company: parsed.company, reports: {} };
 
-  file.reports[parsed.reportCode] = { kind: preview.kind, savedAt: now.toISOString(), raw, parsed };
+  // A re-import must not wipe Henri's fixes; applyCorrections later flags any that no longer fit.
+  const corrections = file.reports[parsed.reportCode]?.corrections;
+  file.reports[parsed.reportCode] = { kind: preview.kind, savedAt: now.toISOString(), raw, parsed, ...(corrections && { corrections }) };
   writeAtomic(jsonPath, JSON.stringify(file, null, 2) + "\n");
   const notePath = join(vaultDir, `Period ${file.period}.md`);
   writeAtomic(notePath, periodNote(file));
   return { jsonPath, notePath, period: parsed.period, reportCode: parsed.reportCode };
+}
+
+/** Adds one fix to a saved report. */
+export function saveCorrection(vaultDir: string, period: number, reportCode: string, correction: Correction): void {
+  const jsonPath = join(vaultDir, "data", `period-${period}.json`);
+  const file: PeriodFile = JSON.parse(readFileSync(jsonPath, "utf8"));
+  const report = file.reports[reportCode];
+  // Fixing the same cell again replaces the earlier fix — one value, one fix, last one wins.
+  report.corrections = [...(report.corrections ?? []).filter((c) => c.path.join() !== correction.path.join()), correction];
+  writeAtomic(jsonPath, JSON.stringify(file, null, 2) + "\n");
+}
+
+/** Removes a cell's fix (undo). Unknown paths are fine — nothing to undo. */
+export function removeCorrection(vaultDir: string, period: number, reportCode: string, path: Correction["path"]): void {
+  const jsonPath = join(vaultDir, "data", `period-${period}.json`);
+  const file: PeriodFile = JSON.parse(readFileSync(jsonPath, "utf8"));
+  file.reports[reportCode].corrections = (file.reports[reportCode].corrections ?? []).filter(
+    (c) => c.path.join() !== path.join(),
+  );
+  writeAtomic(jsonPath, JSON.stringify(file, null, 2) + "\n");
 }
 
 /** Every saved period (data/period-<n>.json), oldest first; [] before the first save. */

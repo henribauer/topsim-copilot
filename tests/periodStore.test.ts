@@ -2,7 +2,7 @@ import { mkdtempSync, readFileSync, existsSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { loadPeriods, saveReport } from "../src/store/periodStore";
+import { loadPeriods, removeCorrection, saveCorrection, saveReport } from "../src/store/periodStore";
 import { p0Report } from "./fixtures";
 
 const CM = p0Report("=== Report11_Contribution Margin.pdf", "=== ");
@@ -74,5 +74,34 @@ describe("saveReport", () => {
     const dir = vault();
     expect(() => saveReport(dir, "hello", NOW)).toThrow(/No supported report header/);
     expect(existsSync(join(dir, "data"))).toBe(false);
+  });
+});
+
+describe("saveCorrection", () => {
+  const path = ["sections", 0, "rows", 0, "value"];
+  const fix = { path, from: 1, to: "2.00", at: "2026-10-01T11:00:00.000Z" };
+
+  it("stores a fix next to its report and keeps it when the same report is imported again", () => {
+    const dir = vault();
+    saveReport(dir, CM, NOW);
+    saveCorrection(dir, 0, "TNB10", fix);
+    saveReport(dir, CM, new Date("2026-10-02T08:00:00Z"));
+
+    const [p0] = loadPeriods(dir);
+    expect(p0.reports.TNB10.corrections).toEqual([fix]);
+    expect(p0.reports.TNB10.raw).toBe(CM);
+  });
+
+  it("replaces an earlier fix of the same cell, and undo removes only that cell's fix", () => {
+    const dir = vault();
+    saveReport(dir, CM, NOW);
+    const other = { ...fix, path: ["sections", 0, "rows", 1, "value"] };
+    saveCorrection(dir, 0, "TNB10", fix);
+    saveCorrection(dir, 0, "TNB10", other);
+    saveCorrection(dir, 0, "TNB10", { ...fix, to: "3.00" });
+    expect(loadPeriods(dir)[0].reports.TNB10.corrections).toEqual([other, { ...fix, to: "3.00" }]);
+
+    removeCorrection(dir, 0, "TNB10", path);
+    expect(loadPeriods(dir)[0].reports.TNB10.corrections).toEqual([other]);
   });
 });
