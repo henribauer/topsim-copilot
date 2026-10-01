@@ -1,0 +1,30 @@
+[
+  {
+    "app": "Duolingo",
+    "screen": "Quiz question – select the correct meaning",
+    "url": "https://mobbin.com/screens/d063716e-502e-45cc-9df9-1f8bd384b919",
+    "layout": "Hero is a single character illustration with a speech-bubble word, the prompt sits as a short line above it, and the answer options are one plain stacked list below, with the progress bar pinned full-width at the very top and skip/check actions anchored at the very bottom.",
+    "take": "Copy the one-image, one-question, one-option-list structure with all chrome (progress, actions) pushed to the screen edges so the center stays empty and glanceable."
+  },
+  {
+    "app": "The Leap",
+    "screen": "Quiz question with inline correct/incorrect marking",
+    "url": "https://mobbin.com/screens/fbf8c18d-c9bd-43b5-8968-83721a4d88b7",
+    "layout": "The question itself is the largest element at the top of a narrow card, three answer rows stack directly beneath it, and feedback is shown only as a colored border + check/cross icon on the selected and correct rows plus a one-line hint, with alphabet-style progress dashes above the card.",
+    "take": "Show right/wrong feedback by recoloring the existing option row instead of adding banners or separate feedback panels."
+  },
+  {
+    "app": "Uxcel",
+    "screen": "Glossary index with A-Z scrubber",
+    "url": "https://mobbin.com/screens/850c2bfa-b082-49f8-923c-6d26191f7684",
+    "layout": "A short title and one-line description sit above a single horizontal A-Z letter bar that doubles as navigation, with terms grouped under large letter headers and each row reduced to term name, one metadata line, and a single Follow button.",
+    "take": "Use one persistent horizontal letter scrubber as the only navigation and cap each glossary row to a term plus one line of detail and one action."
+  },
+  {
+    "app": "Selfridges",
+    "screen": "Alphabetical brand directory",
+    "url": "https://mobbin.com/screens/38cd2cf0-bb2d-44b1-b1b4-e2be830e7d74",
+    "layout": "The selected letter is highlighted in the top A-Z bar and repeated as a large section heading, with entries below laid out as plain multi-column text lists with no icons, images, or extra UI.",
+    "take": "Restate the active letter as a big heading for orientation, and strip entry rows down to text only so nothing competes for attention."
+  }
+]

@@ -158,3 +158,9 @@
   forecast table, "Type into TOPSIM" list, copilot hand-off; What-if: up to 3 scenarios side by side with
   green/red deltas against A. Still to calibrate with period 1 data: demand rules, overdraft rate. 227 tests,
   37 + 9 mutants caught (1 closed with a new test).
+- 2026-10-01: Redesign step 1 — app shell (design guide R2, C3). Research via `scripts/mobbin.sh` (claude CLI +
+  Mobbin connector, 6 topics x 4 screens in `docs/mobbin/`). `src/shell/nav.ts` (tested): sidebar in groups
+  Dashboard/Analysis | Plan: Planner, What-if | Learn: Quiz, Glossary | Data: Import. The copilot is no longer a page:
+  it is a docked right panel on every page (collapsed 44 px strip / open 400 px), stays mounted so the conversation
+  and draft survive page changes, and every "Ask the copilot" link opens it in place instead of leaving the page.
+  Page titles moved to a sticky top bar. 232 tests; browser-checked (groups, in-place ask, draft survives, 0 errors).

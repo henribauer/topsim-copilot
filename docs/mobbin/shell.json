@@ -1,0 +1,30 @@
+[
+  {
+    "app": "Google Ads",
+    "screen": "Campaigns Overview",
+    "url": "https://mobbin.com/screens/548c9239-651b-4a44-981f-a6bff4d02cd9",
+    "layout": "Hero is the center content area (campaign status cards and alerts) under a top bar with a custom date-range picker, flanked by a grouped collapsible sidebar (Campaigns, Tools, Billing, Admin) on the left and a collapsible AI chat-history panel on the right.",
+    "take": "Copy the single bold primary CTA plus one alert banner as the only focal points in the center column, keeping every other section collapsed or secondary."
+  },
+  {
+    "app": "Klaviyo",
+    "screen": "Home Dashboard",
+    "url": "https://mobbin.com/screens/164f1689-4f2b-45a5-8cfc-8a41a8b79ccc",
+    "layout": "Grouped left sidebar (Website, Social, Service, Analytics sections) supports a hero metrics row (Total/Attributed revenue) governed by a top conversion-metric and time-period dropdown, with a right-hand AI assistant panel already mid-conversation.",
+    "take": "Copy pairing one dropdown-controlled metric hero with a handful of large number tiles below it, so the date control changes one clear focal number instead of the whole page."
+  },
+  {
+    "app": "Quicken",
+    "screen": "Dashboard",
+    "url": "https://mobbin.com/screens/69a5f309-3a54-452d-8fd3-350e3ca7f948",
+    "layout": "Left sidebar groups accounts hierarchically (Banking, Investments, Assets, Liabilities) as secondary navigation, the hero is the Net Worth card with trend chart, and the right panel is a collapsible AI assistant surfacing one proactive insight.",
+    "take": "Copy showing only one AI insight card at a time with a clear verdict (bottom line) rather than a full chat transcript, so the panel stays skimmable."
+  },
+  {
+    "app": "Fibery",
+    "screen": "Home Workspace",
+    "url": "https://mobbin.com/screens/b055ccb8-1b35-45c5-94f2-fe466a7ec28d",
+    "layout": "Grouped, expandable left tree-sidebar (Workspace > Spaces > Databases) sits beside a calm hero welcome/search area, with a far-left collapsible AI panel kept nearly empty until invoked.",
+    "take": "Copy keeping the AI panel visually quiet (just a prompt input and placeholder) when idle, so it doesn't compete with the main content for attention."
+  }
+]

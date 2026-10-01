@@ -1,0 +1,30 @@
+[
+  {
+    "app": "Deel",
+    "screen": "Home / Payments tracker",
+    "url": "https://mobbin.com/screens/d784bbd9-d9ff-4f4b-be16-20eca82fb631",
+    "layout": "Hero is the large '$1.5M Payments due' figure at top-left, directly below it a red 'Action required: overdue invoices' alert strip with a Pay now button, and a separate 'For you today' card groups numbered to-do badges (data updates, approvals, submissions) to the right.",
+    "take": "Stack the alert strip immediately under the hero number so it reads as a direct consequence of it, and push every other to-do into one visually distinct side card instead of scattering badges across the page."
+  },
+  {
+    "app": "Quicken",
+    "screen": "Net Worth dashboard",
+    "url": "https://mobbin.com/screens/cadd5a30-924c-4326-a48e-0a3aaad69b9d",
+    "layout": "Hero is 'Your net worth $35,013.50' with a full-width trend chart above the fold; below it, Accounts (Assets/Debts) and a 'Debt to Asset Ratio' card with a colored 'Risky' alert badge sit side by side as grouped secondary panels.",
+    "take": "Give the hero its own full-width band with just the number and trend line, then demote every supporting metric into equal-weight cards below so the eye has one obvious starting point."
+  },
+  {
+    "app": "Mercury",
+    "screen": "Home / account overview",
+    "url": "https://mobbin.com/screens/b9df7157-bec7-4f64-a527-13a6346b67e4",
+    "layout": "Account balance and its chart lead at top, with Bill Pay and Invoicing grouped as two matched cards beneath showing only outstanding/overdue/due-soon counts, and a 'Money movement' timeline closing out the page.",
+    "take": "Use identical-shaped twin cards for paired KPIs (money owed vs. money due) so secondary data reads as one scannable row instead of a cluttered grid."
+  },
+  {
+    "app": "Copilot Money",
+    "screen": "Dashboard",
+    "url": "https://mobbin.com/screens/4e13cc80-a9e1-48b0-8882-c8857758acc5",
+    "layout": "Two equal hero-weight cards (Monthly spending left, Net worth right) sit at the top, with 'Transactions to review', 'Top categories', and 'Next two weeks' as clearly separated, single-purpose cards in a loose grid below.",
+    "take": "Cap each secondary card to one metric or one short list so none compete with the hero for attention, letting whitespace between cards do the grouping instead of borders or color."
+  }
+]

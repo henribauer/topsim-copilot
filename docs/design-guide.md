@@ -153,3 +153,16 @@ Design research for a local, single-user desktop web app that supports Henri thr
 3. **Copilot as a docked panel vs. a dedicated screen** — Gemini Notebook (33) keeps a 3-pane docked layout with chat always visible beside content; ChatGPT (32) treats the chat as the entire page. Does the copilot travel with every screen, or get its own tab in the sidebar?
 4. **Waterfall vs. cascade/Sankey style** — Zoho CRM's waterfall (16) suits "how contribution margin I becomes V"; Monarch's Sankey (17) suits "where did the money go." Pick one as the default contribution-margin visual, or use both depending on the question being asked.
 5. **Quiz correction style** — Coursera/Turo (44, 45) reveal correct/incorrect immediately with the explanation; Brilliant (46) offers a retry before revealing. Which fits the post-period quiz's learning goal better — immediate feedback, or a forced retry first?
+
+## Redesign research (2026-10-01, via `scripts/mobbin.sh`, the claude CLI + Mobbin connector)
+
+Goal (Henri): clearer, better organised, graspable at a glance, not overwhelming. Every screen below was returned by Mobbin; the full lists are in `docs/mobbin/*.json` (layout + take per screen). Rules R1-R6 extend D1-D36.
+
+- **R1 One hero per page.** Dashboard: one hero number, the alert strip directly under it, secondary cards demoted to equal weight (Deel, Quicken, Copilot Money: `docs/mobbin/dashboard.json`).
+- **R2 Group the sidebar, not the page.** Labelled groups (Plan / Learn / Data) instead of eight flat items; the assistant is a quiet docked panel (Google Ads, Klaviyo, Quicken, Fibery: `shell.json`). *Built in redesign step 1.*
+- **R3 Tabs instead of stacked cards.** Headline KPI row first, then tabs switch the topic below it (Vercel, Mintlify, Calendly, Squarespace: `analysis.json`).
+- **R4 Results above the controls.** Planner keeps the outcome numbers in view while sliders/fields change; inputs grouped under short section headers with reset (Claude calculator, Quicken, Churnkey, Origin: `planner.json`).
+- **R5 One question, one path.** Quiz: question large, options as plain rows, feedback by recolouring the row, chrome at the edges (Duolingo, The Leap); glossary: one A-Z bar, text-only rows (Uxcel, Selfridges: `learn.json`).
+- **R6 Shrink what is finished.** Import: near-empty canvas with one drop zone and a thin stepper; once data exists it becomes a slim status (Resend, Remote, Calendly, Workable: `import.json`).
+
+Redesign steps: 1 shell (R2, C3) done; 2 dashboard (R1); 3 analysis (R3); 4 planner + what-if (R4); 5 quiz, glossary, import (R5, R6); 6 shared polish.

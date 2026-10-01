@@ -1,0 +1,30 @@
+[
+  {
+    "app": "Quicken",
+    "screen": "Retirement Planner",
+    "url": "https://mobbin.com/screens/24a183c1-0cdd-4d50-8055-23198a426165",
+    "layout": "Left column groups all inputs into labeled sections (Current details, Contributions, Retirement info, Return & tax projection) with a Reset per group, while the full right side is one large chart showing high/expected/low projection bands.",
+    "take": "Group related sliders/fields under short section headers instead of one long list, so the single hero chart stays uncluttered and clearly the focus."
+  },
+  {
+    "app": "Churnkey",
+    "screen": "Churn volume pricing calculator",
+    "url": "https://mobbin.com/screens/fb3f5f54-8d6d-4fdc-99ad-69bde8a7a683",
+    "layout": "Two-panel card: left has one slider driving a single bold headline number plus a short 'Expected Results' list, right shows the resulting plan/price as a secondary confirmation panel.",
+    "take": "Limit the hero to one giant number tied directly to the slider, and push everything else (results list, plan card) to supporting, smaller text."
+  },
+  {
+    "app": "Claude",
+    "screen": "Compound interest calculator",
+    "url": "https://mobbin.com/screens/025626bb-da23-4aaa-b892-83a399b2bc19",
+    "layout": "Two key output stats pinned at top as the hero, three vertically stacked sliders directly below as secondary controls, and a live chart beneath that visualizes the same outputs.",
+    "take": "Put the outcome numbers above the sliders (not beside, in a separate zone) so the result is the first thing read, with controls and chart as clearly separated secondary tiers."
+  },
+  {
+    "app": "Origin",
+    "screen": "Forecast",
+    "url": "https://mobbin.com/screens/fe03490e-ff53-4f6f-a47d-8b4646482868",
+    "layout": "Hero is the single large net-worth projection line chart with one key stat callout, tabs above switch metric views, and a 'compare scenarios' plus plain-language summary sit as secondary panels below/beside.",
+    "take": "Use one dominant chart with a single callout stat as the hero, and demote scenario comparison and explanatory text to a collapsible secondary strip so the main view stays glanceable."
+  }
+]

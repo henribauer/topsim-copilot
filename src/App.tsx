@@ -6,6 +6,7 @@ import { Copilot } from "./Copilot";
 import { Glossary } from "./Glossary";
 import { Analysis } from "./Analysis";
 import { Learn } from "./Learn";
+import { NAV_GROUPS, pageTitle } from "./shell/nav";
 import { Planner, WhatIf } from "./Planner";
 import { EditableNum, type FixTarget } from "./Correctable";
 import type {
@@ -26,19 +27,6 @@ import type {
   CostUnitStep,
 } from "./parser/costAccounting";
 import type { SectionedReport } from "./parser/sectionedReport";
-
-/** D1: the app's sections. Import and Dashboard exist so far; the rest are shown but disabled. */
-const SECTIONS = [
-  "Import",
-  "Dashboard",
-  "Analysis",
-  "Planner",
-  "What-if",
-  "Copilot",
-  "Learn",
-  "Glossary",
-];
-const READY = ["Import", "Dashboard", "Analysis", "Copilot", "Learn", "Glossary", "Planner", "What-if"];
 
 /** D24: the three entry modes as tabs on one panel. Upload takes the TOPSIM ZIP or single PDFs. */
 const TABS = [
@@ -66,6 +54,13 @@ export default function App() {
   const [tab, setTab] = useState("pdf");
   // A question handed over from another page (e.g. the glossary); it only prefills the copilot's input.
   const [prefill, setPrefill] = useState<string | null>(null);
+  // C3: the copilot is a docked panel on every page. It stays mounted when hidden, so the conversation survives
+  // moving between pages; "Ask the copilot" on any page opens it in place instead of leaving the page.
+  const [copilotOpen, setCopilotOpen] = useState(false);
+  const ask = (q: string) => {
+    setPrefill(q);
+    setCopilotOpen(true);
+  };
   // A glossary term handed over from the quiz ("worth another look"): it opens the glossary searched for that term.
   const [glossaryQuery, setGlossaryQuery] = useState("");
   const preview = previewPaste(text);
@@ -98,69 +93,53 @@ export default function App() {
 
   return (
     <div className="shell">
-      <nav className="sidebar">
+      <nav className="sidebar" aria-label="Pages">
         <div className="brand">TOPSIM Copilot</div>
-        {SECTIONS.map((s) => (
-          <button
-            key={s}
-            className={s === section ? "nav active" : "nav"}
-            disabled={!READY.includes(s)}
-            onClick={() => setSection(s)}
-          >
-            {s}
-          </button>
+        {NAV_GROUPS.map((g) => (
+          <div key={g.label ?? "main"} className="nav-group">
+            {g.label && <div className="nav-label">{g.label}</div>}
+            {g.pages.map((p) => (
+              <button key={p} className={p === section ? "nav active" : "nav"} onClick={() => setSection(p)} aria-current={p === section ? "page" : undefined}>
+                {p}
+              </button>
+            ))}
+          </div>
         ))}
       </nav>
 
+      <div className="content">
+        <header className="topbar">
+          <h1>{pageTitle(section)}</h1>
+        </header>
       {section === "Dashboard" && (
         <main className="page">
-          <h1>Dashboard</h1>
           <Dashboard onImport={() => setSection("Import")} />
         </main>
       )}
       {section === "Analysis" && (
         <main className="page">
-          <h1>Analysis</h1>
           <Analysis
             onImport={() => setSection("Import")}
-            onAsk={(q) => {
-              setPrefill(q);
-              setSection("Copilot");
-            }}
+            onAsk={ask}
           />
-        </main>
-      )}
-      {section === "Copilot" && (
-        <main className="page page-chat">
-          <h1>Copilot</h1>
-          <Copilot prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
         </main>
       )}
       {section === "Planner" && (
         <main className="page wide">
-          <h1>Planner</h1>
           <Planner
-            onAsk={(q) => {
-              setPrefill(q);
-              setSection("Copilot");
-            }}
+            onAsk={ask}
           />
         </main>
       )}
       {section === "What-if" && (
         <main className="page wide">
-          <h1>What-if</h1>
           <WhatIf
-            onAsk={(q) => {
-              setPrefill(q);
-              setSection("Copilot");
-            }}
+            onAsk={ask}
           />
         </main>
       )}
-      {section === "Learn" && (
+      {section === "Quiz" && (
         <main className="page">
-          <h1>Learn</h1>
           <p className="muted">
             A short quiz after each period, built from your own numbers. Every answer shows the lecture's formula worked
             through with them.
@@ -171,16 +150,12 @@ export default function App() {
               setGlossaryQuery(term);
               setSection("Glossary");
             }}
-            onAsk={(q) => {
-              setPrefill(q);
-              setSection("Copilot");
-            }}
+            onAsk={ask}
           />
         </main>
       )}
       {section === "Glossary" && (
         <main className="page">
-          <h1>Glossary</h1>
           <p className="muted">
             The controlling terms behind your reports. Every entry names where it comes from: the TOPSIM handbook, the
             lecture script, or the report where you see the number.
@@ -188,16 +163,12 @@ export default function App() {
           <Glossary
             key={glossaryQuery}
             initialQuery={glossaryQuery}
-            onAsk={(q) => {
-              setPrefill(q);
-              setSection("Copilot");
-            }}
+            onAsk={ask}
           />
         </main>
       )}
       {section === "Import" && (
         <main className="page">
-          <h1>Import reports</h1>
           <p className="muted">
             Drop the ZIP from TOPSIM's "download all reports", or single report
             PDFs (TNB01–TNB12, TNB14–TNB16, TNB19). Each report's type and period
@@ -304,6 +275,16 @@ export default function App() {
           </div>
         </main>
       )}
+      </div>
+
+      <aside className={copilotOpen ? "dock open" : "dock"} aria-label="Copilot">
+        <button className="dock-toggle" onClick={() => setCopilotOpen(!copilotOpen)} aria-expanded={copilotOpen}>
+          {copilotOpen ? "Hide copilot ›" : "‹ Ask copilot"}
+        </button>
+        <div className="dock-body" hidden={!copilotOpen}>
+          <Copilot prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
+        </div>
+      </aside>
     </div>
   );
 }

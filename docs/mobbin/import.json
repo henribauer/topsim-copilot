@@ -1,0 +1,30 @@
+[
+  {
+    "app": "Resend",
+    "screen": "Adding contacts — Upload step",
+    "url": "https://mobbin.com/screens/8c9911e7-cb1e-438d-bd72-c28f152d6628",
+    "layout": "Hero is a single centered dropzone taking most of the frame, with a small horizontal 3-step numbered tracker (Upload, Map Columns, Review) pinned above it as the only secondary element.",
+    "take": "Copy the near-empty canvas: one dominant action area and a tiny unobtrusive stepper, with zero competing text or chrome."
+  },
+  {
+    "app": "Remote",
+    "screen": "Add expenses — CSV upload wizard",
+    "url": "https://mobbin.com/screens/8cdd65e9-4cae-44ed-af55-d1d693e29114",
+    "layout": "Hero is the uploaded-file confirmation card (icon, filename, size) directly under a short instructional headline; the 4-step tracker sits as a slim secondary bar at the very top, and a single primary Continue button anchors the bottom.",
+    "take": "Copy the vertical hierarchy — headline, one file-state card, one CTA — so the eye has exactly one path down the page instead of scanning a busy form."
+  },
+  {
+    "app": "Calendly",
+    "screen": "Import contacts from a file — Step 1",
+    "url": "https://mobbin.com/screens/2c3955d1-f994-4494-b0d9-4b672af38d93",
+    "layout": "A two-column modal groups the primary upload dropzone on the left against a secondary 'tips' panel on the right, with step progress reduced to a thin dot/segment bar in the header rather than a verbose labeled stepper.",
+    "take": "Copy demoting the stepper to a minimal progress bar once the wizard is mid-flow, freeing space to pair the action with just-in-time help instead of clutter."
+  },
+  {
+    "app": "Workable",
+    "screen": "Import employees from CSV — Upload CSV",
+    "url": "https://mobbin.com/screens/83f92da4-74ca-4ad8-8a0f-7d433c589d0d",
+    "layout": "A left-side vertical numbered stepper (4 steps, current one bold/black, rest greyed) sits beside a generous whitespace-heavy right panel holding only the file row, a checkbox, and one help callout.",
+    "take": "Copy the greyed-out future steps and bolded current step in a vertical rail — it reads progress at a glance without stealing focus from the single active task."
+  }
+]

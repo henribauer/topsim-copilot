@@ -1,0 +1,30 @@
+[
+  {
+    "app": "Vercel",
+    "screen": "Project Analytics overview",
+    "url": "https://mobbin.com/screens/172f9834-0e6a-4fa8-abd4-6e91b02b5ef4",
+    "layout": "Three metric tabs (Visitors, Page Views, Bounce Rate) double as the hero and chart selector sitting above a single line chart, with two secondary tabbed tables (Pages/Routes/Hostnames and Referrers/UTM) grouped side-by-side below.",
+    "take": "Let the KPI number itself be the tab that drives the chart above it, so switching metrics never adds a new UI element."
+  },
+  {
+    "app": "Mintlify",
+    "screen": "Analytics overview",
+    "url": "https://mobbin.com/screens/8f6b45d8-9665-4c24-8463-e44cb421d80c",
+    "layout": "Five flat KPI cards form the hero row, a single full-width area chart is the sole secondary visual, and two plain tables (Top pages, Referrals) sit at the bottom with no borders or shadows.",
+    "take": "Use one chart, not several, and render tables as plain two-column lists to keep the eye moving top-to-bottom without visual noise."
+  },
+  {
+    "app": "Calendly",
+    "screen": "Analytics – Events tab",
+    "url": "https://mobbin.com/screens/ece0c4c2-6fe3-41a8-9f3b-c04dda66f3e0",
+    "layout": "Page-level tabs (Events/Routing) sit above a labeled 'Event data' section of 4 KPI cards, followed by a labeled 'User data' section of smaller chart cards in a grid.",
+    "take": "Group KPI cards and charts under small section labels so the hierarchy (headline numbers first, supporting charts second) is legible without extra chrome."
+  },
+  {
+    "app": "Squarespace",
+    "screen": "Traffic dashboard",
+    "url": "https://mobbin.com/screens/84370f2e-90c1-4bf1-bf0d-98c92b8c2232",
+    "layout": "A tab bar (Traffic/Traffic Sources/Search Keywords/Geography) sits directly under the title, with 4 KPI cards inside a single bordered panel above one hero chart, and three small comparison charts anchoring the bottom row.",
+    "take": "Enclose the KPI row in one bordered card instead of four separate cards to visually bind the headline metrics into a single glanceable unit."
+  }
+]
