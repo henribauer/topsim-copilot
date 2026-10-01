@@ -319,3 +319,16 @@ td.strong { font-weight: 700; } td.neg { color: #c92a2a; }
 .hero-support { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 13px; }
 .hero-support strong { font-variant-numeric: tabular-nums; }
 .attn-row .link { margin-top: 0; }
+
+/* Analysis (redesign step 3, R3). Headline row, then a tab bar; one panel at a time. */
+.an-top { display: flex; align-items: center; min-height: 28px; }
+.an-period { margin: 0; font-size: 13px; }
+.headline-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.headline { display: flex; flex-direction: column; gap: 2px; padding: 14px 18px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.headline:hover { border-color: var(--accent); }
+.headline-value { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.15; margin-top: 4px; }
+.headline-value small { font-size: 13px; font-weight: 500; color: var(--muted); }
+.headline-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.an-tabs { padding: 0; }
+.an-tabs + .a-card, .an-tabs + .card { margin-top: -6px; }
+.be-line { margin: 10px 0 12px; font-size: 14px; line-height: 1.5; }

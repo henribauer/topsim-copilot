@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { breakEven, cmCascade, competitorTable, costPerUnit, periodChange } from "./analysis/analysis";
 import { explainBreakEven, explainCmStep, waterfall, type Bar } from "./analysis/explain";
+import { analysisHeadlines, analysisTabs, type TabId } from "./analysis/overview";
 import type { PeriodFile } from "./store/periodStore";
 
 const fmt = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const whole = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
 /**
- * Analysis (PRD Must 3 + 7). Design guide: a real floating-bar waterfall for the contribution-margin cascade with
+ * Analysis (PRD Must 3 + 7), redesigned in step 3 (R3; Mobbin: Vercel, Mintlify, Calendly, Squarespace): three headline
+ * numbers first, then a tab bar so only one topic is on screen at a time. Design guide: a real floating-bar waterfall for the contribution-margin cascade with
  * Increase/Decrease/Total legend and dashed connectors (D14, Zoho CRM ref 16); a variance table with direction
  * arrow, delta and green/red meaning (D15, D8, Xero ref 12). Every result has an "Explain" view with the formula
  * and this period's numbers (PRD Must 7). All numbers come from GET /api/periods, fixes included.
@@ -16,6 +18,7 @@ export function Analysis({ onAsk, onImport }: { onAsk: (q: string) => void; onIm
   const [periods, setPeriods] = useState<PeriodFile[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
+  const [tab, setTab] = useState<TabId>("cascade");
 
   useEffect(() => {
     fetch("/api/periods")
@@ -39,24 +42,62 @@ export function Analysis({ onAsk, onImport }: { onAsk: (q: string) => void; onIm
     );
   }
   const period = withCm.find((p) => p.period === selected) ?? withCm[withCm.length - 1];
+  const head = analysisHeadlines(period)!;
+  const tabs = analysisTabs(periods, period);
+  // A tab that disappears for another period (e.g. "Period vs period" for period 0) must not leave the page blank.
+  const current = tabs.find((t) => t.id === tab)?.id ?? tabs[0].id;
 
   return (
     <div className="analysis">
-      {withCm.length > 1 && (
-        <div className="period-pick" role="tablist" aria-label="Period">
-          {withCm.map((p) => (
-            <button key={p.period} role="tab" aria-selected={p.period === period.period}
-              className={p.period === period.period ? "tab active" : "tab"} onClick={() => setSelected(p.period)}>
-              Period {p.period}
-            </button>
-          ))}
-        </div>
-      )}
-      <CascadeCard period={period} onAsk={onAsk} />
-      <BreakEvenCard period={period} onAsk={onAsk} />
-      <CostCard period={period} />
-      <ChangeCard periods={periods} />
-      <CompetitorCard period={period} />
+      <div className="an-top">
+        {withCm.length > 1 ? (
+          <div className="period-pick" role="tablist" aria-label="Period">
+            {withCm.map((p) => (
+              <button key={p.period} role="tab" aria-selected={p.period === period.period}
+                className={p.period === period.period ? "tab active" : "tab"} onClick={() => setSelected(p.period)}>
+                Period {p.period}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <span className="muted an-period">Period {period.period}</span>
+        )}
+      </div>
+
+      {/* Calendly / Squarespace: the headline numbers bound together in one row above everything else. */}
+      <div className="headline-row">
+        <button className="card headline" onClick={() => setTab("cascade")} aria-label="Show the margin cascade">
+          <span className="kpi-label">{head.operatingResult.label} · {head.operatingResult.sublabel}</span>
+          <span className="headline-value">{fmt.format(head.operatingResult.value)} <small>{head.operatingResult.unit}</small></span>
+        </button>
+        {head.breakEven && (
+          <button className="card headline" onClick={() => setTab("breakeven")} aria-label="Show the break-even point">
+            <span className="kpi-label">Break-even point</span>
+            <span className="headline-value">{whole.format(head.breakEven.units)} <small>units</small></span>
+            <span className="headline-sub">{whole.format(head.breakEven.safetyUnits)} units beyond it · {fmt.format(head.breakEven.safetyPct)} % safety</span>
+          </button>
+        )}
+        {head.costPerUnit && (
+          <button className="card headline" onClick={() => setTab("cost")} aria-label="Show the cost per unit">
+            <span className="kpi-label">Cost per unit sold</span>
+            <span className="headline-value">{fmt.format(head.costPerUnit.value)} <small>{head.costPerUnit.unit}</small></span>
+          </button>
+        )}
+      </div>
+
+      <div className="tabs an-tabs" role="tablist" aria-label="Analysis topic">
+        {tabs.map((t) => (
+          <button key={t.id} role="tab" aria-selected={t.id === current} className={t.id === current ? "tab active" : "tab"} onClick={() => setTab(t.id)}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {current === "cascade" && <CascadeCard period={period} onAsk={onAsk} />}
+      {current === "breakeven" && <BreakEvenCard period={period} onAsk={onAsk} />}
+      {current === "cost" && <CostCard period={period} />}
+      {current === "change" && <ChangeCard periods={periods.filter((p) => p.period <= period.period)} />}
+      {current === "competitors" && <CompetitorCard period={period} />}
     </div>
   );
 }
@@ -156,10 +197,10 @@ function BreakEvenCard({ period, onAsk }: { period: PeriodFile; onAsk: (q: strin
   return (
     <section className="card a-card">
       <h2>Break-even point · Period {period.period}</h2>
-      <div className="be-numbers">
-        <div><span className="big">{whole.format(b.breakEvenUnits)}</span><span className="muted"> units to cover the fixed costs</span></div>
-        <div><span className="big">{whole.format(b.safetyUnits)}</span><span className="muted"> units sold beyond it ({fmt.format(b.safetyPct)} % margin of safety)</span></div>
-      </div>
+      <p className="be-line">
+        Fixed costs are covered after <strong>{whole.format(b.breakEvenUnits)}</strong> of the <strong>{whole.format(b.unitsSold)}</strong> units sold; the last{" "}
+        <strong>{whole.format(b.safetyUnits)}</strong> units are profit ({fmt.format(b.safetyPct)} % margin of safety).
+      </p>
       <div className="be-bar" aria-label={`Break-even at ${fmt.format(pctSold)} % of the ${whole.format(b.unitsSold)} units sold`}>
         <div className="be-cover" style={{ width: `${pctSold}%` }} />
       </div>

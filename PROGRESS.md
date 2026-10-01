@@ -171,3 +171,10 @@
   handbook section, only the latest period). UI: attention strip under the title with "Ask the copilot" per item
   (opens the dock in place), hero row with a 40 px lead number, 9 equal cards -> 3 + 3 + 3 grouped. 246 tests,
   13+3 mutants caught (2 survivors closed: break-even is not a loss; dead sort removed). Browser-checked, 0 errors.
+- 2026-10-01: Redesign step 3 — Analysis (R3; Mobbin: Vercel, Mintlify, Calendly, Squarespace in
+  docs/mobbin/analysis.json). `src/analysis/overview.ts` (tested): `analysisHeadlines` (operating result = CM V,
+  break-even + margin of safety, full cost per unit; what a period cannot answer is omitted, null without TNB10) and
+  `analysisTabs` (cascade, break-even, cost per unit, period-vs-period only when an earlier period exists,
+  competitors; tabs without data are dropped). UI: 3 clickable headline cards (each jumps to its tab), tab bar,
+  one panel at a time; break-even tab no longer repeats the headline numbers. Page height 1,803 px -> 900 px.
+  258 tests; 14 mutants caught (3 survivors closed with new tests). Browser-checked, 0 errors.
