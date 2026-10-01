@@ -17,6 +17,13 @@ const PNL_REPORT = readFileSync(
   .split("=== Report12_Profit and Loss Statement.pdf")[1]
   .split("=== Report13_")[0];
 
+const BS_REPORT = readFileSync(
+  resolve(import.meta.dirname, "../docs/p0_reports_sample.txt"),
+  "utf8",
+)
+  .split("=== Report16_Balance Sheet.pdf")[1]
+  .split("=== Report17_")[0];
+
 describe("previewPaste", () => {
   it("returns 'empty' for blank input, so the screen shows the hint instead of an error", () => {
     expect(previewPaste("   \n  ")).toEqual({ status: "empty" });
@@ -38,6 +45,13 @@ describe("previewPaste", () => {
     expect(result.report.sections[2].rows.at(-1)?.value).toBe(207.66);
   });
 
+  it("recognises a TNB15 paste and returns it as kind 'bs'", () => {
+    const result = previewPaste(BS_REPORT);
+    expect(result.status === "ok" && result.kind).toBe("bs");
+    if (result.status !== "ok" || result.kind !== "bs") return;
+    expect(result.report.total.assets.current).toBe(4349.91);
+  });
+
   it("returns 'error' naming the supported reports when no known header is found", () => {
     expect(previewPaste("Balance Sheet\nAssets 1,000.00")).toEqual({
       status: "error",
@@ -45,5 +59,6 @@ describe("previewPaste", () => {
     });
     expect(UNRECOGNISED_MESSAGE).toContain("TNB10");
     expect(UNRECOGNISED_MESSAGE).toContain("TNB11");
+    expect(UNRECOGNISED_MESSAGE).toContain("TNB15");
   });
 });

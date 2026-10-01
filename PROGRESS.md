@@ -36,5 +36,13 @@
   and skips repeated page headers/footers. 4 tests; mutation check 4/4 caught. previewPaste now dispatches
   on report code (kind "cm" | "pnl"; unknown → error naming supported reports). UI renders one table per
   P&L section, breakdown rows indented. 18 tests green, typecheck clean; headless Chrome: 29 P&L rows,
-  CM still 32. Next: balance sheet (TNB12?), then the remaining report types.
+  CM still 32. Next: balance sheet (turned out to be TNB15, file Report16), then the remaining report types.
+- 2026-10-01: Slice 1d.2 done — TNB15 Balance Sheet parser (`src/parser/balanceSheet.ts`). Shared header
+  reader extracted to `src/parser/header.ts` (P&L now uses it). The PDF prints both sides side by side, so
+  the text interleaves them and wraps labels around numbers ("Profit/Loss carried" 0.00 0.00 "forward");
+  parser tokenises the body into "label words + number pair" chunks and matches them against the fixed
+  19-row list (exact, ends-with, starts-with). Totals read from the "Balance Sheet Total" line (4 numbers).
+  Sample P0: assets 4,349.91 = equity+liabilities 4,349.91 (prev 3,600.00). Mutation check 6 mutants: 5
+  caught first; the page-header skip was dead code for a one-page report → removed. previewPaste `kind:"bs"`,
+  `BsReportView` (two sides, amber warning if totals differ), CSS: CM-only bold Total column. 23 tests.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { previewPaste } from "./import/previewPaste";
 import type { CmStep, CmTable, ContributionMarginReport } from "./parser/contributionMargin";
 import type { PnlRow, ProfitAndLossReport } from "./parser/profitAndLoss";
+import type { BalanceSheetReport, BsRow, PeriodPair } from "./parser/balanceSheet";
 
 /** D1: the app's sections. Only Import exists so far; the rest are shown but disabled. */
 const SECTIONS = ["Import", "Dashboard", "Analysis", "Planner", "What-if", "Copilot", "Learn", "Glossary"];
@@ -34,7 +35,7 @@ export default function App() {
       <main className="page">
         <h1>Import reports</h1>
         <p className="muted">
-          Paste the text of a TOPSIM report. Supported so far: TNB10 Contribution Margin, TNB11 Profit and Loss Statement.
+          Paste the text of a TOPSIM report. Supported so far: TNB10 Contribution Margin, TNB11 Profit and Loss Statement, TNB15 Balance Sheet.
         </p>
 
         <div className="card">
@@ -75,7 +76,9 @@ export default function App() {
                     <span>Period {preview.report.period}</span>
                     <span>{preview.report.company}</span>
                   </div>
-                  {preview.kind === "cm" ? <CmReportView report={preview.report} /> : <PnlReportView report={preview.report} />}
+                  {preview.kind === "cm" && <CmReportView report={preview.report} />}
+                  {preview.kind === "pnl" && <PnlReportView report={preview.report} />}
+                  {preview.kind === "bs" && <BsReportView report={preview.report} />}
                   <button className="link" onClick={() => setShowJson((v) => !v)}>
                     {showJson ? "Hide" : "Show"} JSON
                   </button>
@@ -144,6 +147,56 @@ function PnlReportView({ report }: { report: ProfitAndLossReport }) {
   );
 }
 
+/**
+ * The two sides next to each other, as TOPSIM prints them. D6: amounts right-aligned,
+ * tabular figures; group lines bold like margin rows; items indented like P&L sub-rows.
+ * D12 amber notice if the two totals differ (a parse or report problem, never normal).
+ */
+function BsReportView({ report }: { report: BalanceSheetReport }) {
+  const { assets, liabilities } = report.total;
+  const balanced = assets.current === liabilities.current && assets.previous === liabilities.previous;
+  return (
+    <>
+      <div className="bs-sides">
+        <BsSideView title="Assets (TEUR)" rows={report.assets} total={assets} />
+        <BsSideView title="Equity and Liabilities (TEUR)" rows={report.liabilities} total={liabilities} />
+      </div>
+      {!balanced && <div className="warning">The two sides do not balance — check the paste.</div>}
+    </>
+  );
+}
+
+function BsSideView({ title, rows, total }: { title: string; rows: BsRow[]; total: PeriodPair }) {
+  return (
+    <div>
+      <h2>{title}</h2>
+      <table>
+        <thead>
+          <tr>
+            <th />
+            <th className="num">Current</th>
+            <th className="num">Previous</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.label} className={r.group ? "margin" : "sub"}>
+              <td>{r.label}</td>
+              <td className="num">{fmt.format(r.current)}</td>
+              <td className="num">{fmt.format(r.previous)}</td>
+            </tr>
+          ))}
+          <tr className="margin total">
+            <td>Balance Sheet Total</td>
+            <td className="num">{fmt.format(total.current)}</td>
+            <td className="num">{fmt.format(total.previous)}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function pnlRowClass(r: PnlRow, hasPercent: boolean): string {
   if (r.sign === "=") return "margin";
   if (hasPercent && r.percentOfRevenue === null) return "sub";
@@ -155,7 +208,7 @@ function CmTableView({ title, table }: { title: string; table: CmTable }) {
   return (
     <>
       <h2>{title}</h2>
-      <table>
+      <table className="cm">
         <thead>
           <tr>
             <th />

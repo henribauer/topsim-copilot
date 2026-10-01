@@ -1,4 +1,5 @@
 import { parseNumber } from "./contributionMargin";
+import { readHeader } from "./header";
 
 export interface ProfitAndLossReport {
   reportCode: "TNB11";
@@ -40,26 +41,12 @@ const NUMBER_RE = /^-?[\d,]+\.\d+$/;
  */
 export function parseProfitAndLoss(text: string): ProfitAndLossReport {
   const lines = text.split("\n").map((l) => l.trim());
-
-  const start = lines.findIndex((l) => /^TNB11:/.test(l));
-  if (start === -1) throw new Error("Not a TNB11 Profit and Loss report: missing 'TNB11:' header");
-
-  // TOPSIM wraps the header: "TNB11: Profit and" / "Loss Statement" / "Period: 0".
-  let header = "";
-  for (const line of lines.slice(start, start + 4)) {
-    header = header ? `${header} ${line}` : line;
-    if (/Period:\s*\d+/.test(line)) break;
-  }
-  const m = /^TNB11:\s*(.+?)\s+Period:\s*(\d+)/.exec(header);
-  if (!m) throw new Error(`Cannot parse header: "${header}"`);
-
-  const companyLine = lines.find((l) => l.includes("- Company "));
-  const company = companyLine?.split(" - ").pop() ?? "";
+  const { title, period, company, start } = readHeader(lines, "TNB11", "Profit and Loss");
 
   return {
     reportCode: "TNB11",
-    title: m[1],
-    period: Number(m[2]),
+    title,
+    period,
     company,
     sections: parseSections(lines.slice(start)),
   };

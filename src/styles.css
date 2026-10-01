@@ -90,9 +90,14 @@ th { font-weight: 600; color: var(--muted); padding: 6px 8px; border-bottom: 1px
 th.num { max-width: 90px; }
 td { padding: 5px 8px; border-bottom: 1px solid #f0f1f3; white-space: nowrap; }
 .num { text-align: right; font-variant-numeric: tabular-nums; }
-/* The aggregate column (Total / ø-Value) is the one Henri reads first. */
-th:last-child, td:last-child { font-weight: 700; border-left: 1px solid var(--border); }
+/* The aggregate column (Total / ø-Value) is the one Henri reads first — CM tables only. */
+.cm th:last-child, .cm td:last-child { font-weight: 700; border-left: 1px solid var(--border); }
 tr.margin td { font-weight: 700; background: #fafbfc; }
+tr.total td { border-top: 2px solid var(--text); }
+.bs-sides { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+/* Two sides share the width, so long labels wrap instead of pushing numbers into the other side. */
+.bs-sides td:first-child { white-space: normal; }
+.bs-sides td.num, .bs-sides th.num { width: 1%; }
 tr.cost td:first-child { color: var(--muted); }
 tr.sub td { color: var(--muted); font-size: 12px; }
 tr.sub td:first-child { padding-left: 24px; }
