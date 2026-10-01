@@ -130,3 +130,22 @@ tr.sub td:first-child { padding-left: 24px; }
 /* Cost accounting grids: wide (up to 6 number columns), so labels may wrap like the balance sheet. */
 table.cost td:first-child { white-space: normal; }
 .footnotes { list-style: none; padding: 0; margin: 8px 0 0; font-size: 12px; }
+
+/* Upload tab — drop zone + file list (design guide §1 Import, refs 1, 2, 3). */
+.upload { padding: 16px; }
+.dropzone { display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1.5px dashed var(--border); border-radius: 10px; padding: 22px; cursor: pointer; background: var(--bg); text-align: center; }
+.dropzone .muted { margin: 0; font-size: 13px; }
+.dropzone:hover, .dropzone.dragging { border-color: var(--accent); background: var(--accent-soft); }
+.upload .summary { margin: 14px 0 0; }
+.split.files { border: 1px solid var(--border); border-radius: 10px; margin-top: 14px; min-height: 420px; }
+.filelist { list-style: none; margin: 0; padding: 6px; border-right: 1px solid var(--border); overflow-y: auto; max-height: 640px; }
+.file { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; border: 0; background: none; font: inherit; text-align: left; padding: 7px 10px; border-radius: 6px; cursor: pointer; }
+.file:hover { background: var(--bg); }
+.file.active { background: var(--accent-soft); }
+.file-title { font-size: 13px; font-weight: 500; }
+.file-meta { font-size: 12px; color: var(--muted); }
+.ok-text { color: #2b8a3e; }
+.err-text { color: var(--red); }
+.preview .source { margin: 12px 0 0; font-size: 12px; }
+.upload-actions { display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
+.upload-actions .saved { margin: 0; }

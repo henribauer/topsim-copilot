@@ -31,7 +31,9 @@ export function readHeader(lines: string[], code: string, reportName: string): R
   // Take the tail from the line after the period only when it completes the known report name.
   const wrapped = `${m[1]} ${lines[periodLine + 1] ?? ""}`;
   const cutShort = m[1] !== reportName && reportName.startsWith(m[1]);
-  const title = cutShort && wrapped.startsWith(reportName) ? reportName : m[1];
+  // PDF text order puts the tail before the period: "TNB07: Cost Type" / "Accounting (TEUR)" / "Period: 0".
+  const withUnit = m[1].startsWith(`${reportName} (`);
+  const title = withUnit || (cutShort && wrapped.startsWith(reportName)) ? reportName : m[1];
 
   const companyLine = lines.find((l) => l.includes("- Company "));
   return {

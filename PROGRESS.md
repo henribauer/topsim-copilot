@@ -87,4 +87,12 @@
   4/4 mutants caught. `loadPeriods` + GET /api/periods (raw text stripped). `src/Dashboard.tsx`: D13 3-col card
   grid, D5 label above numeral, D8 green/red delta, sparkline from 2 periods, empty state → Import. Dashboard is
   now the start section. Verified headless-Chrome screenshot with scratch vault P0+fake P1. 55 tests.
+- 2026-10-01: Slice 1g done — PDF + ZIP import. `src/import/pdfText.ts` (pdfjs-dist, rows rebuilt from glyph
+  positions, tab between columns): all 16 PDFs parse identically to the pasted text (P&L compared order-free:
+  the PDF prints Other Income before Stock Increase). `reportsZip.ts` reads TOPSIM's "download all reports" ZIP
+  (`Period n/<company>/Individual reports/ReportN_….pdf`, skips Collective report + __MACOSX). `importFiles.ts`:
+  any mix of ZIPs/PDFs → items oldest period first then code, duplicates (code+period) skipped with reason,
+  unreadable files last in drop order. `FileImport.tsx`: Upload tab is now the default (drop zone + file list +
+  ReportPreview, "Save N reports to vault" saves sequentially). Mutants caught incl. period ordering. E2E in
+  headless Chromium with real ~/Downloads/reports.zip → 16/16 saved to scratch vault, 0 console errors. 79 tests.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

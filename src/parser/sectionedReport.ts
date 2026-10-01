@@ -171,6 +171,11 @@ export function parseSectionedReport(text: string): SectionedReport {
       last.label += ` ${line}`;
       continue;
     }
+    // PDF text order puts the label end first: "Type A Line Nr." / "1" / "-9 1,250.00 …".
+    if (pending && layout.labelTail?.after.test(pending) && layout.labelTail.line.test(line)) {
+      pending += ` ${line}`;
+      continue;
+    }
     const row = layout.labelLines?.includes(line) ? null
       : layout.emptyRows?.includes(line) ? { label: line, values: [] } : readRow(line, pending, layout.labelPattern);
     if (!row) {

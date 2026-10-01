@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { previewPaste } from "./import/previewPaste";
+import { previewPaste, type PastePreview } from "./import/previewPaste";
+import { FileImport } from "./FileImport";
 import { Dashboard } from "./Dashboard";
 import type {
   CmStep,
@@ -34,10 +35,10 @@ const SECTIONS = [
 ];
 const READY = ["Import", "Dashboard"];
 
-/** D24: the three entry modes as tabs on one panel. Only Paste is built (slice 1c). */
+/** D24: the three entry modes as tabs on one panel. Upload takes the TOPSIM ZIP or single PDFs. */
 const TABS = [
+  { id: "pdf", label: "Upload PDF or ZIP", ready: true },
   { id: "paste", label: "Paste text", ready: true },
-  { id: "pdf", label: "Upload PDF", ready: false },
   { id: "manual", label: "Manual entry", ready: false },
 ];
 
@@ -55,6 +56,7 @@ export default function App() {
   const [text, setText] = useState("");
   const [showJson, setShowJson] = useState(false);
   const [save, setSave] = useState<SaveState>({ status: "idle" });
+  const [tab, setTab] = useState("pdf");
   const preview = previewPaste(text);
 
   async function saveToVault() {
@@ -108,8 +110,9 @@ export default function App() {
         <main className="page">
           <h1>Import reports</h1>
           <p className="muted">
-            Paste the text of any TOPSIM report (TNB01–TNB12, TNB14–TNB16,
-            TNB19). The report type is detected from its header.
+            Drop the ZIP from TOPSIM's "download all reports", or single report
+            PDFs (TNB01–TNB12, TNB14–TNB16, TNB19). Each report's type and period
+            are read from its header.
           </p>
 
           <div className="card">
@@ -117,8 +120,9 @@ export default function App() {
               {TABS.map((t) => (
                 <button
                   key={t.id}
-                  className={t.id === "paste" ? "tab active" : "tab"}
+                  className={t.id === tab ? "tab active" : "tab"}
                   disabled={!t.ready}
+                  onClick={() => setTab(t.id)}
                 >
                   {t.label}
                   {!t.ready && <span className="soon">soon</span>}
@@ -126,6 +130,8 @@ export default function App() {
               ))}
             </div>
 
+            {tab === "pdf" && <FileImport />}
+            {tab === "paste" && (
             <div className="split">
               <textarea
                 aria-label="Report text"
@@ -154,33 +160,7 @@ export default function App() {
 
                 {preview.status === "ok" && (
                   <>
-                    <div className="meta">
-                      <span>{preview.report.reportCode}</span>
-                      <span>{preview.report.title}</span>
-                      <span>Period {preview.report.period}</span>
-                      <span>{preview.report.company}</span>
-                    </div>
-                    {preview.kind === "cm" && (
-                      <CmReportView report={preview.report} />
-                    )}
-                    {preview.kind === "pnl" && (
-                      <PnlReportView report={preview.report} />
-                    )}
-                    {preview.kind === "bs" && (
-                      <BsReportView report={preview.report} />
-                    )}
-                    {preview.kind === "costType" && (
-                      <CostTypeView report={preview.report} />
-                    )}
-                    {preview.kind === "costCenter" && (
-                      <CostCenterView report={preview.report} />
-                    )}
-                    {preview.kind === "costUnit" && (
-                      <CostUnitView report={preview.report} />
-                    )}
-                    {preview.kind === "sectioned" && (
-                      <SectionedReportView report={preview.report} />
-                    )}
+                    <ReportPreview preview={preview} />
                     {/* D23: the result sits right above the primary action. D11: errors as red banner with text. */}
                     {save.status === "error" && (
                       <div className="error" role="alert">
@@ -223,10 +203,46 @@ export default function App() {
                 )}
               </section>
             </div>
+            )}
           </div>
         </main>
       )}
     </div>
+  );
+}
+
+/** Header chips plus the report's own view; used by the Paste tab and the file list. */
+export function ReportPreview({ preview }: { preview: Extract<PastePreview, { status: "ok" }> }) {
+  return (
+    <>
+      <div className="meta">
+        <span>{preview.report.reportCode}</span>
+        <span>{preview.report.title}</span>
+        <span>Period {preview.report.period}</span>
+        <span>{preview.report.company}</span>
+      </div>
+      {preview.kind === "cm" && (
+        <CmReportView report={preview.report} />
+      )}
+      {preview.kind === "pnl" && (
+        <PnlReportView report={preview.report} />
+      )}
+      {preview.kind === "bs" && (
+        <BsReportView report={preview.report} />
+      )}
+      {preview.kind === "costType" && (
+        <CostTypeView report={preview.report} />
+      )}
+      {preview.kind === "costCenter" && (
+        <CostCenterView report={preview.report} />
+      )}
+      {preview.kind === "costUnit" && (
+        <CostUnitView report={preview.report} />
+      )}
+      {preview.kind === "sectioned" && (
+        <SectionedReportView report={preview.report} />
+      )}
+    </>
   );
 }
 
