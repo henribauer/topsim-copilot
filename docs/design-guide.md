@@ -166,3 +166,7 @@ Goal (Henri): clearer, better organised, graspable at a glance, not overwhelming
 - **R6 Shrink what is finished.** Import: near-empty canvas with one drop zone and a thin stepper; once data exists it becomes a slim status (Resend, Remote, Calendly, Workable: `import.json`).
 
 Redesign steps: 1 shell (R2, C3) done; 2 dashboard (R1); 3 analysis (R3); 4 planner + what-if (R4); 5 quiz, glossary, import (R5, R6); 6 shared polish.
+
+- **R7 One type scale, one card padding.** Seven sizes (12, 13, 14, 16, 22, 28, 40 px), nothing below 12 px, one card padding (`--card-pad`), one muted grey. `tests/designTokens.test.ts` fails when a new rule breaks it. *Built in redesign step 6.*
+
+Redesign status (2026-10-01): steps 1-6 done. Page heights at 1440x900: Dashboard, Analysis, Planner, Quiz, Glossary and Import fit one screen (900 px); What-if is 1,301 px because it holds two scenario forms. Before: Analysis 1,803 px, Glossary 7,414 px.

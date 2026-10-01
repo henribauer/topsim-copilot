@@ -195,3 +195,6 @@
   option row, actions at the bottom edge; glossary = search + A-Z strip + big letter heading + text-only rows that
   expand (7,414 px -> 900 px); import = three-step rail, "Add more files" fold once files are in, "All saved" banner,
   Save bar pinned to the viewport bottom, unready "Manual entry" tab hidden, one-line page intros. 287 tests.
+- 2026-10-01: Redesign step 6 — shared polish (R7). Audit from computed styles: 13 font sizes (10-40 px) and 4 card
+  paddings across 7 pages. Now 7 sizes (12, 13, 14, 16, 22, 28, 40), nothing under 12 px, `--card-pad` for every card,
+  one muted grey. `tests/designTokens.test.ts` guards it (4 tests, 8 mutants caught). 291 tests. Redesign complete.
