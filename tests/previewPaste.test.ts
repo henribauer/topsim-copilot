@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { previewPaste, UNRECOGNISED_MESSAGE } from "../src/import/previewPaste";
+import { p0Report } from "./fixtures";
 
 const FULL_REPORT = readFileSync(
   resolve(import.meta.dirname, "../docs/p0_reports_sample.txt"),
@@ -50,6 +51,19 @@ describe("previewPaste", () => {
     expect(result.status === "ok" && result.kind).toBe("bs");
     if (result.status !== "ok" || result.kind !== "bs") return;
     expect(result.report.total.assets.current).toBe(4349.91);
+  });
+
+  it("recognises the three cost accounting reports (TNB07 type, TNB08 center, TNB09 unit)", () => {
+    const kinds = [
+      p0Report("=== Report8_Cost Type Accounting.pdf", "=== Report9_"),
+      p0Report("=== Report9_Cost Center Accounting.pdf", "=== Report10_"),
+      p0Report("=== Report10_Cost Unit Accounting.pdf", "=== Report11_"),
+    ].map((text) => {
+      const r = previewPaste(text);
+      return r.status === "ok" ? [r.kind, r.report.reportCode] : [r.status];
+    });
+    expect(kinds).toEqual([["costType", "TNB07"], ["costCenter", "TNB08"], ["costUnit", "TNB09"]]);
+    expect(UNRECOGNISED_MESSAGE).toContain("TNB07 Cost Type Accounting, TNB08 Cost Center Accounting, TNB09 Cost Unit Accounting");
   });
 
   it("returns 'error' naming the supported reports when no known header is found", () => {

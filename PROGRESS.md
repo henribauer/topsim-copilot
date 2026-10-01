@@ -45,4 +45,15 @@
   Sample P0: assets 4,349.91 = equity+liabilities 4,349.91 (prev 3,600.00). Mutation check 6 mutants: 5
   caught first; the page-header skip was dead code for a one-page report → removed. previewPaste `kind:"bs"`,
   `BsReportView` (two sides, amber warning if totals differ), CSS: CM-only bold Total column. 23 tests.
+- 2026-10-01: Slice 1d.3 done — cost accounting, one module `src/parser/costAccounting.ts`: TNB07 Cost Type
+  (Report8), TNB08 Cost Center (Report9), TNB09 Cost Unit (Report10). TNB07/08 share `readCostGrid` (4 groups,
+  labels wrapped over up to 3 lines with numbers on their own line, "/"-joins without space, "(*)" footnote
+  kept as `note`, "Total"/"Total Costs" line separate). TNB08 cost centers read from the column header line.
+  TNB09 `readSteps` (+ / = / +/- signs, TEUR block with Total+product, EUR per-unit block, "(*)"/"(**)" notes).
+  `readHeader` now rejoins titles cut before the Period line ("TNB07: Cost Type" / "Period: 0" / "Accounting")
+  only when the read title is a strict prefix of the expected name. Sample P0: costs 5,673.90 = overhead
+  1,989.90 + direct 3,684.00; overhead to Purchasing 204.50, Production 1,063.00, R&D 0, Sales 536.20,
+  Admin 186.20; full cost 5,578.99 TEUR = 139.47 EUR/unit. Mutation check 11/11 caught. previewPaste kinds
+  `costType`/`costCenter`/`costUnit`, views `CostGridView` + `CostStepsView` + `Footnotes`. Shared fixture
+  helper `tests/fixtures.ts` `p0Report()`. 30 tests.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

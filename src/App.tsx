@@ -3,6 +3,7 @@ import { previewPaste } from "./import/previewPaste";
 import type { CmStep, CmTable, ContributionMarginReport } from "./parser/contributionMargin";
 import type { PnlRow, ProfitAndLossReport } from "./parser/profitAndLoss";
 import type { BalanceSheetReport, BsRow, PeriodPair } from "./parser/balanceSheet";
+import type { CostCenterReport, CostGroup, CostTypeReport, CostUnitReport, CostUnitStep } from "./parser/costAccounting";
 
 /** D1: the app's sections. Only Import exists so far; the rest are shown but disabled. */
 const SECTIONS = ["Import", "Dashboard", "Analysis", "Planner", "What-if", "Copilot", "Learn", "Glossary"];
@@ -35,7 +36,7 @@ export default function App() {
       <main className="page">
         <h1>Import reports</h1>
         <p className="muted">
-          Paste the text of a TOPSIM report. Supported so far: TNB10 Contribution Margin, TNB11 Profit and Loss Statement, TNB15 Balance Sheet.
+          Paste the text of a TOPSIM report. Supported so far: TNB07 Cost Type Accounting, TNB08 Cost Center Accounting, TNB09 Cost Unit Accounting, TNB10 Contribution Margin, TNB11 Profit and Loss Statement, TNB15 Balance Sheet.
         </p>
 
         <div className="card">
@@ -79,6 +80,9 @@ export default function App() {
                   {preview.kind === "cm" && <CmReportView report={preview.report} />}
                   {preview.kind === "pnl" && <PnlReportView report={preview.report} />}
                   {preview.kind === "bs" && <BsReportView report={preview.report} />}
+                  {preview.kind === "costType" && <CostTypeView report={preview.report} />}
+                  {preview.kind === "costCenter" && <CostCenterView report={preview.report} />}
+                  {preview.kind === "costUnit" && <CostUnitView report={preview.report} />}
                   <button className="link" onClick={() => setShowJson((v) => !v)}>
                     {showJson ? "Hide" : "Show"} JSON
                   </button>
@@ -236,4 +240,152 @@ function CmTableView({ title, table }: { title: string; table: CmTable }) {
 
 function prefix(s: CmStep): string {
   return s.kind === "cost" ? "− " : s.kind === "margin" ? "= " : "";
+}
+
+/** TNB07: where the costs came from, split into overhead (→ cost centers) and direct costs (→ product). */
+function CostTypeView({ report }: { report: CostTypeReport }) {
+  const groups = report.groups.map((g) => ({
+    name: g.name,
+    rows: g.rows.map((r) => ({ label: r.label, values: [r.total, r.overhead, r.direct], note: r.note })),
+  }));
+  const { total, overhead, direct } = report.total;
+  return <CostGridView columns={["Total", "Overhead", "Direct"]} groups={groups} total={[total, overhead, direct]} />;
+}
+
+/** TNB08: the overhead from TNB07, distributed to the cost centers that caused it. */
+function CostCenterView({ report }: { report: CostCenterReport }) {
+  const groups = report.groups.map((g) => ({
+    name: g.name,
+    rows: g.rows.map((r) => ({ label: r.label, values: [r.total, ...r.byCenter], note: r.note })),
+  }));
+  return (
+    <CostGridView
+      columns={["Total", ...report.centers]}
+      groups={groups}
+      total={[report.total.total, ...report.total.byCenter]}
+    />
+  );
+}
+
+interface GridViewRow {
+  label: string;
+  values: number[];
+  note?: string;
+}
+
+/**
+ * Shared grid for TNB07/TNB08. D6: amounts right-aligned, tabular figures; group lines
+ * bold like the balance-sheet groups, cost types indented below them, total last.
+ * TOPSIM's "(*)" footnote is kept as a marker plus a muted line under the table.
+ */
+function CostGridView({ columns, groups, total }: { columns: string[]; groups: CostGroup<GridViewRow>[]; total: number[] }) {
+  const notes = [...new Set(groups.flatMap((g) => g.rows.flatMap((r) => (r.note ? [r.note] : []))))];
+  const mark = (note?: string) => (note ? ` ${"*".repeat(notes.indexOf(note) + 1)}` : "");
+  return (
+    <>
+      <h2>Costs (TEUR)</h2>
+      <table className="cost">
+        <thead>
+          <tr>
+            <th />
+            {columns.map((c) => (
+              <th key={c} className="num">{c}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {groups.map((g) => [
+            <tr key={g.name} className="margin">
+              <td colSpan={columns.length + 1}>{g.name}</td>
+            </tr>,
+            ...g.rows.map((r) => (
+              <tr key={`${g.name}/${r.label}`} className="sub">
+                <td>{r.label}{mark(r.note)}</td>
+                {r.values.map((v, i) => (
+                  <td key={i} className="num">{fmt.format(v)}</td>
+                ))}
+              </tr>
+            )),
+          ])}
+          <tr className="margin total">
+            <td>Total</td>
+            {total.map((v, i) => (
+              <td key={i} className="num">{fmt.format(v)}</td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+      <Footnotes notes={notes} />
+    </>
+  );
+}
+
+/** TNB09: direct costs plus each cost center's overhead, built up step by step to the full cost. */
+function CostUnitView({ report }: { report: CostUnitReport }) {
+  const notes = [...new Set(report.perUnit.flatMap((s) => (s.note ? [s.note] : [])))];
+  return (
+    <>
+      <CostStepsView
+        title="Total (TEUR)"
+        columns={["Total", ...report.products]}
+        steps={report.totals.map((s) => ({ ...s, values: [s.total, ...s.byProduct] }))}
+        notes={[]}
+      />
+      <CostStepsView
+        title="Per unit (EUR)"
+        columns={report.products}
+        steps={report.perUnit.map((s) => ({ ...s, values: s.byProduct }))}
+        notes={notes}
+      />
+      <Footnotes notes={notes} />
+    </>
+  );
+}
+
+function CostStepsView({ title, columns, steps, notes }: {
+  title: string;
+  columns: string[];
+  steps: (CostUnitStep & { values: number[] })[];
+  notes: string[];
+}) {
+  return (
+    <>
+      <h2>{title}</h2>
+      <table className="cost">
+        <thead>
+          <tr>
+            <th />
+            {columns.map((c) => (
+              <th key={c} className="num">{c}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {steps.map((s, i) => (
+            <tr key={i} className={s.sign === "=" ? "margin" : ""}>
+              <td>
+                {s.sign === "+/-" ? "± " : `${s.sign} `}
+                {s.label}
+                {s.note ? ` ${"*".repeat(notes.indexOf(s.note) + 1)}` : ""}
+              </td>
+              {s.values.map((v, j) => (
+                <td key={j} className="num">{fmt.format(v)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
+
+function Footnotes({ notes }: { notes: string[] }) {
+  if (notes.length === 0) return null;
+  return (
+    <ol className="footnotes muted">
+      {notes.map((n, i) => (
+        <li key={n}>{"*".repeat(i + 1)} {n}</li>
+      ))}
+    </ol>
+  );
 }

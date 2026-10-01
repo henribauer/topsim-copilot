@@ -107,3 +107,7 @@ tr.sub td:first-child { padding-left: 24px; }
 
 .link { border: 0; background: none; color: var(--accent); font: inherit; font-size: 13px; padding: 0; margin-top: 16px; cursor: pointer; }
 .json { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 11px; max-height: 360px; overflow: auto; }
+
+/* Cost accounting grids: wide (up to 6 number columns), so labels may wrap like the balance sheet. */
+table.cost td:first-child { white-space: normal; }
+.footnotes { list-style: none; padding: 0; margin: 8px 0 0; font-size: 12px; }
