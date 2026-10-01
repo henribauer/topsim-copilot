@@ -19,7 +19,8 @@ export function readHeader(lines: string[], code: string, reportName: string): R
   let header = "";
   let periodLine = start;
   for (const [i, line] of lines.slice(start, start + 4).entries()) {
-    header = header ? `${header} ${line}` : line;
+    // "TNB14: Cash-" / "Flow Statement": a line ending in a hyphen continues the word.
+    header = !header ? line : header.endsWith("-") ? header + line : `${header} ${line}`;
     periodLine = start + i;
     if (/Period:\s*\d+/.test(line)) break;
   }
