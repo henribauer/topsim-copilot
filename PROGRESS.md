@@ -164,3 +164,10 @@
   it is a docked right panel on every page (collapsed 44 px strip / open 400 px), stays mounted so the conversation
   and draft survive page changes, and every "Ask the copilot" link opens it in place instead of leaving the page.
   Page titles moved to a sticky top bar. 232 tests; browser-checked (groups, in-place ask, draft survives, 0 errors).
+- 2026-10-01: Redesign step 2 — Dashboard (R1; Mobbin: Deel, Quicken, Copilot Money in docs/mobbin/dashboard.json).
+  `dashboardLayout` (3 headline cards, each with one supporting figure: net income + return on sales, revenue +
+  units, market share + success value index; equity/cash/overdraft grouped under "Financial health"; every KPI once)
+  and `attentionItems` (overdraft -> warn, net loss -> warn, cash at the 10 TEUR minimum -> note; each names its
+  handbook section, only the latest period). UI: attention strip under the title with "Ask the copilot" per item
+  (opens the dock in place), hero row with a 40 px lead number, 9 equal cards -> 3 + 3 + 3 grouped. 246 tests,
+  13+3 mutants caught (2 survivors closed: break-even is not a loss; dead sort removed). Browser-checked, 0 errors.

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { dashboardKpis, type Kpi } from "./dashboard/kpis";
+import { attentionItems, dashboardKpis, dashboardLayout, type Attention, type Kpi } from "./dashboard/kpis";
 import type { PeriodFile } from "./store/periodStore";
 
 type Load = { status: "loading" } | { status: "error"; message: string } | { status: "ok"; periods: PeriodFile[] };
 
 /** D13: KPI dashboard as a grid of small-multiple cards, three per row. Data: GET /api/periods. */
-export function Dashboard({ onImport }: { onImport: () => void }) {
+export function Dashboard({ onImport, onAsk }: { onImport: () => void; onAsk?: (q: string) => void }) {
   const [load, setLoad] = useState<Load>({ status: "loading" });
 
   useEffect(() => {
@@ -38,19 +38,76 @@ export function Dashboard({ onImport }: { onImport: () => void }) {
     );
 
   const latest = withSummary[withSummary.length - 1].period;
+  const layout = dashboardLayout(dashboardKpis(load.periods));
+  const attention = attentionItems(load.periods);
   return (
-    <>
-      <p className="muted">
+    <div className="dash">
+      <p className="muted dash-sub">
         Period {latest}
-        {withSummary.length > 1 ? ` compared with period ${withSummary[withSummary.length - 2].period}` : " (import the next period to see changes)"}
+        {withSummary.length > 1 ? ` compared with period ${withSummary[withSummary.length - 2].period}` : " · import the next period to see changes"}
         . Values exactly as TOPSIM printed them.
       </p>
+      {attention.length > 0 && <AttentionStrip items={attention} onAsk={onAsk} />}
+      {/* R1 (Deel, Quicken): one hero row first. */}
+      <div className="hero-row">
+        {layout.headline.map((h, i) => (
+          <HeroCard key={h.kpi.label} kpi={h.kpi} support={h.support} primary={i === 0} />
+        ))}
+      </div>
+      {/* R1 (Copilot Money): supporting cards, one metric each, grouped under a small section label. */}
+      <h2 className="dash-sec">Financial health</h2>
       <div className="kpi-grid">
-        {dashboardKpis(load.periods).map((k) => (
+        {layout.health.map((k) => (
           <KpiCard key={k.label} kpi={k} />
         ))}
       </div>
-    </>
+    </div>
+  );
+}
+
+/** D12 + D35: amber band for what needs a look, always text; the handbook section is named so it can be checked. */
+function AttentionStrip({ items, onAsk }: { items: Attention[]; onAsk?: (q: string) => void }) {
+  return (
+    <div className="attention" role="region" aria-label="Needs attention">
+      {items.map((i) => (
+        <div key={i.id} className={`attn-row ${i.level}`}>
+          <span className="attn-badge">{i.level === "warn" ? "Needs attention" : "Note"}</span>
+          <span className="attn-text">
+            {i.text} <span className="src">Handbook §{i.source}</span>
+          </span>
+          {onAsk && (
+            <button className="link" onClick={() => onAsk(`Why does this matter for our next decisions? ${i.text}`)}>
+              Ask the copilot →
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** D5 + R1: label above a large numeral; the primary hero is larger; one supporting figure sits inside the card. */
+function HeroCard({ kpi, support, primary }: { kpi: Kpi; support?: Kpi; primary: boolean }) {
+  const last = kpi.points[kpi.points.length - 1];
+  const sup = support?.points[support.points.length - 1];
+  return (
+    <div className={primary ? "card hero hero-lead" : "card hero"}>
+      <div className="kpi-label">
+        {kpi.label}
+        {kpi.unit && <span className="kpi-unit"> · {kpi.unit}</span>}
+      </div>
+      <div className="hero-value">{last ? last.raw : "–"}</div>
+      <div className="kpi-foot">
+        {kpi.delta && last ? <Delta delta={kpi.delta} decimals={decimalsOf(last.raw)} /> : <span />}
+        <Sparkline points={kpi.points.map((p) => p.n)} />
+      </div>
+      {support && sup && (
+        <div className="hero-support">
+          <span className="muted">{support.label}{support.unit && ` · ${support.unit}`}</span>
+          <strong>{sup.raw}</strong>
+        </div>
+      )}
+    </div>
   );
 }
 

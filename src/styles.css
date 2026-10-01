@@ -107,6 +107,7 @@ tr.sub td:first-child { padding-left: 24px; }
 
 /* Dashboard (D5, D8, D9, D13) */
 .kpi-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.kpi-grid .kpi-value { font-size: 22px; }
 .kpi { padding: 14px 16px; }
 .kpi-label { font-size: 12px; color: var(--muted); }
 .kpi-unit { color: #9aa0a8; }
@@ -297,3 +298,24 @@ td.strong { font-weight: 700; } td.neg { color: #c92a2a; }
 .dock:not(.open) .dock-toggle { writing-mode: vertical-rl; padding: 18px 10px; }
 .dock-body { flex: 1; min-height: 0; display: flex; padding: 0 14px 14px; }
 .dock-body[hidden] { display: none; }
+
+/* Dashboard (redesign step 2, R1). Hero row first, attention strip under the title, supporting cards below. */
+.dash { display: flex; flex-direction: column; gap: 16px; max-width: 1040px; }
+.dash-sub { margin: 0; font-size: 13px; }
+.dash-sec { margin: 8px 0 -6px; }
+.attention { display: flex; flex-direction: column; gap: 6px; }
+.attn-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 10px; font-size: 14px; line-height: 1.45; background: var(--bg); border: 1px solid var(--border); }
+.attn-row.warn { background: var(--amber-soft); border-color: #f1dd8a; }
+.attn-badge { flex-shrink: 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--amber); }
+.attn-row:not(.warn) .attn-badge { color: var(--muted); }
+.attn-text { flex: 1; } .attn-text .src { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.attn-row .link { flex-shrink: 0; }
+.hero-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 14px; }
+.hero { padding: 16px 18px; display: flex; flex-direction: column; }
+.hero-value { font-size: 30px; font-weight: 700; font-variant-numeric: tabular-nums; margin: 4px 0 6px; line-height: 1.1; }
+.hero-lead .hero-value { font-size: 40px; }
+.kpi-grid .kpi { padding-bottom: 12px; }
+.kpi-grid .kpi-value { margin-bottom: 0; }
+.hero-support { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 13px; }
+.hero-support strong { font-variant-numeric: tabular-nums; }
+.attn-row .link { margin-top: 0; }

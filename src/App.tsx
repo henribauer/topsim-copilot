@@ -113,7 +113,7 @@ export default function App() {
         </header>
       {section === "Dashboard" && (
         <main className="page">
-          <Dashboard onImport={() => setSection("Import")} />
+          <Dashboard onImport={() => setSection("Import")} onAsk={ask} />
         </main>
       )}
       {section === "Analysis" && (
