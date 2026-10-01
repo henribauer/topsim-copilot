@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ReportPreview } from "./App";
+import type { FixTarget } from "./Correctable";
 import { importFiles, type ImportItem, type ImportResult } from "./import/importFiles";
 
 type RowSave = { status: "saved" } | { status: "error"; message: string };
@@ -100,6 +101,11 @@ export function FileImport() {
   const failedSaves = Object.values(saves).filter((s) => s.status === "error").length;
   const periods = [...new Set(good.map((i) => i.period))];
   const current = items[selected];
+  // A saved row's numbers become fixable: fixes need the report's vault home (period + code).
+  const currentTarget: FixTarget | null =
+    current.preview.status === "ok" && saves[selected]?.status === "saved"
+      ? { period: current.period!, reportCode: current.code! }
+      : null;
 
   return (
     <div className="upload">
@@ -148,7 +154,16 @@ export function FileImport() {
         <section className="preview">
           <p className="source muted">{current.source}</p>
           {current.preview.status === "ok" ? (
-            <ReportPreview preview={current.preview} />
+            <>
+              <ReportPreview preview={current.preview} target={currentTarget} />
+              {currentTarget && (
+                // D35: instructions in words, not icons.
+                <p className="muted">
+                  Saved — click any number above to fix a value the parser
+                  misread; the amber dot marks a fix, ↺ undoes it.
+                </p>
+              )}
+            </>
           ) : (
             <div className="error" role="alert">
               <strong>Could not read this file.</strong>{" "}

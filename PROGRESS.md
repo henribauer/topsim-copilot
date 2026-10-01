@@ -96,3 +96,13 @@
   ReportPreview, "Save N reports to vault" saves sequentially). Mutants caught incl. period ordering. E2E in
   headless Chromium with real ~/Downloads/reports.zip → 16/16 saved to scratch vault, 0 console errors. 79 tests.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.
+- 2026-10-01: Slice 2a started — fix a misread number. `src/store/corrections.ts` (applyCorrections: only
+  overwrites where the value still matches what Henri saw; mismatched fixes are reported stale, never applied
+  blindly; handles plain numbers and printed {raw, n} cells). `saveCorrection`/`removeCorrection` in
+  periodStore: fixes live in data/period-n.json under the report as {path, from, to, at}; same-cell fix
+  replaces the earlier one; re-import keeps fixes; parsed + raw never touched. API: POST / DELETE
+  /api/corrections (origin-checked, `at` set server-side). UI: src/Correctable.tsx EditableNum — click a
+  number, type the right one, Enter; amber dot + ↺ undo (D17 Melio/Twenty); cells fixable once the report is
+  saved (paste tab after "Save to vault", upload tab per row). Wired through every report view with real
+  fix paths. E2E with real reports.zip: fix → in vault JSON, undo → gone, 0 console errors, favicon 404
+  fixed. 87 tests, 8 more mutants caught.

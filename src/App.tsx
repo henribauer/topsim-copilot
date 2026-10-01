@@ -2,6 +2,7 @@ import { useState } from "react";
 import { previewPaste, type PastePreview } from "./import/previewPaste";
 import { FileImport } from "./FileImport";
 import { Dashboard } from "./Dashboard";
+import { EditableNum, type FixTarget } from "./Correctable";
 import type {
   CmStep,
   CmTable,
@@ -15,7 +16,6 @@ import type {
 } from "./parser/balanceSheet";
 import type {
   CostCenterReport,
-  CostGroup,
   CostTypeReport,
   CostUnitReport,
   CostUnitStep,
@@ -56,6 +56,8 @@ export default function App() {
   const [text, setText] = useState("");
   const [showJson, setShowJson] = useState(false);
   const [save, setSave] = useState<SaveState>({ status: "idle" });
+  // Set once the pasted report is in the vault: from then on the preview's numbers are fixable.
+  const [savedTarget, setSavedTarget] = useState<FixTarget | null>(null);
   const [tab, setTab] = useState("pdf");
   const preview = previewPaste(text);
 
@@ -76,6 +78,7 @@ export default function App() {
             }
           : { status: "error", message: body.error },
       );
+      if (body.ok) setSavedTarget({ period: body.period, reportCode: body.reportCode });
     } catch (e) {
       setSave({
         status: "error",
@@ -140,6 +143,7 @@ export default function App() {
                 onChange={(e) => {
                   setText(e.target.value);
                   setSave({ status: "idle" });
+                  setSavedTarget(null);
                 }}
                 spellCheck={false}
               />
@@ -160,7 +164,14 @@ export default function App() {
 
                 {preview.status === "ok" && (
                   <>
-                    <ReportPreview preview={preview} />
+                    <ReportPreview preview={preview} target={savedTarget} />
+                    {savedTarget && (
+                      // D35: instructions in words, not icons.
+                      <p className="muted">
+                        Saved — click any number above to fix a value the parser
+                        misread; the amber dot marks a fix, ↺ undoes it.
+                      </p>
+                    )}
                     {/* D23: the result sits right above the primary action. D11: errors as red banner with text. */}
                     {save.status === "error" && (
                       <div className="error" role="alert">
@@ -211,8 +222,9 @@ export default function App() {
   );
 }
 
-/** Header chips plus the report's own view; used by the Paste tab and the file list. */
-export function ReportPreview({ preview }: { preview: Extract<PastePreview, { status: "ok" }> }) {
+/** Header chips plus the report's own view; used by the Paste tab and the file list.
+ * `target` set → numbers are clickable and fixes save to that report (see Correctable.tsx). */
+export function ReportPreview({ preview, target }: { preview: Extract<PastePreview, { status: "ok" }>; target?: FixTarget | null }) {
   return (
     <>
       <div className="meta">
@@ -222,25 +234,25 @@ export function ReportPreview({ preview }: { preview: Extract<PastePreview, { st
         <span>{preview.report.company}</span>
       </div>
       {preview.kind === "cm" && (
-        <CmReportView report={preview.report} />
+        <CmReportView report={preview.report} target={target} />
       )}
       {preview.kind === "pnl" && (
-        <PnlReportView report={preview.report} />
+        <PnlReportView report={preview.report} target={target} />
       )}
       {preview.kind === "bs" && (
-        <BsReportView report={preview.report} />
+        <BsReportView report={preview.report} target={target} />
       )}
       {preview.kind === "costType" && (
-        <CostTypeView report={preview.report} />
+        <CostTypeView report={preview.report} target={target} />
       )}
       {preview.kind === "costCenter" && (
-        <CostCenterView report={preview.report} />
+        <CostCenterView report={preview.report} target={target} />
       )}
       {preview.kind === "costUnit" && (
-        <CostUnitView report={preview.report} />
+        <CostUnitView report={preview.report} target={target} />
       )}
       {preview.kind === "sectioned" && (
-        <SectionedReportView report={preview.report} />
+        <SectionedReportView report={preview.report} target={target} />
       )}
     </>
   );
@@ -252,7 +264,7 @@ export function ReportPreview({ preview }: { preview: Extract<PastePreview, { st
  * costs (same classes as the P&L). The unit gets its own column so numbers stay aligned.
  * Values are shown exactly as printed (TOPSIM's own decimals: "41,000" units, "85.42" %), never as 0 when blank.
  */
-export function SectionedReportView({ report }: { report: SectionedReport }) {
+export function SectionedReportView({ report, target }: { report: SectionedReport; target?: FixTarget | null }) {
   return (
     <>
       {report.sections.map((section, s) => {
@@ -299,10 +311,15 @@ export function SectionedReportView({ report }: { report: SectionedReport }) {
                     {hasUnit && <td className="muted">{r.unit ?? ""}</td>}
                     {Array.from({ length: width }, (_, col) => {
                       const v = r.values[col];
+                      if (!v) return <td key={col} className="num" />;
                       return (
-                        <td key={col} className="num">
-                          {v?.raw ?? ""}
-                        </td>
+                        <EditableNum
+                          key={col}
+                          target={target}
+                          path={["sections", s, "rows", i, "values", col]}
+                          from={v.raw}
+                          display={v.raw}
+                        />
                       );
                     })}
                   </tr>
@@ -321,7 +338,7 @@ export function SectionedReportView({ report }: { report: SectionedReport }) {
   );
 }
 
-function CmReportView({ report }: { report: ContributionMarginReport }) {
+function CmReportView({ report, target }: { report: ContributionMarginReport; target?: FixTarget | null }) {
   return (
     <>
       <CmTableView
@@ -331,11 +348,15 @@ function CmReportView({ report }: { report: ContributionMarginReport }) {
           channels: report.channels,
           steps: report.steps,
         }}
+        target={target}
+        base={[]}
       />
       {report.perUnit ? (
         <CmTableView
           title={`Per unit (${report.perUnit.unit})`}
           table={report.perUnit}
+          target={target}
+          base={["perUnit"]}
         />
       ) : (
         <div className="warning">Page 2 (per unit) was not in the paste.</div>
@@ -345,10 +366,10 @@ function CmReportView({ report }: { report: ContributionMarginReport }) {
 }
 
 /** One table per P&L block. D6: amounts right-aligned, tabular figures. */
-function PnlReportView({ report }: { report: ProfitAndLossReport }) {
+export function PnlReportView({ report, target }: { report: ProfitAndLossReport; target?: FixTarget | null }) {
   return (
     <>
-      {report.sections.map((section) => {
+      {report.sections.map((section, s) => {
         const hasPercent = section.rows.some(
           (r) => r.percentOfRevenue !== null,
         );
@@ -378,14 +399,23 @@ function PnlReportView({ report }: { report: ProfitAndLossReport }) {
                             : ""}
                       {r.label}
                     </td>
-                    <td className="num">{fmt.format(r.value)}</td>
-                    {hasPercent && (
-                      <td className="num">
-                        {r.percentOfRevenue === null
-                          ? ""
-                          : `${fmt.format(r.percentOfRevenue)} %`}
-                      </td>
-                    )}
+                    <EditableNum
+                      target={target}
+                      path={["sections", s, "rows", i, "value"]}
+                      from={r.value}
+                      display={fmt.format(r.value)}
+                    />
+                    {hasPercent &&
+                      (r.percentOfRevenue === null ? (
+                        <td className="num" />
+                      ) : (
+                        <EditableNum
+                          target={target}
+                          path={["sections", s, "rows", i, "percentOfRevenue"]}
+                          from={r.percentOfRevenue}
+                          display={`${fmt.format(r.percentOfRevenue)} %`}
+                        />
+                      ))}
                   </tr>
                 ))}
               </tbody>
@@ -402,7 +432,7 @@ function PnlReportView({ report }: { report: ProfitAndLossReport }) {
  * tabular figures; group lines bold like margin rows; items indented like P&L sub-rows.
  * D12 amber notice if the two totals differ (a parse or report problem, never normal).
  */
-function BsReportView({ report }: { report: BalanceSheetReport }) {
+function BsReportView({ report, target }: { report: BalanceSheetReport; target?: FixTarget | null }) {
   const { assets, liabilities } = report.total;
   const balanced =
     assets.current === liabilities.current &&
@@ -410,9 +440,11 @@ function BsReportView({ report }: { report: BalanceSheetReport }) {
   return (
     <>
       <div className="bs-sides">
-        <BsSideView title="Assets (TEUR)" rows={report.assets} total={assets} />
+        <BsSideView target={target} title="Assets (TEUR)" side="assets" rows={report.assets} total={assets} />
         <BsSideView
+          target={target}
           title="Equity and Liabilities (TEUR)"
+          side="liabilities"
           rows={report.liabilities}
           total={liabilities}
         />
@@ -428,12 +460,17 @@ function BsReportView({ report }: { report: BalanceSheetReport }) {
 
 function BsSideView({
   title,
+  side,
   rows,
   total,
+  target,
 }: {
   title: string;
+  /** Fixes under this side live at ["assets"|"liabilities", row, "current"|"previous"]. */
+  side: "assets" | "liabilities";
   rows: BsRow[];
   total: PeriodPair;
+  target?: FixTarget | null;
 }) {
   return (
     <div>
@@ -447,17 +484,17 @@ function BsSideView({
           </tr>
         </thead>
         <tbody>
-          {rows.map((r) => (
+          {rows.map((r, i) => (
             <tr key={r.label} className={r.group ? "margin" : "sub"}>
               <td>{r.label}</td>
-              <td className="num">{fmt.format(r.current)}</td>
-              <td className="num">{fmt.format(r.previous)}</td>
+              <EditableNum target={target} path={[side, i, "current"]} from={r.current} display={fmt.format(r.current)} />
+              <EditableNum target={target} path={[side, i, "previous"]} from={r.previous} display={fmt.format(r.previous)} />
             </tr>
           ))}
           <tr className="margin total">
             <td>Balance Sheet Total</td>
-            <td className="num">{fmt.format(total.current)}</td>
-            <td className="num">{fmt.format(total.previous)}</td>
+            <EditableNum target={target} path={["total", side, "current"]} from={total.current} display={fmt.format(total.current)} />
+            <EditableNum target={target} path={["total", side, "previous"]} from={total.previous} display={fmt.format(total.previous)} />
           </tr>
         </tbody>
       </table>
@@ -471,7 +508,7 @@ function pnlRowClass(r: PnlRow, hasPercent: boolean): string {
   return r.sign === "-" ? "cost" : "";
 }
 
-function CmTableView({ title, table }: { title: string; table: CmTable }) {
+function CmTableView({ title, table, target, base }: { title: string; table: CmTable; target?: FixTarget | null; base: (string | number)[] }) {
   const width = table.channels.length;
   return (
     <>
@@ -496,11 +533,19 @@ function CmTableView({ title, table }: { title: string; table: CmTable }) {
               </td>
               {/* Rows with fewer values (e.g. CM V: Total only) fill the right-most columns. */}
               {Array.from({ length: width }, (_, col) => {
-                const v = s.values[col - (width - s.values.length)];
+                // Rows with fewer values (e.g. CM V: Total only) fill the right-most columns;
+                // the fix path points at the real index inside `values`.
+                const idx = col - (width - s.values.length);
+                const v = s.values[idx];
+                if (v === undefined) return <td key={col} className="num" />;
                 return (
-                  <td key={col} className="num">
-                    {v === undefined ? "" : fmt.format(v)}
-                  </td>
+                  <EditableNum
+                    key={col}
+                    target={target}
+                    path={[...base, "steps", i, "values", idx]}
+                    from={v}
+                    display={fmt.format(v)}
+                  />
                 );
               })}
             </tr>
@@ -516,48 +561,63 @@ function prefix(s: CmStep): string {
 }
 
 /** TNB07: where the costs came from, split into overhead (→ cost centers) and direct costs (→ product). */
-function CostTypeView({ report }: { report: CostTypeReport }) {
-  const groups = report.groups.map((g) => ({
+function CostTypeView({ report, target }: { report: CostTypeReport; target?: FixTarget | null }) {
+  const groups = report.groups.map((g, gi) => ({
     name: g.name,
-    rows: g.rows.map((r) => ({
+    rows: g.rows.map((r, ri) => ({
       label: r.label,
       values: [r.total, r.overhead, r.direct],
+      paths: [
+        ["groups", gi, "rows", ri, "total"],
+        ["groups", gi, "rows", ri, "overhead"],
+        ["groups", gi, "rows", ri, "direct"],
+      ],
       note: r.note,
     })),
   }));
   const { total, overhead, direct } = report.total;
   return (
     <CostGridView
+      target={target}
       columns={["Total", "Overhead", "Direct"]}
       groups={groups}
       total={[total, overhead, direct]}
+      totalPaths={[["total", "total"], ["total", "overhead"], ["total", "direct"]]}
     />
   );
 }
 
 /** TNB08: the overhead from TNB07, distributed to the cost centers that caused it. */
-function CostCenterView({ report }: { report: CostCenterReport }) {
-  const groups = report.groups.map((g) => ({
+function CostCenterView({ report, target }: { report: CostCenterReport; target?: FixTarget | null }) {
+  const groups = report.groups.map((g, gi) => ({
     name: g.name,
-    rows: g.rows.map((r) => ({
+    rows: g.rows.map((r, ri) => ({
       label: r.label,
       values: [r.total, ...r.byCenter],
+      paths: [
+        ["groups", gi, "rows", ri, "total"],
+        ...r.byCenter.map((_, ci) => ["groups", gi, "rows", ri, "byCenter", ci]),
+      ],
       note: r.note,
     })),
   }));
   return (
     <CostGridView
+      target={target}
       columns={["Total", ...report.centers]}
       groups={groups}
       total={[report.total.total, ...report.total.byCenter]}
+      totalPaths={[["total", "total"], ...report.total.byCenter.map((_, ci) => ["total", "byCenter", ci])]}
     />
   );
 }
 
-interface GridViewRow {
+interface CostGridRow {
   label: string;
   values: number[];
-  note?: string;
+  /** One fix path per value cell, same order as `values`. */
+  paths: (string | number)[][];
+  note?: string | null;
 }
 
 /**
@@ -569,17 +629,21 @@ function CostGridView({
   columns,
   groups,
   total,
+  totalPaths,
+  target,
 }: {
   columns: string[];
-  groups: CostGroup<GridViewRow>[];
+  groups: { name: string; rows: CostGridRow[] }[];
   total: number[];
+  totalPaths: (string | number)[][];
+  target?: FixTarget | null;
 }) {
   const notes = [
     ...new Set(
       groups.flatMap((g) => g.rows.flatMap((r) => (r.note ? [r.note] : []))),
     ),
   ];
-  const mark = (note?: string) =>
+  const mark = (note?: string | null) =>
     note ? ` ${"*".repeat(notes.indexOf(note) + 1)}` : "";
   return (
     <>
@@ -607,9 +671,13 @@ function CostGridView({
                   {mark(r.note)}
                 </td>
                 {r.values.map((v, i) => (
-                  <td key={i} className="num">
-                    {fmt.format(v)}
-                  </td>
+                  <EditableNum
+                    key={i}
+                    target={target}
+                    path={r.paths[i]}
+                    from={v}
+                    display={fmt.format(v)}
+                  />
                 ))}
               </tr>
             )),
@@ -617,9 +685,13 @@ function CostGridView({
           <tr className="margin total">
             <td>Total</td>
             {total.map((v, i) => (
-              <td key={i} className="num">
-                {fmt.format(v)}
-              </td>
+              <EditableNum
+                key={i}
+                target={target}
+                path={totalPaths[i]}
+                from={v}
+                display={fmt.format(v)}
+              />
             ))}
           </tr>
         </tbody>
@@ -630,25 +702,32 @@ function CostGridView({
 }
 
 /** TNB09: direct costs plus each cost center's overhead, built up step by step to the full cost. */
-function CostUnitView({ report }: { report: CostUnitReport }) {
+function CostUnitView({ report, target }: { report: CostUnitReport; target?: FixTarget | null }) {
   const notes = [
     ...new Set(report.perUnit.flatMap((s) => (s.note ? [s.note] : []))),
   ];
   return (
     <>
       <CostStepsView
+        target={target}
         title="Total (TEUR)"
         columns={["Total", ...report.products]}
-        steps={report.totals.map((s) => ({
+        steps={report.totals.map((s, i) => ({
           ...s,
           values: [s.total, ...s.byProduct],
+          paths: [["totals", i, "total"], ...s.byProduct.map((_, j) => ["totals", i, "byProduct", j])],
         }))}
         notes={[]}
       />
       <CostStepsView
+        target={target}
         title="Per unit (EUR)"
         columns={report.products}
-        steps={report.perUnit.map((s) => ({ ...s, values: s.byProduct }))}
+        steps={report.perUnit.map((s, i) => ({
+          ...s,
+          values: s.byProduct,
+          paths: s.byProduct.map((_, j) => ["perUnit", i, "byProduct", j]),
+        }))}
         notes={notes}
       />
       <Footnotes notes={notes} />
@@ -661,11 +740,13 @@ function CostStepsView({
   columns,
   steps,
   notes,
+  target,
 }: {
   title: string;
   columns: string[];
-  steps: (CostUnitStep & { values: number[] })[];
+  steps: (CostUnitStep & { values: number[]; paths: (string | number)[][] })[];
   notes: string[];
+  target?: FixTarget | null;
 }) {
   return (
     <>
@@ -690,9 +771,7 @@ function CostStepsView({
                 {s.note ? ` ${"*".repeat(notes.indexOf(s.note) + 1)}` : ""}
               </td>
               {s.values.map((v, j) => (
-                <td key={j} className="num">
-                  {fmt.format(v)}
-                </td>
+                <EditableNum key={j} target={target} path={s.paths[j]} from={v} display={fmt.format(v)} />
               ))}
             </tr>
           ))}

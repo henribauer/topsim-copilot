@@ -1,5 +1,6 @@
 import { basename } from "node:path";
-import { loadPeriods, saveReport } from "./periodStore";
+import { loadPeriods, removeCorrection, saveCorrection, saveReport } from "./periodStore";
+import type { Correction } from "./corrections";
 
 export interface ApiResponse {
   status: number;
@@ -36,4 +37,50 @@ export function handlePeriodsRequest(vaultDir: string): ApiResponse {
     reports: Object.fromEntries(Object.entries(p.reports).map(([code, { raw: _raw, ...rest }]) => [code, rest])),
   }));
   return { status: 200, body: { periods } };
+}
+
+/** POST /api/corrections, body {period, reportCode, correction:{path, from, to}}. `at` is set here, not by the browser. */
+export function handleCorrectionRequest(vaultDir: string, rawBody: string, origin: string | undefined): ApiResponse {
+  if (origin !== undefined && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin)) {
+    return { status: 403, body: { ok: false, error: "Saving is only allowed from the app itself" } };
+  }
+  let body: { period?: unknown; reportCode?: unknown; correction?: unknown };
+  try {
+    body = JSON.parse(rawBody);
+  } catch {
+    return { status: 400, body: { ok: false, error: 'Body must be JSON: {"period": 0, "reportCode": "TNB10", "correction": {"path": […], "from": …, "to": "6,100.00"}}' } };
+  }
+  const c = body.correction as Correction | undefined;
+  if (typeof body.period !== "number" || typeof body.reportCode !== "string" || !Array.isArray(c?.path) || typeof c.to !== "string") {
+    return { status: 400, body: { ok: false, error: 'Body must be JSON: {"period": 0, "reportCode": "TNB10", "correction": {"path": […], "from": …, "to": "6,100.00"}}' } };
+  }
+  try {
+    saveCorrection(vaultDir, body.period, body.reportCode, { path: c.path, from: c.from as Correction["from"], to: c.to, at: new Date().toISOString() });
+    return { status: 200, body: { ok: true } };
+  } catch (e) {
+    console.error("CORR-ERR", e);
+    return { status: 400, body: { ok: false, error: `No saved report ${body.reportCode} in period ${body.period}` } };
+  }
+}
+
+/** DELETE /api/corrections, body {period, reportCode, path} — undo one cell's fix. */
+export function handleCorrectionDelete(vaultDir: string, rawBody: string, origin: string | undefined): ApiResponse {
+  if (origin !== undefined && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin)) {
+    return { status: 403, body: { ok: false, error: "Saving is only allowed from the app itself" } };
+  }
+  let body: { period?: unknown; reportCode?: unknown; path?: unknown };
+  try {
+    body = JSON.parse(rawBody);
+  } catch {
+    return { status: 400, body: { ok: false, error: 'Body must be JSON: {"period": 0, "reportCode": "TNB10", "path": […]}' } };
+  }
+  if (typeof body.period !== "number" || typeof body.reportCode !== "string" || !Array.isArray(body.path)) {
+    return { status: 400, body: { ok: false, error: 'Body must be JSON: {"period": 0, "reportCode": "TNB10", "path": […]}' } };
+  }
+  try {
+    removeCorrection(vaultDir, body.period, body.reportCode, body.path as Correction["path"]);
+    return { status: 200, body: { ok: true } };
+  } catch {
+    return { status: 400, body: { ok: false, error: `No saved report ${body.reportCode} in period ${body.period}` } };
+  }
 }

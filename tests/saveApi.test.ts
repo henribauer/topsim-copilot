@@ -2,8 +2,9 @@ import { mkdtempSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { handlePeriodsRequest, handleSaveRequest } from "../src/store/saveApi";
+import { handleCorrectionRequest, handlePeriodsRequest, handleSaveRequest } from "../src/store/saveApi";
 import { p0Report } from "./fixtures";
+import { loadPeriods } from "../src/store/periodStore";
 
 const CM = p0Report("=== Report11_Contribution Margin.pdf", "=== ");
 const LOCAL = "http://127.0.0.1:5181";
@@ -52,5 +53,32 @@ describe("handlePeriodsRequest (GET /api/periods)", () => {
     expect(periods.map((p) => p.period)).toEqual([0]);
     expect(periods[0].reports.TNB10.parsed.title).toBe("Contribution Margin");
     expect(periods[0].reports.TNB10.raw).toBeUndefined();
+  });
+});
+
+describe("handleCorrectionRequest (POST /api/corrections)", () => {
+  const fix = { path: ["sections", 0, "rows", 0, "value"], from: 6000, to: "6,100.00" };
+
+  it("stores the fix and timestamps it server-side", () => {
+    const dir = mkdtempSync(join(tmpdir(), "topsim-vault-"));
+    handleSaveRequest(dir, JSON.stringify({ text: CM }), LOCAL);
+    const res = handleCorrectionRequest(dir, JSON.stringify({ period: 0, reportCode: "TNB10", correction: fix }), LOCAL);
+    expect(res.status).toBe(200);
+    const [p0] = loadPeriods(dir);
+    expect(p0.reports.TNB10.corrections![0].path).toEqual(fix.path);
+    expect(p0.reports.TNB10.corrections![0].at).toBeTypeOf("string");
+  });
+
+  it("answers 400 for a wrong body and for a report that is not saved", () => {
+    const dir = mkdtempSync(join(tmpdir(), "topsim-vault-"));
+    handleSaveRequest(dir, JSON.stringify({ text: CM }), LOCAL);
+    expect(handleCorrectionRequest(dir, "not json", LOCAL).status).toBe(400);
+    expect(handleCorrectionRequest(dir, JSON.stringify({ period: 0, reportCode: "TNB10", correction: { ...fix, to: 5 } }), LOCAL).status).toBe(400);
+    expect(handleCorrectionRequest(dir, JSON.stringify({ period: 3, reportCode: "TNB10", correction: fix }), LOCAL).status).toBe(400);
+  });
+
+  it("refuses requests sent from another website (403)", () => {
+    const dir = mkdtempSync(join(tmpdir(), "topsim-vault-"));
+    expect(handleCorrectionRequest(dir, JSON.stringify({ period: 0, reportCode: "TNB10", correction: fix }), "https://evil.example").status).toBe(403);
   });
 });

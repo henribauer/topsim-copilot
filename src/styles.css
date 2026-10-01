@@ -149,3 +149,12 @@ table.cost td:first-child { white-space: normal; }
 .preview .source { margin: 12px 0 0; font-size: 12px; }
 .upload-actions { display: flex; align-items: center; justify-content: flex-end; gap: 14px; }
 .upload-actions .saved { margin: 0; }
+
+/* Fixable number cells (PRD Must 1, manual correction of a misread value). D17 (Melio 5, Twenty 6):
+   a fixed cell keeps Henri's typed value with an amber dot — the parsed value is never overwritten. */
+td.fixable { cursor: pointer; }
+td.fixable:hover { background: var(--accent-soft); }
+.fix-input { width: 7.5em; text-align: right; font: inherit; padding: 1px 4px; border: 1px solid var(--accent); border-radius: 4px; background: var(--card); }
+.fix-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--amber); margin-left: 5px; vertical-align: middle; }
+.fix-undo { border: 0; background: none; color: var(--muted); cursor: pointer; font-size: 11px; padding: 0 3px; }
+.fix-undo:hover { color: var(--muted); }
