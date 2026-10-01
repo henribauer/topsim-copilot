@@ -178,3 +178,12 @@
   competitors; tabs without data are dropped). UI: 3 clickable headline cards (each jumps to its tab), tab bar,
   one panel at a time; break-even tab no longer repeats the headline numbers. Page height 1,803 px -> 900 px.
   258 tests; 14 mutants caught (3 survivors closed with new tests). Browser-checked, 0 errors.
+- 2026-10-01: Redesign step 4 — Planner + What-if (R4; Mobbin: Claude calculator, Quicken, Churnkey, Origin in
+  docs/mobbin/planner.json). `src/plan/summary.ts` (tested, 18 tests, 23 mutants caught): `plannerSummary` (net income,
+  overdraft, production used vs limit of lines/staff, status ok/tight(>=95 %)/over, problems), `sliderRange` per
+  decision (price +-20 %, advertising to 2x, quality 0-2, production to +3 lines, tick at last period's value),
+  `bestScenario` (highest net income among plans TOPSIM accepts, null on tie/none). UI: results band pinned under
+  the title while editing (net income, overdraft, production bar, plan possible/problems), decisions as numbered
+  cards with number field + slider + tick, details behind tabs (Checks with count badge / Forecast / Type into
+  TOPSIM); What-if tints the best column and tags it. 276 tests. Browser-checked: slider drives number and band,
+  band stays on screen when scrolling, status flips on over-capacity, 0 errors.
