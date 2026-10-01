@@ -3,6 +3,7 @@ import { previewPaste, type PastePreview } from "./import/previewPaste";
 import { FileImport } from "./FileImport";
 import { Dashboard } from "./Dashboard";
 import { Copilot } from "./Copilot";
+import { Glossary } from "./Glossary";
 import { EditableNum, type FixTarget } from "./Correctable";
 import type {
   CmStep,
@@ -34,7 +35,7 @@ const SECTIONS = [
   "Learn",
   "Glossary",
 ];
-const READY = ["Import", "Dashboard", "Copilot"];
+const READY = ["Import", "Dashboard", "Copilot", "Glossary"];
 
 /** D24: the three entry modes as tabs on one panel. Upload takes the TOPSIM ZIP or single PDFs. */
 const TABS = [
@@ -60,6 +61,8 @@ export default function App() {
   // Set once the pasted report is in the vault: from then on the preview's numbers are fixable.
   const [savedTarget, setSavedTarget] = useState<FixTarget | null>(null);
   const [tab, setTab] = useState("pdf");
+  // A question handed over from another page (e.g. the glossary); it only prefills the copilot's input.
+  const [prefill, setPrefill] = useState<string | null>(null);
   const preview = previewPaste(text);
 
   async function saveToVault() {
@@ -113,7 +116,22 @@ export default function App() {
       {section === "Copilot" && (
         <main className="page page-chat">
           <h1>Copilot</h1>
-          <Copilot />
+          <Copilot prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
+        </main>
+      )}
+      {section === "Glossary" && (
+        <main className="page">
+          <h1>Glossary</h1>
+          <p className="muted">
+            The controlling terms behind your reports. Every entry names where it comes from: the TOPSIM handbook, the
+            lecture script, or the report where you see the number.
+          </p>
+          <Glossary
+            onAsk={(q) => {
+              setPrefill(q);
+              setSection("Copilot");
+            }}
+          />
         </main>
       )}
       {section === "Import" && (

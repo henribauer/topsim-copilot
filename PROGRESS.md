@@ -116,3 +116,9 @@
   citation badges -> collapsible source list, Coach/Propose switch above input, "reading..." status.
   E2E with real claude: coach answer cites TNB11 + Handbook correctly, follow-up in Propose uses history, 0 console
   errors. 113 tests; 9 + 4 + 5 mutants caught.
+- 2026-10-01: Batch A2 — Glossary (PRD Must 7). `src/learn/glossary.ts`: 37 terms (CM I–V, break-even, mother of
+  all formulas, cost types/centers/units, overdraft, tax 35 %, liquidity I–III, equity/debt ratio, ROS/ROE, success
+  value, price-sales table, advertising, ...), every definition written from the handbook or the lecture script
+  with its source. Tests check every cited handbook section exists as a heading and every script page occurs in
+  the script (4 mutants caught). UI: search (name > definition, "35 %" = "35%"), source lines, "Ask the copilot
+  about this" prefills the copilot input without sending. 119 tests.

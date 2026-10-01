@@ -188,3 +188,16 @@ td.fixable:hover { background: var(--accent-soft); }
 .composer textarea { flex: 1; font: inherit; border: 1px solid var(--border); border-radius: 10px; padding: 9px 12px; resize: none; background: var(--card); }
 .composer textarea:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
 .primary:disabled { opacity: 0.5; cursor: default; }
+
+/* Glossary (PRD Must 7) */
+.glossary { max-width: 860px; }
+.search { width: 100%; box-sizing: border-box; font: inherit; border: 1px solid var(--border); border-radius: 10px; padding: 9px 14px; background: var(--card); }
+.search:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
+.count { margin: 8px 0 12px; font-size: 12px; }
+.terms { display: flex; flex-direction: column; gap: 10px; }
+.term { padding: 4px 18px 12px; }
+.term h3 { font-size: 15px; margin: 12px 0 2px; }
+.term p { margin: 6px 0; line-height: 1.55; }
+.formula { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: var(--bg); border-radius: 6px; padding: 6px 10px; }
+.term-sources { margin: 8px 0 2px; padding-left: 18px; font-size: 12px; color: var(--muted); }
+.term .link { margin-top: 6px; }

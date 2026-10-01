@@ -29,13 +29,21 @@ const STARTERS = [
  * input (D27, ref 35); a visible "reading the sources" status while waiting (D28); sources listed under every
  * answer (D29). Coach is the default (PRD: learning first).
  */
-export function Copilot() {
+export function Copilot({ prefill, onPrefillUsed }: { prefill?: string | null; onPrefillUsed?: () => void }) {
   const [mode, setMode] = useState<Mode>("coach");
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState("");
   const [waiting, setWaiting] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const end = useRef<HTMLDivElement>(null);
+
+  // A question handed over from the glossary lands in the input; Henri decides whether to send it.
+  useEffect(() => {
+    if (prefill) {
+      setDraft(prefill);
+      onPrefillUsed?.();
+    }
+  }, [prefill, onPrefillUsed]);
 
   useEffect(() => {
     end.current?.scrollIntoView?.({ block: "end" });
