@@ -4,6 +4,7 @@ import type { CmStep, CmTable, ContributionMarginReport } from "./parser/contrib
 import type { PnlRow, ProfitAndLossReport } from "./parser/profitAndLoss";
 import type { BalanceSheetReport, BsRow, PeriodPair } from "./parser/balanceSheet";
 import type { CostCenterReport, CostGroup, CostTypeReport, CostUnitReport, CostUnitStep } from "./parser/costAccounting";
+import type { SectionedReport } from "./parser/sectionedReport";
 
 /** D1: the app's sections. Only Import exists so far; the rest are shown but disabled. */
 const SECTIONS = ["Import", "Dashboard", "Analysis", "Planner", "What-if", "Copilot", "Learn", "Glossary"];
@@ -36,7 +37,7 @@ export default function App() {
       <main className="page">
         <h1>Import reports</h1>
         <p className="muted">
-          Paste the text of a TOPSIM report. Supported so far: TNB07 Cost Type Accounting, TNB08 Cost Center Accounting, TNB09 Cost Unit Accounting, TNB10 Contribution Margin, TNB11 Profit and Loss Statement, TNB15 Balance Sheet.
+          Paste the text of any TOPSIM report (TNB01–TNB12, TNB14–TNB16, TNB19). The report type is detected from its header.
         </p>
 
         <div className="card">
@@ -83,6 +84,7 @@ export default function App() {
                   {preview.kind === "costType" && <CostTypeView report={preview.report} />}
                   {preview.kind === "costCenter" && <CostCenterView report={preview.report} />}
                   {preview.kind === "costUnit" && <CostUnitView report={preview.report} />}
+                  {preview.kind === "sectioned" && <SectionedReportView report={preview.report} />}
                   <button className="link" onClick={() => setShowJson((v) => !v)}>
                     {showJson ? "Hide" : "Show"} JSON
                   </button>
@@ -94,6 +96,56 @@ export default function App() {
         </div>
       </main>
     </div>
+  );
+}
+
+/**
+ * The ten "list" reports (TNB01–06, 12, 14, 16, 19) share one view: a table per section, as TOPSIM
+ * prints them. D6: values right-aligned, tabular figures; "=" rows bold like margins, "−" rows like
+ * costs (same classes as the P&L). The unit gets its own column so numbers stay aligned.
+ * Values are shown exactly as printed (TOPSIM's own decimals: "41,000" units, "85.42" %), never as 0 when blank.
+ */
+export function SectionedReportView({ report }: { report: SectionedReport }) {
+  return (
+    <>
+      {report.sections.map((section, s) => {
+        const hasUnit = section.rows.some((r) => r.unit);
+        const width = Math.max(section.columns.length, ...section.rows.map((r) => r.values.length));
+        return (
+          <div key={s}>
+            {section.heading && <h2>{section.heading}</h2>}
+            <table className="cm">
+              {section.columns.length > 0 && (
+                <thead>
+                  <tr>
+                    <th />
+                    {hasUnit && <th />}
+                    {section.columns.map((c) => (
+                      <th key={c} className="num">{c}</th>
+                    ))}
+                  </tr>
+                </thead>
+              )}
+              <tbody>
+                {section.rows.map((r, i) => (
+                  <tr key={i} className={r.sign === "=" ? "margin" : r.sign === "-" ? "cost" : ""}>
+                    <td>{r.sign === "=" ? "= " : r.sign === "-" ? "− " : r.sign === "+" ? "+ " : ""}{r.label}</td>
+                    {hasUnit && <td className="muted">{r.unit ?? ""}</td>}
+                    {Array.from({ length: width }, (_, col) => {
+                      const v = r.values[col];
+                      return <td key={col} className="num">{v?.raw ?? ""}</td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
+      {report.footnotes.map((f) => (
+        <p key={f} className="muted">{f}</p>
+      ))}
+    </>
   );
 }
 

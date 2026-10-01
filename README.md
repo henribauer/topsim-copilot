@@ -44,6 +44,8 @@ Early development — see [PROGRESS.md](PROGRESS.md) for the running log and
 ```bash
 npm install        # node_modules lives outside iCloud via symlink (see link-local-deps.sh)
 npm run dev        # local dev server
+sh scripts/start.sh          # what the desktop icon runs: start server on :5181 if needed, open browser
+sh scripts/make-launcher.sh  # (re)build ~/Desktop/TOPSIM Copilot.app
 npm test           # vitest
 npm run typecheck  # tsc --noEmit
 ```

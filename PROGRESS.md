@@ -56,4 +56,21 @@
   Admin 186.20; full cost 5,578.99 TEUR = 139.47 EUR/unit. Mutation check 11/11 caught. previewPaste kinds
   `costType`/`costCenter`/`costUnit`, views `CostGridView` + `CostStepsView` + `Footnotes`. Shared fixture
   helper `tests/fixtures.ts` `p0Report()`. 30 tests.
+- 2026-10-01: Slice 1d.4 done — all remaining report types with one data-driven parser
+  `src/parser/sectionedReport.ts`: TNB01 Executive Summary, 02 Market Research, 03 Production, 04 R&D,
+  05 Inventory, 06 Human Resources, 12 Cash Accounting, 14 Cash-Flow, 16 Business Report, 19 Decision Protocol.
+  Each report is a `LAYOUTS` entry (headings, printed column-header lines → clean names, footnotes, label
+  quirks); the reader handles units after labels, +/−/= signs, wrapped labels, blank cells (padded / mapped
+  via `sparseRows` for TNB03 "Total"), labels with numbers (`labelPattern`, `labelLines`), label tails below
+  values ("Type A Line Nr." … "1"). Values kept as printed (`raw`) + parsed `n`. `readHeader` now joins a title
+  split at a hyphen ("Cash-"/"Flow"). 15 of 16 report types parse; TNB13 has no P0 sample yet. previewPaste
+  `kind:"sectioned"`, one `SectionedReportView` (checked via renderToStaticMarkup for TNB03/06/19). Mutation
+  check on sparse/tail/labelPattern logic 3/3 caught. Pre-commit hook `scripts/secret-scan.sh` (blocks token
+  formats; proven with a fake ghp_ token). 43 tests.
+- 2026-10-01: Desktop launcher — `~/Desktop/TOPSIM Copilot.app`, same pattern as Pressespiegel.app (AppleScript
+  applet → `scripts/start.sh`: start vite on 127.0.0.1:5181 if not running, then open the browser; never
+  restarts a running server). Rebuild with `sh scripts/make-launcher.sh` (icon from `scripts/make-icon.py`,
+  accent #3b5bdb). Pitfall: editing Info.plist/icon after osacompile breaks the signature → macOS denies the
+  iCloud folder ("Operation not permitted"); the script re-signs ad hoc. First launch asks once for iCloud
+  Drive access (granted 2026-10-01). Cold start ≈1 s. Log: $TMPDIR/topsim-copilot.log.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

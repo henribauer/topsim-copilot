@@ -12,6 +12,7 @@ import {
   type CostTypeReport,
   type CostUnitReport,
 } from "../parser/costAccounting";
+import { parseSectionedReport, SECTIONED_CODES, type SectionedReport } from "../parser/sectionedReport";
 
 /** What the paste screen shows for the current textarea content. */
 export type PastePreview =
@@ -22,10 +23,11 @@ export type PastePreview =
   | { status: "ok"; kind: "costType"; report: CostTypeReport }
   | { status: "ok"; kind: "costCenter"; report: CostCenterReport }
   | { status: "ok"; kind: "costUnit"; report: CostUnitReport }
+  | { status: "ok"; kind: "sectioned"; report: SectionedReport }
   | { status: "error"; message: string };
 
 export const UNRECOGNISED_MESSAGE =
-  "No supported report header found. Supported so far: TNB07 Cost Type Accounting, TNB08 Cost Center Accounting, TNB09 Cost Unit Accounting, TNB10 Contribution Margin, TNB11 Profit and Loss Statement, TNB15 Balance Sheet.";
+  "No supported report header found. Supported: TNB01–TNB12, TNB14–TNB16 and TNB19 (TNB07 Cost Type Accounting, TNB08 Cost Center Accounting, TNB09 Cost Unit Accounting, TNB10 Contribution Margin, TNB11 Profit and Loss Statement, TNB15 Balance Sheet and the ten other reports). TNB13 has no sample yet.";
 
 /** Picks the parser from the report code TOPSIM prints at the top of every page. */
 export function previewPaste(text: string): PastePreview {
@@ -37,6 +39,8 @@ export function previewPaste(text: string): PastePreview {
     if (/^\s*TNB10:/m.test(text)) return { status: "ok", kind: "cm", report: parseContributionMargin(text) };
     if (/^\s*TNB11:/m.test(text)) return { status: "ok", kind: "pnl", report: parseProfitAndLoss(text) };
     if (/^\s*TNB15:/m.test(text)) return { status: "ok", kind: "bs", report: parseBalanceSheet(text) };
+    const code = /^\s*(TNB\d\d):/m.exec(text)?.[1];
+    if (code && SECTIONED_CODES.includes(code)) return { status: "ok", kind: "sectioned", report: parseSectionedReport(text) };
     return { status: "error", message: UNRECOGNISED_MESSAGE };
   } catch (e) {
     return { status: "error", message: e instanceof Error ? e.message : String(e) };

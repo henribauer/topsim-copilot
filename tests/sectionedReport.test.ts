@@ -69,3 +69,127 @@ describe("parseSectionedReport — TNB14 Cash-Flow Statement", () => {
     expect(s.rows[15]).toEqual({ label: "Free Cash-Flow (A+B)", values: [v("-542.25")] });
   });
 });
+describe("parseSectionedReport — TNB19 Decision Protocol", () => {
+  const REPORT = p0Report("=== Report20_Decision Protocol.pdf", "=== ");
+
+  it("reads every decision, including Yes/No answers, '+0' changes and a decision left empty", () => {
+    const r = parseSectionedReport(REPORT);
+    expect(r.title).toBe("Decision Protocol");
+    expect(r.sections.map((s) => [s.heading, s.columns.join("|"), s.rows.length])).toEqual([
+      ["Marketing Mix", "P 0", 4],
+      ["Product Development", "P 0", 1],
+      ["Bulk Buyer", "P 0", 1],
+      ["Purchase and Production", "P 0", 1],
+      ["Production Lines", "P 0", 2],
+      ["Human Resources", "P 0", 1],
+    ]);
+    expect(r.sections[0].rows[3]).toEqual({ label: "Access Online-Market Superbass", values: [{ raw: "Yes", n: null }] });
+    expect(r.sections[1].rows[0]).toEqual({ label: "Product Quality Level Superbass Increase", values: [v("+0", 0)] });
+    expect(r.sections[4].rows[1]).toEqual({ label: "Disinvestment Line No.", values: [v("", null)] });
+  });
+});
+describe("parseSectionedReport — TNB06 Human Resources", () => {
+  const REPORT = p0Report("=== Report7_Human Resources.pdf", "=== ");
+
+  it("rejoins labels wrapped over the unit line, keeps the footnote apart and ends the table at it", () => {
+    const r = parseSectionedReport(REPORT);
+    const cols = ["Purchasing", "Administration", "Production", "Account Manager", "Total"];
+    expect(r.sections.map((s) => [s.heading, s.columns, s.rows.length])).toEqual([
+      ["Workforce", cols, 5],
+      ["Staffing Costs", cols, 4],
+      ["", [], 1],
+    ]);
+    expect(r.sections[0].rows[4]).toEqual({
+      sign: "=", label: "Final Workforce", unit: "Number", values: [v("3.0"), v("2.0"), v("23.0"), v("8.0"), v("36.0")],
+    });
+    expect(r.sections[1].rows.map((row) => row.label)).toEqual([
+      "Wages/Salaries (*)", "Recruitment/Dismissals/Training", "Non-Salary Staff Costs (*)", "Total Staffing Costs",
+    ]);
+    expect(r.footnotes).toEqual(["(*) Without Overtime Costs"]);
+    expect(r.sections[2].rows[0]).toEqual({ label: "Non-Salary Staff Costs in % of Salaries", values: [v("30.00")] });
+  });
+});
+describe("parseSectionedReport — TNB05 Inventory", () => {
+  const REPORT = p0Report("=== Report6_Inventory.pdf", "=== ");
+
+  it("reads a column header printed over two lines and the + / - / = inventory movements", () => {
+    const r = parseSectionedReport(REPORT);
+    const cols = ["Quantity (Units)", "EUR/per unit", "Inventory (TEUR)"];
+    expect(r.sections.map((s) => [s.heading, s.columns, s.rows.length])).toEqual([
+      ["Overview Inventory · Superbass", [], 2],
+      ["Input Materials/Parts Superbass", cols, 5],
+      ["Finished Products Superbass", cols, 4],
+      ["Storage Cost · All Products", [], 3],
+    ]);
+    expect(r.sections[2].rows[2]).toEqual({
+      sign: "-", label: "Quantity Distributed", values: [v("40,000"), v("94.91"), v("3,796.59")],
+    });
+    expect(r.sections[3].rows[2]).toEqual({ label: "Total", unit: "TEUR", values: [v("5.00")] });
+  });
+});
+describe("parseSectionedReport — TNB16 Business Report", () => {
+  const REPORT = p0Report("=== Report17_Business Report.pdf", "=== ");
+
+  it("reads all four companies and keeps numbers that are part of a label in the label", () => {
+    const r = parseSectionedReport(REPORT);
+    expect(r.title).toBe("Business Report of the Industry");
+    const cols = ["C1", "C2", "C3", "C4"];
+    expect(r.sections.map((s) => [s.heading, s.columns, s.rows.length])).toEqual([
+      ["Cost of Sales Accounting (TEUR)", cols, 11],
+      ["Balance Sheet (TEUR) · Assets", cols, 10],
+      ["Liabilities", cols, 11],
+    ]);
+    const c = (raw: string) => [v(raw), v(raw), v(raw), v(raw)];
+    expect(r.sections[1].rows[2]).toEqual({ label: "Machines and Production Facilities", values: c("2,625.00") });
+    expect(r.sections[2].rows[7]).toEqual({ label: "Long-term Loans gt 10 Periods", values: c("750.00") });
+    expect(r.sections[2].rows[8]).toEqual({ label: "Short-Term Loans lt 1 Period", values: c("0.00") });
+  });
+});
+describe("parseSectionedReport — TNB04 Research & Development", () => {
+  const REPORT = p0Report("=== Report5_Research & Development.pdf", "=== ");
+
+  it("rejoins the title cut before the period and reads the column header printed over three lines", () => {
+    const r = parseSectionedReport(REPORT);
+    expect(r.title).toBe("Research & Development");
+    expect(r.sections).toEqual([{
+      heading: "Superbass",
+      columns: ["Level Previous Period", "Level Current Period", "Fixed Costs (TEUR)", "Variable Cost (EUR/unit)", "Variable Costs (TEUR)"],
+      rows: [{ label: "Product Quality", values: [v("1"), v("1"), v("0.00"), v("16.00"), v("640.00")] }],
+    }]);
+  });
+});
+describe("parseSectionedReport — TNB03 Production Report", () => {
+  const REPORT = p0Report("=== Report3_Production Report.pdf", "=== ");
+
+  it("reads all five tables across the page break", () => {
+    const r = parseSectionedReport(REPORT);
+    expect(r.sections.map((s) => [s.heading, s.columns.length, s.rows.length])).toEqual([
+      ["Overview · Superbass", 0, 4],
+      ["Production Lines", 7, 5],
+      ["", 3, 5],
+      ["Utilization Production Lines · Superbass", 0, 6],
+      ["Utilization of Staff · Superbass", 0, 7],
+    ]);
+    expect(r.sections[3].rows[3]).toEqual({
+      label: "Production Line Capacity Needed per Finished Product", unit: "Number per product", values: [v("1.00")],
+    });
+    expect(r.sections[4].rows[2]).toEqual({ label: "Production Capacity per Employee", unit: "Units/Period", values: [v("2,000")] });
+  });
+
+  it("keeps the line number in the label, even when it wraps below the values", () => {
+    const [, lines, capacity] = parseSectionedReport(REPORT).sections;
+    expect(lines.rows[0]).toEqual({
+      label: "Type A Line Nr. 1", values: [v("-9"), v("1,250.00"), v("0"), v("125.00"), v("0.00"), v("200.00"), v("25.0")],
+    });
+    expect(capacity.rows[3]).toEqual({ label: "Type A Line Nr. 4", values: [v("12,000"), v("0.00"), v("1.00")] });
+  });
+
+  it("puts the values of the sparse Total row under the columns they belong to", () => {
+    const [, lines] = parseSectionedReport(REPORT).sections;
+    const empty = v("", null);
+    expect(lines.columns[1]).toBe("Acquisition Value (TEUR)");
+    expect(lines.rows[4]).toEqual({
+      label: "Total", values: [empty, v("5,000.00"), empty, v("500.00"), v("2,625.00"), v("320.00"), empty],
+    });
+  });
+});

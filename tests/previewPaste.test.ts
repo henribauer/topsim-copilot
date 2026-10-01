@@ -66,6 +66,23 @@ describe("previewPaste", () => {
     expect(UNRECOGNISED_MESSAGE).toContain("TNB07 Cost Type Accounting, TNB08 Cost Center Accounting, TNB09 Cost Unit Accounting");
   });
 
+  it("recognises the ten sectioned reports and returns them as kind 'sectioned'", () => {
+    const files = [
+      "Report1_Executive Summary", "Report2_Market Research Report", "Report3_Production Report",
+      "Report5_Research & Development", "Report6_Inventory", "Report7_Human Resources",
+      "Report13_Cash Accounting", "Report15_Cash-Flow Statement", "Report17_Business Report", "Report20_Decision Protocol",
+    ];
+    const kinds = files.map((f) => {
+      const r = previewPaste(p0Report(`=== ${f}.pdf`, "=== "));
+      return r.status === "ok" ? `${r.kind} ${r.report.reportCode}` : r.status;
+    });
+    expect(kinds).toEqual([
+      "sectioned TNB01", "sectioned TNB02", "sectioned TNB03", "sectioned TNB04", "sectioned TNB05",
+      "sectioned TNB06", "sectioned TNB12", "sectioned TNB14", "sectioned TNB16", "sectioned TNB19",
+    ]);
+    expect(UNRECOGNISED_MESSAGE).toContain("TNB01–TNB12, TNB14–TNB16 and TNB19");
+  });
+
   it("returns 'error' naming the supported reports when no known header is found", () => {
     expect(previewPaste("Balance Sheet\nAssets 1,000.00")).toEqual({
       status: "error",
