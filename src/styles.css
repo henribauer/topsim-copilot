@@ -201,3 +201,37 @@ td.fixable:hover { background: var(--accent-soft); }
 .formula { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: var(--bg); border-radius: 6px; padding: 6px 10px; }
 .term-sources { margin: 8px 0 2px; padding-left: 18px; font-size: 12px; color: var(--muted); }
 .term .link { margin-top: 6px; }
+
+/* Analysis (design guide D14, D15, D8; refs 12, 16) */
+.analysis { display: flex; flex-direction: column; gap: 16px; max-width: 1000px; }
+.a-card { padding: 4px 22px 18px; }
+.a-card h2 { text-transform: none; font-size: 15px; letter-spacing: 0; color: inherit; margin: 16px 0 2px; }
+.a-card h3 { font-size: 14px; margin: 14px 0 4px; }
+.period-pick { display: flex; gap: 4px; }
+.hint { font-size: 12px; margin: 6px 0 0; }
+.waterfall { width: 100%; height: auto; display: block; }
+.waterfall .grid { stroke: var(--border); stroke-width: 1; }
+.waterfall .axis { font-size: 11px; fill: var(--muted); }
+.waterfall .value { font-size: 11px; fill: #343a40; }
+.waterfall .connector { stroke: #adb5bd; stroke-width: 1; stroke-dasharray: 3 3; }
+.waterfall .bar.increase rect { fill: #2b8a3e; }
+.waterfall .bar.decrease rect { fill: #e03131; }
+.waterfall .bar.total rect { fill: var(--accent); }
+.waterfall .bar.pick { cursor: pointer; }
+.waterfall .bar.pick:hover rect, .waterfall .bar.open rect { fill: #2f4bb8; }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--muted); margin-top: 4px; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; }
+.sw.inc { background: #2b8a3e; } .sw.dec { background: #e03131; } .sw.tot { background: var(--accent); }
+.explain-open { margin-top: 10px; padding: 4px 16px 12px; background: var(--bg); border-radius: 8px; }
+.explain { margin-top: 12px; font-size: 14px; }
+.explain summary { cursor: pointer; color: var(--accent); font-weight: 600; font-size: 13px; }
+.explain .steps { padding-left: 20px; }
+.explain .steps li { margin: 8px 0; }
+.be-numbers { display: flex; gap: 36px; margin: 10px 0 12px; }
+.big { font-size: 26px; font-weight: 700; }
+.be-bar { height: 14px; background: #d8f5e0; border-radius: 7px; overflow: hidden; }
+.be-cover { height: 100%; background: #f1b0b0; }
+td.fav, .fav { color: #2b8a3e; } td.unfav, .unfav { color: #c92a2a; }
+.variance td.num, .variance th.num { white-space: nowrap; }
+th.ours, td.ours { background: var(--accent-soft); font-weight: 600; }
+.empty { padding: 24px; }

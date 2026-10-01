@@ -4,6 +4,7 @@ import { FileImport } from "./FileImport";
 import { Dashboard } from "./Dashboard";
 import { Copilot } from "./Copilot";
 import { Glossary } from "./Glossary";
+import { Analysis } from "./Analysis";
 import { EditableNum, type FixTarget } from "./Correctable";
 import type {
   CmStep,
@@ -35,7 +36,7 @@ const SECTIONS = [
   "Learn",
   "Glossary",
 ];
-const READY = ["Import", "Dashboard", "Copilot", "Glossary"];
+const READY = ["Import", "Dashboard", "Analysis", "Copilot", "Glossary"];
 
 /** D24: the three entry modes as tabs on one panel. Upload takes the TOPSIM ZIP or single PDFs. */
 const TABS = [
@@ -111,6 +112,18 @@ export default function App() {
         <main className="page">
           <h1>Dashboard</h1>
           <Dashboard onImport={() => setSection("Import")} />
+        </main>
+      )}
+      {section === "Analysis" && (
+        <main className="page">
+          <h1>Analysis</h1>
+          <Analysis
+            onImport={() => setSection("Import")}
+            onAsk={(q) => {
+              setPrefill(q);
+              setSection("Copilot");
+            }}
+          />
         </main>
       )}
       {section === "Copilot" && (

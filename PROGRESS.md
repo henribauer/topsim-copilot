@@ -127,3 +127,12 @@
   claude finds its keychain login by user name. `claudePath.ts`: findClaude (TOPSIM_CLAUDE, ~/.local/bin,
   homebrew, ...) + claudeEnv (adds USER/LOGNAME). Verified by starting scripts/start.sh under `env -i` with a
   Finder-like PATH and asking a real question (answer in 6 s). 125 tests, 6 mutants caught.
+- 2026-10-01: Batch B1 — Analysis (PRD Must 3). `src/analysis/analysis.ts` (cmCascade from TNB10, breakEven =
+  fixed costs / CM per unit with variable costs = blocks above CM I, costPerUnit from TNB09, periodChange variance
+  table latest vs previous, competitorTable from TNB02) and `explain.ts` (CM I-V concept + formula + this period's
+  numbers, flags a gap >0.05 between printed parts and printed result; break-even walk-through; waterfall bars
+  with dashed connectors, restarting from the printed margin so report rounding never drifts the chart). GET
+  /api/periods now serves corrected values (+ `stale` list) so Dashboard, Analysis and the copilot agree. UI
+  `Analysis.tsx`: SVG waterfall (D14), break-even card, cost per unit, variance table (D15/D8), competitor table,
+  Explain views, copilot hand-off. Real break-even P0: 34,928 units, 5,072 safety (12.68 %). 147 tests; 18+11+2
+  mutants caught after closing 7 survivors.

@@ -1,6 +1,6 @@
 import { basename } from "node:path";
 import { loadPeriods, removeCorrection, saveCorrection, saveReport } from "./periodStore";
-import type { Correction } from "./corrections";
+import { applyCorrections, type Correction } from "./corrections";
 
 export interface ApiResponse {
   status: number;
@@ -30,11 +30,20 @@ export function handleSaveRequest(vaultDir: string, rawBody: string, origin: str
   }
 }
 
-/** GET /api/periods: everything the dashboard needs. The raw text stays on disk (it is only for re-parsing). */
+/**
+ * GET /api/periods: everything the dashboard and analysis need. The raw text stays on disk (it is only for
+ * re-parsing). `parsed` is already corrected with Henri's fixes, so every screen shows the same numbers;
+ * a fix that no longer matches what the parser reads is left out and listed in `stale`.
+ */
 export function handlePeriodsRequest(vaultDir: string): ApiResponse {
   const periods = loadPeriods(vaultDir).map((p) => ({
     ...p,
-    reports: Object.fromEntries(Object.entries(p.reports).map(([code, { raw: _raw, ...rest }]) => [code, rest])),
+    reports: Object.fromEntries(
+      Object.entries(p.reports).map(([code, { raw: _raw, parsed, corrections, ...rest }]) => {
+        const fixed = applyCorrections(parsed, corrections ?? []);
+        return [code, { ...rest, parsed: fixed.report, corrections, stale: fixed.stale }];
+      }),
+    ),
   }));
   return { status: 200, body: { periods } };
 }

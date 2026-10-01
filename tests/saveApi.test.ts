@@ -82,3 +82,20 @@ describe("handleCorrectionRequest (POST /api/corrections)", () => {
     expect(handleCorrectionRequest(dir, JSON.stringify({ period: 0, reportCode: "TNB10", correction: fix }), "https://evil.example").status).toBe(403);
   });
 });
+
+describe("handlePeriodsRequest with corrections", () => {
+  it("serves the corrected value to the dashboard and analysis, and reports a fix that no longer fits", () => {
+    const dir = mkdtempSync(join(tmpdir(), "topsim-vault-"));
+    handleSaveRequest(dir, JSON.stringify({ text: CM }), LOCAL);
+    const path = ["steps", 0, "values", 5];
+    handleCorrectionRequest(dir, JSON.stringify({ period: 0, reportCode: "TNB10", correction: { path, from: 6000, to: "6,100.00" } }), LOCAL);
+    handleCorrectionRequest(dir, JSON.stringify({ period: 0, reportCode: "TNB10", correction: { path: ["steps", 1, "values", 5], from: 999, to: "1.00" } }), LOCAL);
+
+    const { body } = handlePeriodsRequest(dir);
+    const r = (body.periods as { reports: Record<string, { parsed: { steps: { values: number[] }[] }; stale?: unknown[] }> }[])[0].reports.TNB10;
+    expect(r.parsed.steps[0].values[5]).toBe(6100);
+    expect(r.parsed.steps[1].values[5]).toBe(1520); // the stale fix was not applied
+    expect(r.stale).toHaveLength(1);
+  });
+});
+
