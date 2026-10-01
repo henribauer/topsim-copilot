@@ -16,12 +16,32 @@ const TABS = [
   { id: "manual", label: "Manual entry", ready: false },
 ];
 
+type SaveState =
+  | { status: "idle" | "saving" }
+  | { status: "saved" | "error"; message: string };
+
 const fmt = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export default function App() {
   const [text, setText] = useState("");
   const [showJson, setShowJson] = useState(false);
+  const [save, setSave] = useState<SaveState>({ status: "idle" });
   const preview = previewPaste(text);
+
+  async function saveToVault() {
+    setSave({ status: "saving" });
+    try {
+      const res = await fetch("/api/reports", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      const body = await res.json();
+      setSave(body.ok ? { status: "saved", message: `Saved ${body.reportCode} to TOPSIM/${body.note}` } : { status: "error", message: body.error });
+    } catch (e) {
+      setSave({ status: "error", message: `Could not reach the local server: ${e instanceof Error ? e.message : e}` });
+    }
+  }
 
   return (
     <div className="shell">
@@ -55,7 +75,10 @@ export default function App() {
               aria-label="Report text"
               placeholder="Paste the report text here (select all in the PDF, copy, paste)…"
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={(e) => {
+                setText(e.target.value);
+                setSave({ status: "idle" });
+              }}
               spellCheck={false}
             />
 
@@ -85,6 +108,23 @@ export default function App() {
                   {preview.kind === "costCenter" && <CostCenterView report={preview.report} />}
                   {preview.kind === "costUnit" && <CostUnitView report={preview.report} />}
                   {preview.kind === "sectioned" && <SectionedReportView report={preview.report} />}
+                  {/* D23: the result sits right above the primary action. D11: errors as red banner with text. */}
+                  {save.status === "error" && (
+                    <div className="error" role="alert">
+                      <strong>Not saved.</strong> {save.message}
+                    </div>
+                  )}
+                  {save.status === "saved" && (
+                    <p className="saved" role="status">
+                      ✓ {save.message}
+                    </p>
+                  )}
+                  <div className="actions">
+                    {/* D10: the accent colour is for the primary action. */}
+                    <button className="primary" onClick={saveToVault} disabled={save.status === "saving" || save.status === "saved"}>
+                      {save.status === "saving" ? "Saving…" : save.status === "saved" ? "Saved" : "Save to vault"}
+                    </button>
+                  </div>
                   <button className="link" onClick={() => setShowJson((v) => !v)}>
                     {showJson ? "Hide" : "Show"} JSON
                   </button>

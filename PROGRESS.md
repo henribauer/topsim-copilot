@@ -73,4 +73,12 @@
   accent #3b5bdb). Pitfall: editing Info.plist/icon after osacompile breaks the signature → macOS denies the
   iCloud folder ("Operation not permitted"); the script re-signs ad hoc. First launch asks once for iCloud
   Drive access (granted 2026-10-01). Cold start ≈1 s. Log: $TMPDIR/topsim-copilot.log.
+- 2026-10-01: Slice 1e done — save imported reports to the vault. `src/store/periodStore.ts` `saveReport`:
+  `Cowork OS/TOPSIM/data/period-<n>.json` (all reports of a period keyed by code, each with kind, savedAt,
+  raw pasted text, parsed data; re-save replaces) + regenerated `Period <n>.md` note (frontmatter period/
+  company/reports, table code/report/date). Atomic writes (tmp + rename). `src/store/saveApi.ts` =
+  POST /api/reports, mounted in vite.config.ts; refuses foreign Origins (403) so other websites can't write
+  to the vault; 400 with the parser message for non-reports. UI: "Save to vault" primary button (D10) with
+  green ✓ / red banner (D11, D23). Vault path override `TOPSIM_VAULT` (used for the e2e run on :5199 with a
+  scratch vault: 200 / 403 / 405 as expected). Mutation check 3/3 caught. 51 tests.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

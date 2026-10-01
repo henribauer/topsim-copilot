@@ -105,6 +105,11 @@ tr.sub td:first-child { padding-left: 24px; }
 .error { background: var(--red-soft); border: 1px solid var(--red); color: var(--red); border-radius: 8px; padding: 10px 12px; margin-top: 12px; }
 .warning { background: var(--amber-soft); color: var(--amber); border-radius: 8px; padding: 8px 12px; margin-top: 14px; font-size: 13px; }
 
+.actions { margin-top: 16px; }
+.primary { border: 0; border-radius: 8px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; padding: 8px 16px; cursor: pointer; }
+.primary:disabled { opacity: 0.55; cursor: default; }
+.saved { color: #2b8a3e; margin: 12px 0 0; font-size: 13px; }
+
 .link { border: 0; background: none; color: var(--accent); font: inherit; font-size: 13px; padding: 0; margin-top: 16px; cursor: pointer; }
 .json { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-size: 11px; max-height: 360px; overflow: auto; }
 
