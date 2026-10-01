@@ -6,6 +6,7 @@ import { Copilot } from "./Copilot";
 import { Glossary } from "./Glossary";
 import { Analysis } from "./Analysis";
 import { Learn } from "./Learn";
+import { Planner, WhatIf } from "./Planner";
 import { EditableNum, type FixTarget } from "./Correctable";
 import type {
   CmStep,
@@ -37,7 +38,7 @@ const SECTIONS = [
   "Learn",
   "Glossary",
 ];
-const READY = ["Import", "Dashboard", "Analysis", "Copilot", "Learn", "Glossary"];
+const READY = ["Import", "Dashboard", "Analysis", "Copilot", "Learn", "Glossary", "Planner", "What-if"];
 
 /** D24: the three entry modes as tabs on one panel. Upload takes the TOPSIM ZIP or single PDFs. */
 const TABS = [
@@ -133,6 +134,28 @@ export default function App() {
         <main className="page page-chat">
           <h1>Copilot</h1>
           <Copilot prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
+        </main>
+      )}
+      {section === "Planner" && (
+        <main className="page wide">
+          <h1>Planner</h1>
+          <Planner
+            onAsk={(q) => {
+              setPrefill(q);
+              setSection("Copilot");
+            }}
+          />
+        </main>
+      )}
+      {section === "What-if" && (
+        <main className="page wide">
+          <h1>What-if</h1>
+          <WhatIf
+            onAsk={(q) => {
+              setPrefill(q);
+              setSection("Copilot");
+            }}
+          />
         </main>
       )}
       {section === "Learn" && (

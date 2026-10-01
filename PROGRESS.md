@@ -144,3 +144,17 @@
   EBT. UI `Learn.tsx`: one question at a time, immediate feedback, summary with links into the Glossary,
   copilot hand-off. Real-browser run: 7/10 with deliberate mistakes, TEUR hint shown. 165 tests; 27 mutants
   caught (1 equivalent).
+- 2026-10-01: Batch C — Planner + What-if (PRD Must 4 + 5). Model `src/plan/`: `constants.ts` (every rule is a
+  handbook number with its verbatim quote, test checks the quote is still in docs/handbook.txt), `opening.ts`
+  (state a period starts from, read from the reports: staff, wages, lines, stock, debts, interest rates derived
+  from the P&L; `decisionsOf` reads TNB19), `forecast.ts` (decisions -> demand, production limits, staff by the
+  manual's graphs, cost centers, P&L, overdraft solved as TOPSIM draws it, tax with loss carry-forward, cash),
+  `scenarios.ts` (default plan, side-by-side compare with favourable/unfavourable). KEY CHECK: replaying period
+  0's own opening state and decisions reproduces TNB09/TNB11/TNB12 to the cent (revenue 6,000, operating income
+  421.01, overdraft 1,192.25, net income 207.66, final cash 10.00). Only DEMAND is an estimate (manual: price
+  table, +4.5 %/advisor, +1,200 units per +30 TEUR advertising) and is labelled so; quality effect on demand
+  is not modelled (manual gives no size); advertising/CI carry-over is not modelled. UI `Planner.tsx`: decision
+  form per area with handbook-sourced checks (lines, staff incl. 20 % overtime, quality steps, cash/overdraft),
+  forecast table, "Type into TOPSIM" list, copilot hand-off; What-if: up to 3 scenarios side by side with
+  green/red deltas against A. Still to calibrate with period 1 data: demand rules, overdraft rate. 227 tests,
+  37 + 9 mutants caught (1 closed with a new test).
