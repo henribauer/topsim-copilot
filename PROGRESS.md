@@ -122,3 +122,8 @@
   with its source. Tests check every cited handbook section exists as a heading and every script page occurs in
   the script (4 mutants caught). UI: search (name > definition, "35 %" = "35%"), source lines, "Ask the copilot
   about this" prefills the copilot input without sending. 119 tests.
+- 2026-10-01: Copilot fix — from the desktop icon the copilot answered "The claude command was not found", then
+  "Not logged in". Cause: apps started from Finder get a minimal PATH (no ~/.local/bin) and no USER/LOGNAME, and
+  claude finds its keychain login by user name. `claudePath.ts`: findClaude (TOPSIM_CLAUDE, ~/.local/bin,
+  homebrew, ...) + claudeEnv (adds USER/LOGNAME). Verified by starting scripts/start.sh under `env -i` with a
+  Finder-like PATH and asking a real question (answer in 6 s). 125 tests, 6 mutants caught.

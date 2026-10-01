@@ -1,4 +1,5 @@
 import { spawn as nodeSpawn } from "node:child_process";
+import { claudeEnv, findClaude } from "./claudePath";
 
 export interface Turn {
   role: "user" | "assistant";
@@ -23,7 +24,7 @@ export type Spawn = (args: string[], stdin: string) => Promise<{ stdout: string;
  */
 export const spawnClaude: Spawn = (args, stdin) =>
   new Promise((resolve, reject) => {
-    const child = nodeSpawn("claude", args, { cwd: process.env.TMPDIR ?? "/tmp", stdio: ["pipe", "pipe", "pipe"] });
+    const child = nodeSpawn(findClaude(), args, { cwd: process.env.TMPDIR ?? "/tmp", env: claudeEnv(), stdio: ["pipe", "pipe", "pipe"] });
     let stdout = "";
     let stderr = "";
     child.stdout.on("data", (d) => (stdout += d));
