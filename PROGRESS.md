@@ -106,3 +106,13 @@
   saved (paste tab after "Save to vault", upload tab per row). Wired through every report view with real
   fix paths. E2E with real reports.zip: fix → in vault JSON, undo → gone, 0 console errors, favicon 404
   fixed. 87 tests, 8 more mutants caught.
+
+- 2026-10-01: Batch A1 — Copilot (PRD Must 6). `src/copilot/`: context.ts (system prompt = rules + Coach/Propose
+  mode + handbook + lecture notes + every saved report, each under a citable label; Henri's fixes appended),
+  claudeRunner.ts (`claude -p`, no tools, no session, no user settings/MCP/skills: 2.5 s instead of 18 s; Max plan),
+  copilotApi.ts (POST /api/copilot, origin-checked, reads Class Notes + Class Material/*.md read-only, never
+  Assignments/Exam/Flashcards), citations.ts (flags any citation that is none of the given sources),
+  markdown.ts (data-only renderer, model output never becomes markup). UI `Copilot.tsx`: transcript, numbered
+  citation badges -> collapsible source list, Coach/Propose switch above input, "reading..." status.
+  E2E with real claude: coach answer cites TNB11 + Handbook correctly, follow-up in Propose uses history, 0 console
+  errors. 113 tests; 9 + 4 + 5 mutants caught.
