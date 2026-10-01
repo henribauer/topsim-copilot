@@ -19,8 +19,8 @@ function sourceLine(s: Source): string {
  * lecture-script page and TOPSIM report it comes from. Each term can be handed to the copilot as a question
  * (it only fills the input — nothing is sent until Henri presses Ask).
  */
-export function Glossary({ onAsk }: { onAsk: (question: string) => void }) {
-  const [query, setQuery] = useState("");
+export function Glossary({ onAsk, initialQuery = "" }: { onAsk: (question: string) => void; initialQuery?: string }) {
+  const [query, setQuery] = useState(initialQuery);
   const hits = searchGlossary(query);
   return (
     <div className="glossary">

@@ -136,3 +136,11 @@
   `Analysis.tsx`: SVG waterfall (D14), break-even card, cost per unit, variance table (D15/D8), competitor table,
   Explain views, copilot hand-off. Real break-even P0: 34,928 units, 5,072 safety (12.68 %). 147 tests; 18+11+2
   mutants caught after closing 7 survivors.
+- 2026-10-01: Batch B2 — Learn (PRD Must 7). `src/learn/quiz.ts`: 10 questions per period built from the saved
+  reports (CM I/II, CM per unit, break-even, 35 % tax, equity ratio, liquidity I + 3 lecture multiple-choice),
+  each with the lecture formula worked through with the period's numbers and a glossary term to revisit.
+  parseAnswer reads 3,320.00 / 34.927,47 / 0,84 / 55.35 % and rejects "3 4"; grading tolerates TOPSIM's rounding,
+  hints at TEUR vs EUR mix-ups, never counts an unreadable input as wrong. Tax question only when tax = 35 % of
+  EBT. UI `Learn.tsx`: one question at a time, immediate feedback, summary with links into the Glossary,
+  copilot hand-off. Real-browser run: 7/10 with deliberate mistakes, TEUR hint shown. 165 tests; 27 mutants
+  caught (1 equivalent).

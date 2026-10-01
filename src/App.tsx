@@ -5,6 +5,7 @@ import { Dashboard } from "./Dashboard";
 import { Copilot } from "./Copilot";
 import { Glossary } from "./Glossary";
 import { Analysis } from "./Analysis";
+import { Learn } from "./Learn";
 import { EditableNum, type FixTarget } from "./Correctable";
 import type {
   CmStep,
@@ -36,7 +37,7 @@ const SECTIONS = [
   "Learn",
   "Glossary",
 ];
-const READY = ["Import", "Dashboard", "Analysis", "Copilot", "Glossary"];
+const READY = ["Import", "Dashboard", "Analysis", "Copilot", "Learn", "Glossary"];
 
 /** D24: the three entry modes as tabs on one panel. Upload takes the TOPSIM ZIP or single PDFs. */
 const TABS = [
@@ -64,6 +65,8 @@ export default function App() {
   const [tab, setTab] = useState("pdf");
   // A question handed over from another page (e.g. the glossary); it only prefills the copilot's input.
   const [prefill, setPrefill] = useState<string | null>(null);
+  // A glossary term handed over from the quiz ("worth another look"): it opens the glossary searched for that term.
+  const [glossaryQuery, setGlossaryQuery] = useState("");
   const preview = previewPaste(text);
 
   async function saveToVault() {
@@ -132,6 +135,26 @@ export default function App() {
           <Copilot prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
         </main>
       )}
+      {section === "Learn" && (
+        <main className="page">
+          <h1>Learn</h1>
+          <p className="muted">
+            A short quiz after each period, built from your own numbers. Every answer shows the lecture's formula worked
+            through with them.
+          </p>
+          <Learn
+            onImport={() => setSection("Import")}
+            onGlossary={(term) => {
+              setGlossaryQuery(term);
+              setSection("Glossary");
+            }}
+            onAsk={(q) => {
+              setPrefill(q);
+              setSection("Copilot");
+            }}
+          />
+        </main>
+      )}
       {section === "Glossary" && (
         <main className="page">
           <h1>Glossary</h1>
@@ -140,6 +163,8 @@ export default function App() {
             lecture script, or the report where you see the number.
           </p>
           <Glossary
+            key={glossaryQuery}
+            initialQuery={glossaryQuery}
             onAsk={(q) => {
               setPrefill(q);
               setSection("Copilot");
