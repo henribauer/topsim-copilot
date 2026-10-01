@@ -187,3 +187,11 @@
   cards with number field + slider + tick, details behind tabs (Checks with count badge / Forecast / Type into
   TOPSIM); What-if tints the best column and tags it. 276 tests. Browser-checked: slider drives number and band,
   band stays on screen when scrolling, status flips on over-capacity, 0 errors.
+- 2026-10-01: Redesign step 5 — Quiz, Glossary, Import (R5, R6; Mobbin: Duolingo, The Leap, Uxcel, Selfridges,
+  Resend, Remote, Calendly, Workable). Logic (tested, 11 tests, 16 mutants caught, 1 survivor closed): `retryHint`
+  (D34/C5: a wrong number gets a hint - too low/high, TEUR-vs-EUR - and "Try again" before the answer is revealed;
+  "Show answer" or a second miss reveals), `letterIndex`/`entriesForLetter` (A-Z strip), `importSteps` (rail:
+  Add files / Check / Save). UI: quiz = one question per screen, progress at the top, feedback colours the input or
+  option row, actions at the bottom edge; glossary = search + A-Z strip + big letter heading + text-only rows that
+  expand (7,414 px -> 900 px); import = three-step rail, "Add more files" fold once files are in, "All saved" banner,
+  Save bar pinned to the viewport bottom, unready "Manual entry" tab hidden, one-line page intros. 287 tests.

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ReportPreview } from "./App";
 import type { FixTarget } from "./Correctable";
 import { importFiles, type ImportItem, type ImportResult } from "./import/importFiles";
+import { importSteps } from "./import/steps";
 
 type RowSave = { status: "saved" } | { status: "error"; message: string };
 
@@ -86,10 +87,27 @@ export function FileImport() {
     </label>
   );
 
-  if (state.status === "idle") return <div className="upload">{dropZone}</div>;
+  const savedNow = Object.values(saves).filter((x) => x.status === "saved").length;
+  const rail = importSteps(
+    state.status === "ready"
+      ? { status: "ready", readable: state.result.items.filter((i) => i.preview.status === "ok").length, saved: savedNow }
+      : { status: state.status },
+  );
+  const stepper = (
+    <ol className="stepper" aria-label="Import progress">
+      {rail.labels.map((l, i) => (
+        <li key={l} className={i + 1 === rail.current ? "current" : i + 1 < rail.current || rail.done ? "past" : ""} aria-current={i + 1 === rail.current ? "step" : undefined}>
+          <span className="dot">{i + 1 < rail.current || (rail.done && i + 1 === 3) ? "✓" : i + 1}</span>{l}
+        </li>
+      ))}
+    </ol>
+  );
+
+  if (state.status === "idle") return <div className="upload">{stepper}{dropZone}</div>;
   if (state.status === "reading") {
     return (
       <div className="upload">
+        {stepper}
         <p className="muted" role="status">Reading {state.names.join(", ")}…</p>
       </div>
     );
@@ -109,7 +127,16 @@ export function FileImport() {
 
   return (
     <div className="upload">
-      {dropZone}
+      {stepper}
+      {/* Remote / Calendly: once files are in, the big drop zone shrinks to a link and the reports take the stage. */}
+      {rail.done ? (
+        <div className="all-saved" role="status">✓ All {good.length} reports are saved to the vault. <button className="link" onClick={() => { setState({ status: "idle" }); setSaves({}); }}>Import more</button></div>
+      ) : (
+        <details className="more-files">
+          <summary>Add more files</summary>
+          {dropZone}
+        </details>
+      )}
       <p className="muted summary">
         {good.length} report{good.length === 1 ? "" : "s"} found
         {periods.length > 0 && ` for period ${periods.join(", ")}`}

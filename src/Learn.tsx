@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cmCascade } from "./analysis/analysis";
-import { gradeAnswer, generateQuiz, summarize, type Grade, type Question } from "./learn/quiz";
+import { gradeAnswer, generateQuiz, retryHint, summarize, type Grade, type Question } from "./learn/quiz";
 import type { PeriodFile } from "./store/periodStore";
 
 /**
@@ -58,12 +58,15 @@ function Quiz({ period, onGlossary, onAsk }: { period: PeriodFile; onGlossary: (
   const [choice, setChoice] = useState<number | null>(null);
   const [grade, setGrade] = useState<Grade | null>(null);
   const [results, setResults] = useState<{ id: string; correct: boolean | null }[]>([]);
+  const [tries, setTries] = useState(0);
+  const [revealed, setRevealed] = useState(false);
 
   if (index >= quiz.length) {
     const s = summarize(quiz, results);
     return (
-      <section className="card a-card">
-        <h2>Period {period.period} quiz · done</h2>
+      <section className="quiz-screen">
+        <div className="quiz-card">
+        <p className="q-concept">Period {period.period} quiz · done</p>
         <p className="big">{s.correct} of {s.total} correct</p>
         {s.revisit.length === 0 ? (
           <p>Every concept sat. Next: change something in the What-if or ask the copilot why a number moved.</p>
@@ -77,8 +80,9 @@ function Quiz({ period, onGlossary, onAsk }: { period: PeriodFile; onGlossary: (
             </ul>
           </>
         )}
-        <div className="actions">
-          <button className="primary" onClick={() => { setIndex(0); setResults([]); setGrade(null); setInput(""); setChoice(null); }}>Try again</button>
+        </div>
+        <div className="quiz-actions">
+          <button className="primary" onClick={() => { setIndex(0); setResults([]); setGrade(null); setInput(""); setChoice(null); }}>Start again</button>
         </div>
       </section>
     );
@@ -86,55 +90,86 @@ function Quiz({ period, onGlossary, onAsk }: { period: PeriodFile; onGlossary: (
 
   const q: Question = quiz[index];
   const answered = grade !== null && grade.correct !== null;
+  // D34/C5: a wrong number first gets a hint and another try; only "Show answer" (or a second miss) reveals it.
+  const settled = answered && (grade!.correct === true || revealed || q.kind === "choice");
+  const hint = !settled && grade?.correct === false ? retryHint(q, input) : null;
 
   function check() {
     const g = gradeAnswer(q, q.kind === "choice" ? (choice ?? -1) : input);
     setGrade(g);
-    if (g.correct !== null) setResults((r) => [...r, { id: q.id, correct: g.correct }]);
+    if (g.correct === null) return;
+    const finalAnswer = g.correct === true || q.kind === "choice" || tries >= 1;
+    if (finalAnswer) {
+      setRevealed(true);
+      setResults((r) => [...r, { id: q.id, correct: g.correct }]);
+    } else {
+      setTries(tries + 1);
+    }
+  }
+  function showAnswer() {
+    setRevealed(true);
+    setResults((r) => [...r, { id: q.id, correct: false }]);
   }
   function next() {
     setIndex(index + 1);
     setGrade(null);
     setInput("");
     setChoice(null);
+    setTries(0);
+    setRevealed(false);
   }
 
   return (
-    <section className="card a-card quiz">
-      <h2>Period {period.period} quiz</h2>
-      <p className="muted">Question {index + 1} of {quiz.length} · about {q.concept}. Questions use your own numbers.</p>
-      <progress value={index} max={quiz.length} aria-label="Quiz progress" />
-      <p className="q-prompt">{q.prompt}</p>
-      {q.kind === "choice" ? (
-        <div className="choices" role="radiogroup" aria-label="Answer">
-          {q.choices!.map((c, i) => (
-            <button key={c} role="radio" aria-checked={choice === i} disabled={answered}
-              className={`choice${choice === i ? " active" : ""}${answered && i === q.answer ? " right" : ""}${answered && choice === i && i !== q.answer ? " wrong" : ""}`}
-              onClick={() => setChoice(i)}>
-              {c}
-            </button>
-          ))}
-        </div>
-      ) : (
-        <div className="answer-row">
-          <input aria-label="Your answer" inputMode="decimal" value={input} disabled={answered} placeholder={q.unit ? `Your answer in ${q.unit}` : "Your answer"}
-            onChange={(e) => { setInput(e.target.value); if (grade) setGrade(null); }}
-            onKeyDown={(e) => { if (e.key === "Enter" && !answered && input.trim() !== "") check(); }} />
-          <span className="muted">{q.unit}</span>
-        </div>
-      )}
-      {grade && (
-        <div className={grade.correct === true ? "fb ok" : grade.correct === false ? "fb bad" : "fb"} role="status">
-          {grade.correct === true && <strong>✓ </strong>}
-          {grade.feedback}
-          {answered && <div><button className="link" onClick={() => onAsk(`I got this quiz question ${grade.correct ? "right but want to understand it better" : "wrong"}: "${q.prompt}" Explain it step by step.`)}>Ask the copilot to explain →</button></div>}
-        </div>
-      )}
-      <div className="actions">
-        {answered ? (
+    <section className="quiz-screen">
+      {/* Duolingo: progress and period at the edge, the question alone in the middle. */}
+      <div className="quiz-top">
+        <progress value={index} max={quiz.length} aria-label="Quiz progress" />
+        <span className="muted">{index + 1} / {quiz.length}</span>
+      </div>
+      <div className="quiz-card">
+        <p className="q-concept">{q.concept} · Period {period.period}</p>
+        <p className="q-prompt">{q.prompt}</p>
+        {q.kind === "choice" ? (
+          <div className="choices" role="radiogroup" aria-label="Answer">
+            {q.choices!.map((c, i) => (
+              <button key={c} role="radio" aria-checked={choice === i} disabled={settled}
+                className={`choice${choice === i ? " active" : ""}${settled && i === q.answer ? " right" : ""}${settled && choice === i && i !== q.answer ? " wrong" : ""}`}
+                onClick={() => setChoice(i)}>
+                {c}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="answer-row">
+            <input aria-label="Your answer" inputMode="decimal" value={input} disabled={settled}
+              className={settled ? (grade!.correct ? "right" : "wrong") : grade?.correct === false ? "wrong" : ""}
+              placeholder={q.unit ? `Your answer in ${q.unit}` : "Your answer"}
+              onChange={(e) => { setInput(e.target.value); if (grade && !settled) setGrade(null); }}
+              onKeyDown={(e) => { if (e.key === "Enter" && !settled && input.trim() !== "") check(); }} />
+            <span className="muted">{q.unit}</span>
+          </div>
+        )}
+        {/* The Leap: feedback is the row's own colour plus one short line, not a separate panel. */}
+        {hint && <p className="fb-line bad" role="status">{hint}</p>}
+        {grade?.correct === null && <p className="fb-line" role="status">{grade.feedback}</p>}
+        {settled && (
+          <div className={grade!.correct === true ? "fb ok" : "fb bad"} role="status">
+            {grade!.correct === true && <strong>✓ </strong>}
+            {grade!.feedback}
+            <div><button className="link" onClick={() => onAsk(`I got this quiz question ${grade!.correct ? "right but want to understand it better" : "wrong"}: "${q.prompt}" Explain it step by step.`)}>Ask the copilot to explain →</button></div>
+          </div>
+        )}
+      </div>
+      <div className="quiz-actions">
+        {settled ? (
           <button className="primary" onClick={next}>{index + 1 === quiz.length ? "See result" : "Next question"}</button>
         ) : (
-          <button className="primary" onClick={check} disabled={q.kind === "choice" ? choice === null : input.trim() === ""}>Check</button>
+          <>
+            {hint && <button className="link" onClick={showAnswer}>Show answer</button>}
+            <button className="primary" onClick={check} disabled={q.kind === "choice" ? choice === null : input.trim() === ""}>
+              {hint ? "Try again" : "Check"}
+            </button>
+          </>
         )}
       </div>
     </section>

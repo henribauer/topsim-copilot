@@ -366,3 +366,62 @@ table.variance th.best, table.variance td.best, table.variance tr.margin td.best
 .whatif .variance { max-width: 820px; }
 .whatif .variance td:first-child { width: 34%; }
 .scenario .field { grid-template-columns: 150px 76px 40px 1fr; }
+
+/* Quiz (redesign step 5, R5; Duolingo, The Leap): one question per screen, chrome at the edges, feedback on the row. */
+.quiz-screen { display: flex; flex-direction: column; min-height: calc(100vh - 140px); max-width: 640px; }
+.quiz-top { display: flex; align-items: center; gap: 14px; }
+.quiz-top progress { flex: 1; height: 8px; accent-color: var(--accent); }
+.quiz-card { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 32px 0; gap: 4px; }
+.q-concept { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 0; }
+.quiz-card .q-prompt { font-size: 20px; line-height: 1.5; margin: 6px 0 22px; }
+.quiz-card .big { font-size: 40px; font-weight: 700; margin: 6px 0 14px; }
+.quiz-actions { display: flex; justify-content: flex-end; align-items: center; gap: 20px; padding-top: 14px; border-top: 1px solid var(--border); }
+.quiz-actions .link { margin-top: 0; }
+.answer-row input.right, .choice.right { border-color: #2b8a3e; background: #ebfbee; }
+.answer-row input.wrong { border-color: #c92a2a; background: #fff5f5; }
+.fb-line { margin: 10px 0 0; font-size: 14px; } .fb-line.bad { color: #a61e1e; }
+.quiz-card .fb { margin-top: 16px; }
+.quiz-card .answer-row input { font-size: 18px; width: 260px; padding: 10px 14px; }
+.quiz-card .choice { font-size: 16px; padding: 12px 16px; width: 100%; max-width: 480px; }
+
+/* Glossary (R5; Uxcel, Selfridges): letter strip, big letter heading, text-only rows. */
+.glossary { max-width: 760px; }
+.glossary .search { width: 100%; box-sizing: border-box; }
+.letters { display: flex; flex-wrap: wrap; gap: 2px; margin: 12px 0 4px; }
+.letter { font: inherit; font-size: 13px; font-weight: 600; min-width: 30px; padding: 5px 8px; border: 0; border-radius: 7px; background: none; color: var(--muted); cursor: pointer; }
+.letter:hover { background: var(--bg); color: var(--fg, inherit); } .letter.active { background: var(--accent-soft); color: var(--accent); }
+.letter-title { font-size: 28px; font-weight: 700; margin: 14px 0 6px; text-transform: none; letter-spacing: 0; color: inherit; }
+.term-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.term-row { border-bottom: 1px solid var(--border); }
+.term-head { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; text-align: left; font: inherit; background: none; border: 0; padding: 12px 4px; cursor: pointer; }
+.term-head:hover .term-name { color: var(--accent); }
+.term-name { font-weight: 600; font-size: 15px; }
+.term-line { color: var(--muted); font-size: 13px; line-height: 1.4; }
+.term-row.open .term-line { display: none; }
+.term-body { padding: 0 4px 14px; font-size: 14px; line-height: 1.55; }
+.term-body p { margin: 0 0 8px; }
+
+/* Import (R6; Resend, Remote, Calendly, Workable): quiet three-step rail, one action per step. */
+.stepper { display: flex; gap: 22px; list-style: none; padding: 0; margin: 0 0 14px; font-size: 13px; color: var(--muted); }
+.stepper li { display: flex; align-items: center; gap: 7px; }
+.stepper .dot { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--border); font-size: 11px; font-weight: 700; }
+.stepper .current { color: var(--fg, inherit); font-weight: 700; } .stepper .current .dot { border-color: var(--accent); background: var(--accent); color: #fff; }
+.stepper .past .dot { border-color: #2b8a3e; background: #ebfbee; color: #2b8a3e; }
+.all-saved { padding: 10px 14px; border-radius: 10px; background: #ebfbee; color: #1f6b2e; font-size: 14px; display: flex; gap: 14px; align-items: center; }
+.all-saved .link { margin-top: 0; }
+.more-files { margin: 0 0 8px; } .more-files summary { cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+
+/* Step 5 polish: one-line intros, a real progress bar, a dominant drop zone. */
+.page-intro { margin: 0 0 14px; font-size: 13px; }
+.quiz-top progress, progress { -webkit-appearance: none; appearance: none; border: 0; background: #e3e6ea; border-radius: 4px; overflow: hidden; }
+progress::-webkit-progress-bar { background: #e3e6ea; border-radius: 4px; }
+progress::-webkit-progress-value { background: var(--accent); border-radius: 4px; transition: width .2s; }
+progress::-moz-progress-bar { background: var(--accent); border-radius: 4px; }
+.quiz-top progress { height: 8px; }
+.upload .dropzone { min-height: 190px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+.upload .dropzone strong { font-size: 17px; }
+
+/* Import step 2: the one primary action must always be on screen (Remote, Calendly: a single CTA). */
+.upload-actions { position: sticky; bottom: 0; z-index: 3; background: var(--card); border-top: 1px solid var(--border); margin: 12px -16px -16px; padding: 12px 16px; display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
+.upload-actions .saved { margin: 0; color: #2b8a3e; font-size: 13px; }
+.files .filelist, .files .preview { max-height: calc(100vh - 330px); overflow-y: auto; }

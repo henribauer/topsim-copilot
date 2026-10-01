@@ -231,6 +231,20 @@ export function gradeAnswer(q: Question, given: string | number): Grade {
   return { correct: false, feedback: `Not quite — you entered ${money(n)}, the answer is ${money(q.answer)}.${hint} ${q.worked}` };
 }
 
+/**
+ * A hint for a wrong number, shown before the answer is revealed (design guide D34/C5: "Try again" first). It says
+ * which way the answer is off and where to look, never the answer itself. Null when there is nothing useful to
+ * say: a right answer, input that is not a number, or a multiple-choice question.
+ */
+export function retryHint(q: Question, given: string | number): string | null {
+  if (q.kind !== "number") return null;
+  const n = typeof given === "number" ? given : parseAnswer(given);
+  if (n === null || Math.abs(n - q.answer) <= q.tolerance) return null;
+  const unitSlip = q.answer !== 0 && [1000, 1 / 1000].some((f) => Math.abs(n - q.answer * f) <= Math.max(q.tolerance, 0.5) * Math.max(f, 1));
+  if (unitSlip) return "That looks like a mix-up between TEUR (thousands of euros) and EUR. Check the unit in the question.";
+  return `Your answer is too ${n < q.answer ? "low" : "high"}. Re-read the question and work through the formula for “${q.concept}” once more.`;
+}
+
 export interface Summary {
   total: number;
   correct: number;

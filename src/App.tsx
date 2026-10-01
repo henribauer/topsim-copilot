@@ -140,10 +140,7 @@ export default function App() {
       )}
       {section === "Quiz" && (
         <main className="page">
-          <p className="muted">
-            A short quiz after each period, built from your own numbers. Every answer shows the lecture's formula worked
-            through with them.
-          </p>
+          <p className="muted page-intro">A short quiz on your own numbers, with the lecture's formula worked through after every answer.</p>
           <Learn
             onImport={() => setSection("Import")}
             onGlossary={(term) => {
@@ -156,10 +153,7 @@ export default function App() {
       )}
       {section === "Glossary" && (
         <main className="page">
-          <p className="muted">
-            The controlling terms behind your reports. Every entry names where it comes from: the TOPSIM handbook, the
-            lecture script, or the report where you see the number.
-          </p>
+          <p className="muted page-intro">Every term names its source: the handbook, the lecture script or the report.</p>
           <Glossary
             key={glossaryQuery}
             initialQuery={glossaryQuery}
@@ -169,15 +163,11 @@ export default function App() {
       )}
       {section === "Import" && (
         <main className="page">
-          <p className="muted">
-            Drop the ZIP from TOPSIM's "download all reports", or single report
-            PDFs (TNB01–TNB12, TNB14–TNB16, TNB19). Each report's type and period
-            are read from its header.
-          </p>
+          <p className="muted page-intro">Drop the ZIP from TOPSIM's "download all reports". Type and period are read from each report's header.</p>
 
           <div className="card">
             <div className="tabs">
-              {TABS.map((t) => (
+              {TABS.filter((t) => t.ready).map((t) => (
                 <button
                   key={t.id}
                   className={t.id === tab ? "tab active" : "tab"}

@@ -276,3 +276,18 @@ export function searchGlossary(query: string): GlossaryEntry[] {
     .sort((a, b) => a.r - b.r)
     .map((x) => x.e);
 }
+
+/** The letters that start at least one term, in order, with how many terms each holds (the A–Z strip, D32). */
+export function letterIndex(entries: GlossaryEntry[]): { letter: string; count: number }[] {
+  const counts = new Map<string, number>();
+  for (const e of entries) {
+    const l = e.term[0].toUpperCase();
+    counts.set(l, (counts.get(l) ?? 0) + 1);
+  }
+  return [...counts].sort(([a], [b]) => a.localeCompare(b)).map(([letter, count]) => ({ letter, count }));
+}
+
+/** Terms starting with a letter, alphabetically. */
+export function entriesForLetter(entries: GlossaryEntry[], letter: string): GlossaryEntry[] {
+  return entries.filter((e) => e.term[0].toUpperCase() === letter.toUpperCase()).sort((a, b) => a.term.localeCompare(b.term));
+}
