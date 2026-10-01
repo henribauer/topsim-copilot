@@ -2,7 +2,7 @@ import { mkdtempSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { handleSaveRequest } from "../src/store/saveApi";
+import { handlePeriodsRequest, handleSaveRequest } from "../src/store/saveApi";
 import { p0Report } from "./fixtures";
 
 const CM = p0Report("=== Report11_Contribution Margin.pdf", "=== ");
@@ -37,5 +37,20 @@ describe("handleSaveRequest (POST /api/reports)", () => {
     expect(res.status).toBe(403);
     expect(existsSync(join(dir, "data"))).toBe(false);
     expect(handleSaveRequest(dir, JSON.stringify({ text: CM }), "http://localhost:5181").status).toBe(200);
+  });
+});
+
+describe("handlePeriodsRequest (GET /api/periods)", () => {
+  it("lists the saved periods with parsed data but without the raw pasted text", () => {
+    const dir = mkdtempSync(join(tmpdir(), "topsim-vault-"));
+    expect(handlePeriodsRequest(dir)).toEqual({ status: 200, body: { periods: [] } });
+    handleSaveRequest(dir, JSON.stringify({ text: CM }), LOCAL);
+
+    const { status, body } = handlePeriodsRequest(dir);
+    const periods = body.periods as { period: number; reports: Record<string, { raw?: string; parsed: { title: string } }> }[];
+    expect(status).toBe(200);
+    expect(periods.map((p) => p.period)).toEqual([0]);
+    expect(periods[0].reports.TNB10.parsed.title).toBe("Contribution Margin");
+    expect(periods[0].reports.TNB10.raw).toBeUndefined();
   });
 });

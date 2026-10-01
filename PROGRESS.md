@@ -81,4 +81,10 @@
   to the vault; 400 with the parser message for non-reports. UI: "Save to vault" primary button (D10) with
   green ✓ / red banner (D11, D23). Vault path override `TOPSIM_VAULT` (used for the e2e run on :5199 with a
   scratch vault: 200 / 403 / 405 as expected). Mutation check 3/3 caught. 51 tests.
+- 2026-10-01: Slice 2a done — Dashboard. `src/dashboard/kpis.ts` `dashboardKpis(periods)`: 9 KPIs from TNB01
+  (SVI, Total Revenue, Net Income, Market Share, Actual Sales, Return on Sales, Equity, Final Cash, Overdraft),
+  raw values as printed, delta latest vs previous (abs, %, favorable by meaning: Overdraft higherIsBetter=false).
+  4/4 mutants caught. `loadPeriods` + GET /api/periods (raw text stripped). `src/Dashboard.tsx`: D13 3-col card
+  grid, D5 label above numeral, D8 green/red delta, sparkline from 2 periods, empty state → Import. Dashboard is
+  now the start section. Verified headless-Chrome screenshot with scratch vault P0+fake P1. 55 tests.
 - Rule: never inline the full handbook/report text; grep/read targeted ranges.

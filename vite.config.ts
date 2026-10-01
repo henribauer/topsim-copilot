@@ -3,7 +3,7 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
-import { handleSaveRequest } from "./src/store/saveApi";
+import { handlePeriodsRequest, handleSaveRequest } from "./src/store/saveApi";
 
 /** Where imported reports go (PRD: data lives in the vault). TOPSIM_VAULT overrides it, e.g. for a test run. */
 const VAULT_DIR = process.env.TOPSIM_VAULT ?? join(homedir(), "claude", "Cowork OS", "TOPSIM");
@@ -13,6 +13,12 @@ function saveApi(): Plugin {
   return {
     name: "topsim-save-api",
     configureServer(server) {
+      server.middlewares.use("/api/periods", (req, res) => {
+        const out = req.method === "GET" ? handlePeriodsRequest(VAULT_DIR) : { status: 405, body: {} };
+        res.statusCode = out.status;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(out.body));
+      });
       server.middlewares.use("/api/reports", (req, res) => {
         if (req.method !== "POST") {
           res.statusCode = 405;

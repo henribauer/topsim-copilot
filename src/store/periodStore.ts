@@ -1,4 +1,4 @@
-import { mkdirSync, readFileSync, writeFileSync, existsSync, renameSync } from "node:fs";
+import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync, renameSync } from "node:fs";
 import { join } from "node:path";
 import { previewPaste } from "../import/previewPaste";
 
@@ -44,6 +44,16 @@ export function saveReport(vaultDir: string, raw: string, now: Date = new Date()
   const notePath = join(vaultDir, `Period ${file.period}.md`);
   writeAtomic(notePath, periodNote(file));
   return { jsonPath, notePath, period: parsed.period, reportCode: parsed.reportCode };
+}
+
+/** Every saved period (data/period-<n>.json), oldest first; [] before the first save. */
+export function loadPeriods(vaultDir: string): PeriodFile[] {
+  const dataDir = join(vaultDir, "data");
+  if (!existsSync(dataDir)) return [];
+  return readdirSync(dataDir)
+    .filter((name) => /^period-\d+\.json$/.test(name))
+    .map((name) => JSON.parse(readFileSync(join(dataDir, name), "utf8")) as PeriodFile)
+    .sort((a, b) => a.period - b.period);
 }
 
 /** Write to a temp file and rename, so a crash never leaves half a file in the vault. */

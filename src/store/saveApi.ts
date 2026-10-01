@@ -1,5 +1,5 @@
 import { basename } from "node:path";
-import { saveReport } from "./periodStore";
+import { loadPeriods, saveReport } from "./periodStore";
 
 export interface ApiResponse {
   status: number;
@@ -27,4 +27,13 @@ export function handleSaveRequest(vaultDir: string, rawBody: string, origin: str
   } catch (e) {
     return { status: 400, body: { ok: false, error: e instanceof Error ? e.message : String(e) } };
   }
+}
+
+/** GET /api/periods: everything the dashboard needs. The raw text stays on disk (it is only for re-parsing). */
+export function handlePeriodsRequest(vaultDir: string): ApiResponse {
+  const periods = loadPeriods(vaultDir).map((p) => ({
+    ...p,
+    reports: Object.fromEntries(Object.entries(p.reports).map(([code, { raw: _raw, ...rest }]) => [code, rest])),
+  }));
+  return { status: 200, body: { periods } };
 }

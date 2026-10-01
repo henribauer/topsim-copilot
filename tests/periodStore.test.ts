@@ -1,8 +1,8 @@
-import { mkdtempSync, readFileSync, existsSync } from "node:fs";
+import { mkdtempSync, readFileSync, existsSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { saveReport } from "../src/store/periodStore";
+import { loadPeriods, saveReport } from "../src/store/periodStore";
 import { p0Report } from "./fixtures";
 
 const CM = p0Report("=== Report11_Contribution Margin.pdf", "=== ");
@@ -12,6 +12,20 @@ const NOW = new Date("2026-10-01T10:00:00Z");
 function vault(): string {
   return mkdtempSync(join(tmpdir(), "topsim-vault-"));
 }
+
+describe("loadPeriods", () => {
+  it("returns every saved period file sorted by period, and [] for an empty vault", () => {
+    const dir = vault();
+    expect(loadPeriods(dir)).toEqual([]);
+    saveReport(dir, CM, NOW);
+    saveReport(dir, BS.replace("Period: 0", "Period: 1"), NOW);
+    writeFileSync(join(dir, "data", "notes.txt"), "not a period file");
+
+    const periods = loadPeriods(dir);
+    expect(periods.map((p) => p.period)).toEqual([0, 1]);
+    expect(Object.keys(periods[0].reports)).toEqual(["TNB10"]);
+  });
+});
 
 describe("saveReport", () => {
   it("writes the parsed report and its raw text into data/period-<n>.json", () => {
