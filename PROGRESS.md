@@ -198,3 +198,15 @@
 - 2026-10-01: Redesign step 6 — shared polish (R7). Audit from computed styles: 13 font sizes (10-40 px) and 4 card
   paddings across 7 pages. Now 7 sizes (12, 13, 14, 16, 22, 28, 40), nothing under 12 px, `--card-pad` for every card,
   one muted grey. `tests/designTokens.test.ts` guards it (4 tests, 8 mutants caught). 291 tests. Redesign complete.
+- 2026-10-08: Mac distribution (docs/mac-distribution-spec.md, approved by Henri, implemented; nothing committed/published).
+  Electron 44.7.0 wraps the existing React UI: the window loads a private `app://topsim` scheme served by the main process
+  (static files + the same `/api` router as the dev server, `src/server/api.ts`, bodies capped at 2 MB, no network port);
+  data in `~/Library/Application Support/TOPSIM Copilot/` (`reports/`, `sources/`, `settings.json`). Optional first-launch
+  Setup (`src/Setup.tsx`, `src/setup/`): Claude status missing / installed-logged-out / ready / check-failed (separate
+  5 s + 10 s read-only checks, auth output never leaves `claudeStatus.ts`), copy-only install + `claude auth login`, Skip /
+  Recheck / reopen via sidebar, privacy disclosure; user's own handbook (.txt) and lecture folder, nothing bundled. Packaging:
+  `npm run desktop:dist:arm64|x64` → staged allowlist → electron-builder, ad-hoc signed, **unsigned/not notarized**; real DMGs in
+  `~/claude-local/topsim-copilot/release/` (arm64 run in isolation: 44/44 e2e checks; x64 built, never run).
+  `scripts/inspect-package.ts` checks the asar/tree allowlist (caught + fixed packed node_modules and app-update.yml).
+  340 tests (+50), dev launcher unchanged (e2e-dev 6/6). Gates before going public: source-rights audit (docs/handbook.txt,
+  samples, fixtures, encoded quotes), license, Developer ID. Full detail: docs/mac-distribution-handoff.md.

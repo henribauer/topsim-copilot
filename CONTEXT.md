@@ -157,3 +157,29 @@ _Avoid_: retrospective
 **Strategy page**:
 The target position and per-period goals the copilot checks decisions against.
 _Avoid_: goals tab
+
+### Distribution (Mac app)
+
+**Desktop app**:
+The standalone macOS build of TOPSIM Copilot (Electron around the same React UI), installed from a DMG; it keeps reports, settings and sources in its own Application Support folder, not in the vault.
+_Avoid_: installer, packaged version, native rewrite
+
+**Setup**:
+The optional screen (first launch, then the sidebar's Setup button) that explains where data lives, guides the Claude install and sign-in, and takes the user's own sources. Skipping it never blocks the non-AI screens.
+_Avoid_: onboarding, wizard, settings
+
+**Claude status**:
+One of missing, installed-logged-out, ready or check-failed — installation and sign-in are checked separately, read-only, with time limits; the app never installs Claude or signs anyone in.
+_Avoid_: connection state, login state
+
+**Own sources**:
+The handbook text file and lecture folder a user supplies themselves; the app never bundles them and says "none added" when absent.
+_Avoid_: bundled handbook, course pack
+
+**Encoded rules**:
+Handbook numbers and glossary definitions written into the app (planner constants, glossary), as opposed to a copy of the source document; their rights status is part of the publication audit.
+_Avoid_: handbook data
+
+**Unsigned build**:
+A DMG signed only ad hoc — no Developer ID, not notarized — so macOS shows a first-launch warning; the README documents the steps.
+_Avoid_: beta, unofficial

@@ -8,6 +8,8 @@ import { Analysis } from "./Analysis";
 import { Learn } from "./Learn";
 import { NAV_GROUPS, pageTitle } from "./shell/nav";
 import { Planner, WhatIf } from "./Planner";
+import { SetupDialog, useSetup } from "./Setup";
+import { sourcesPhrase } from "./setup/view";
 import { EditableNum, type FixTarget } from "./Correctable";
 import type {
   CmStep,
@@ -46,6 +48,8 @@ const fmt = new Intl.NumberFormat("en-US", {
 
 export default function App() {
   const [section, setSection] = useState("Dashboard");
+  const setup = useSetup();
+  const desktop = setup.app?.desktop === true;
   const [text, setText] = useState("");
   const [showJson, setShowJson] = useState(false);
   const [save, setSave] = useState<SaveState>({ status: "idle" });
@@ -78,7 +82,7 @@ export default function App() {
         body.ok
           ? {
               status: "saved",
-              message: `Saved ${body.reportCode} to TOPSIM/${body.note}`,
+              message: `Saved ${body.reportCode} to ${body.note}`,
             }
           : { status: "error", message: body.error },
       );
@@ -105,7 +109,15 @@ export default function App() {
             ))}
           </div>
         ))}
+        {desktop && (
+          <div className="nav-group nav-setup">
+            <button className="nav" onClick={setup.show}>
+              Setup
+            </button>
+          </div>
+        )}
       </nav>
+      <SetupDialog setup={setup} />
 
       <div className="content">
         <header className="topbar">
@@ -272,7 +284,7 @@ export default function App() {
           {copilotOpen ? "Hide copilot ›" : "‹ Ask copilot"}
         </button>
         <div className="dock-body" hidden={!copilotOpen}>
-          <Copilot prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
+          <Copilot onSetup={desktop ? setup.show : undefined} sources={setup.app?.desktop ? sourcesPhrase(setup.app.handbook.present, setup.app.lecture.notes > 0) : undefined} prefill={prefill} onPrefillUsed={() => setPrefill(null)} />
         </div>
       </aside>
     </div>

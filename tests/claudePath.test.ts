@@ -36,3 +36,17 @@ describe("claudeEnv", () => {
     expect(env).toEqual({ USER: "x", LOGNAME: "y", PATH: "/p", FOO: "1" });
   });
 });
+
+import { findClaudeBinary } from "../src/copilot/claudePath";
+
+describe("findClaudeBinary — null instead of a guess, so setup can say 'not installed'", () => {
+  it("finds the native install and the Homebrew install although Finder's PATH has neither", () => {
+    expect(findClaudeBinary({ home: HOME, env: { PATH: "/usr/bin:/bin" }, exists: (p) => p === `${HOME}/.local/bin/claude` })).toBe(`${HOME}/.local/bin/claude`);
+    expect(findClaudeBinary({ home: HOME, env: { PATH: "/usr/bin:/bin" }, exists: (p) => p === "/opt/homebrew/bin/claude" })).toBe("/opt/homebrew/bin/claude");
+  });
+
+  it("also looks through PATH, and returns null when claude is nowhere", () => {
+    expect(findClaudeBinary({ home: HOME, env: { PATH: "/usr/bin:/custom/bin" }, exists: (p) => p === "/custom/bin/claude" })).toBe("/custom/bin/claude");
+    expect(findClaudeBinary({ home: HOME, env: { PATH: "/usr/bin" }, exists: () => false })).toBeNull();
+  });
+});

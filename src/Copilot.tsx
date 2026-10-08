@@ -29,7 +29,7 @@ const STARTERS = [
  * input (D27, ref 35); a visible "reading the sources" status while waiting (D28); sources listed under every
  * answer (D29). Coach is the default (PRD: learning first).
  */
-export function Copilot({ prefill, onPrefillUsed }: { prefill?: string | null; onPrefillUsed?: () => void }) {
+export function Copilot({ prefill, onPrefillUsed, onSetup, sources }: { prefill?: string | null; onPrefillUsed?: () => void; onSetup?: () => void; sources?: string }) {
   const [mode, setMode] = useState<Mode>("coach");
   const [messages, setMessages] = useState<Message[]>([]);
   const [draft, setDraft] = useState("");
@@ -93,8 +93,7 @@ export function Copilot({ prefill, onPrefillUsed }: { prefill?: string | null; o
         {messages.length === 0 && (
           <div className="copilot-empty">
             <p className="muted">
-              Ask about your numbers, a controlling concept or a decision. Answers use the TOPSIM handbook, your lecture
-              notes and every report you imported, and name the source of each number.
+              Ask about your numbers, a controlling concept or a decision. Answers use {sources ?? "the TOPSIM handbook, your lecture notes and every report you imported"}, and name the source of each number.
             </p>
             <div className="starters">
               {STARTERS.map((s) => (
@@ -110,7 +109,7 @@ export function Copilot({ prefill, onPrefillUsed }: { prefill?: string | null; o
         ))}
         {waiting && (
           <p className="thinking muted" role="status">
-            Reading the handbook, lecture notes and reports… {seconds}s
+            {sources ? "Reading the sources…" : "Reading the handbook, lecture notes and reports…"} {seconds}s
           </p>
         )}
         <div ref={end} />
@@ -156,6 +155,17 @@ export function Copilot({ prefill, onPrefillUsed }: { prefill?: string | null; o
             Ask
           </button>
         </form>
+        <p className="disclosure">
+          When you ask, your saved reports{sources ? " and added sources" : ", the handbook and lecture notes"} are sent to Anthropic through your Claude account — never otherwise.
+          {onSetup && (
+            <>
+              {" "}
+              <button className="linklike" onClick={onSetup}>
+                Claude setup
+              </button>
+            </>
+          )}
+        </p>
       </div>
     </div>
   );

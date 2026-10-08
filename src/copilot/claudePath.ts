@@ -9,13 +9,14 @@ interface Where {
 }
 
 /**
- * Where the `claude` command lives. The app is started from the desktop icon, and apps started from Finder get
- * a minimal PATH (/usr/bin:/bin:...) that does not contain ~/.local/bin — so asking the shell for "claude"
- * fails there even though it works in a terminal. We look in the usual install places first.
+ * Where the `claude` command lives, or null when it is nowhere. The app is started from the desktop icon, and apps
+ * started from Finder get a minimal PATH (/usr/bin:/bin:...) that does not contain ~/.local/bin — so asking the shell
+ * for "claude" fails there even though it works in a terminal. We look in the usual install places first (native
+ * installer, Homebrew), then through PATH.
  */
-export function findClaude(
+export function findClaudeBinary(
   where: Where = { home: homedir(), env: process.env, exists: existsSync },
-): string {
+): string | null {
   const { home, env, exists } = where;
   const candidates = [
     env.TOPSIM_CLAUDE,
@@ -23,9 +24,15 @@ export function findClaude(
     "/opt/homebrew/bin/claude",
     "/usr/local/bin/claude",
     join(home, ".claude", "local", "claude"),
+    ...(env.PATH ?? "").split(":").filter(Boolean).map((dir) => join(dir, "claude")),
   ];
   for (const c of candidates) if (c && exists(c)) return c;
-  return "claude";
+  return null;
+}
+
+/** The command to run: the file found above, or plain "claude" (resolved through PATH by the OS) when none was found. */
+export function findClaude(where?: Where): string {
+  return findClaudeBinary(where) ?? "claude";
 }
 
 /**

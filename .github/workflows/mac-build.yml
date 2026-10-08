@@ -1,0 +1,48 @@
+name: Mac build (artifacts only)
+
+# Builds the unsigned (ad-hoc) DMGs and uploads them as workflow artifacts for a person to download and check.
+# It never creates a release, never reads repository secrets and does not run for pull requests (so a fork's
+# pull request can never reach it). Publishing a release stays a manual step by the repository owner.
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.arch }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: arm64
+            runner: macos-14
+          - arch: x64
+            runner: macos-15-intel
+    runs-on: ${{ matrix.runner }}
+    steps:
+      # `runner` is not available in job-level env, so the build folder is set from a step.
+      - name: Build output folder
+        run: echo "TOPSIM_LOCAL=$RUNNER_TEMP/topsim" >> "$GITHUB_ENV"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run desktop:dist:${{ matrix.arch }}
+      - name: Inspect the package (strict allowlist, signature, DMG contents)
+        run: ARCH=${{ matrix.arch }} npx vite-node scripts/inspect-package.ts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TOPSIM-Copilot-${{ matrix.arch }}-unsigned
+          path: ${{ runner.temp }}/topsim/release/*.dmg
+          if-no-files-found: error
+          retention-days: 14

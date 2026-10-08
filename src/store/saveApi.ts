@@ -1,6 +1,7 @@
 import { basename } from "node:path";
 import { loadPeriods, removeCorrection, saveCorrection, saveReport } from "./periodStore";
 import { applyCorrections, type Correction } from "./corrections";
+import { originAllowed } from "../server/origin";
 
 export interface ApiResponse {
   status: number;
@@ -12,7 +13,7 @@ export interface ApiResponse {
  * Only the app's own page may save: any website open in the browser could otherwise post to localhost.
  */
 export function handleSaveRequest(vaultDir: string, rawBody: string, origin: string | undefined): ApiResponse {
-  if (origin !== undefined && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin)) {
+  if (!originAllowed(origin)) {
     return { status: 403, body: { ok: false, error: "Saving is only allowed from the app itself" } };
   }
   let text: unknown;
@@ -50,7 +51,7 @@ export function handlePeriodsRequest(vaultDir: string): ApiResponse {
 
 /** POST /api/corrections, body {period, reportCode, correction:{path, from, to}}. `at` is set here, not by the browser. */
 export function handleCorrectionRequest(vaultDir: string, rawBody: string, origin: string | undefined): ApiResponse {
-  if (origin !== undefined && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin)) {
+  if (!originAllowed(origin)) {
     return { status: 403, body: { ok: false, error: "Saving is only allowed from the app itself" } };
   }
   let body: { period?: unknown; reportCode?: unknown; correction?: unknown };
@@ -74,7 +75,7 @@ export function handleCorrectionRequest(vaultDir: string, rawBody: string, origi
 
 /** DELETE /api/corrections, body {period, reportCode, path} — undo one cell's fix. */
 export function handleCorrectionDelete(vaultDir: string, rawBody: string, origin: string | undefined): ApiResponse {
-  if (origin !== undefined && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin)) {
+  if (!originAllowed(origin)) {
     return { status: 403, body: { ok: false, error: "Saving is only allowed from the app itself" } };
   }
   let body: { period?: unknown; reportCode?: unknown; path?: unknown };

@@ -9,7 +9,8 @@ export interface LectureNote {
 
 export interface PromptInput {
   mode: CopilotMode;
-  handbook: string;
+  /** The user's own handbook text, or null when they supplied none. */
+  handbook: string | null;
   lecture: LectureNote[];
   periods: PeriodFile[];
 }
@@ -45,7 +46,7 @@ function reportText(raw: string, corrections: { from: number | string; to: strin
 
 /** Every source the copilot may cite, as [label, text] — one place decides the labels. */
 function sources({ handbook, lecture, periods }: Pick<PromptInput, "handbook" | "lecture" | "periods">): [string, string][] {
-  const out: [string, string][] = [["Handbook", handbook.trim()]];
+  const out: [string, string][] = handbook === null ? [] : [["Handbook", handbook.trim()]];
   for (const note of lecture) out.push([`Lecture: ${note.name}`, note.text.trim()]);
   for (const p of periods) {
     for (const [code, r] of Object.entries(p.reports)) {
@@ -63,5 +64,6 @@ export function sourceLabels(input: Pick<PromptInput, "handbook" | "lecture" | "
 /** Everything the copilot may use, each block under a label it can cite (PRD Must 6). */
 export function buildSystemPrompt({ mode, handbook, lecture, periods }: PromptInput): string {
   const blocks = sources({ handbook, lecture, periods }).map(([label, text]) => `[${label}]\n${text}`);
-  return `${COMMON}\n\n${MODES[mode]}\n\n=== SOURCES ===\n\n${blocks.join("\n\n")}`;
+  const missing = handbook === null ? `\n\nNo handbook was supplied, so there is no [Handbook] source: do not cite or quote one, and say so when a rule would need it.` : "";
+  return `${COMMON}\n\n${MODES[mode]}${missing}\n\n=== SOURCES ===\n\n${blocks.join("\n\n")}`;
 }

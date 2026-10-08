@@ -425,3 +425,32 @@ progress::-moz-progress-bar { background: var(--accent); border-radius: 4px; }
 .upload-actions { position: sticky; bottom: 0; z-index: 3; background: var(--card); border-top: 1px solid var(--border); margin: 12px -16px -16px; padding: 12px 16px; display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
 .upload-actions .saved { margin: 0; color: #2b8a3e; font-size: 13px; }
 .files .filelist, .files .preview { max-height: calc(100vh - 330px); overflow-y: auto; }
+
+/* Setup dialog (desktop app only) and the copilot's privacy line */
+.nav-setup { margin-top: 24px; }
+.setup-backdrop { position: fixed; inset: 0; background: rgba(28, 31, 35, 0.45); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.setup-dialog { background: var(--card); border-radius: 12px; width: min(660px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow-y: auto; padding: var(--card-pad); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25); }
+.setup-dialog h2 { font-size: 22px; margin: 0 0 4px; text-transform: none; letter-spacing: normal; color: var(--text); }
+.setup-dialog:focus { outline: none; }
+.setup-dialog h3 { font-size: 16px; margin: 20px 0 6px; }
+.setup-dialog p { margin: 0 0 10px; font-size: 14px; }
+.setup-dialog p.muted { font-size: 13px; }
+.setup-path { font-size: 13px; word-break: break-all; }
+.setup-pill { display: inline-block; font-size: 13px; font-weight: 600; padding: 2px 10px; border-radius: 999px; margin-right: 6px; }
+.setup-pill.ok { background: #ebfbee; color: #2b8a3e; }
+.setup-pill.todo { background: var(--accent-soft); color: var(--accent); }
+.setup-pill.warn { background: var(--amber-soft); color: var(--amber); }
+.setup-pill.checking { background: var(--bg); color: var(--muted); }
+.privacy { background: var(--accent-soft); border-radius: 8px; padding: 8px 12px; }
+.setup-steps { padding-left: 20px; margin: 0 0 10px; }
+.setup-steps li { margin-bottom: 8px; }
+.setup-cmd { display: flex; gap: 8px; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+.setup-cmd code { flex: 1; font-size: 13px; overflow-x: auto; white-space: nowrap; }
+.secondary { border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; font: inherit; font-size: 13px; padding: 6px 12px; cursor: pointer; }
+.setup-buttons { display: flex; gap: 8px; }
+.setup-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.setup-source { border-top: 1px solid var(--border); padding-top: 10px; margin-top: 10px; }
+.setup-state { margin: 0; font-size: 13px; }
+.setup-actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+.disclosure { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.linklike { border: 0; background: none; color: var(--accent); font: inherit; font-size: 12px; padding: 0; cursor: pointer; text-decoration: underline; }
